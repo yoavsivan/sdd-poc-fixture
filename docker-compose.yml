@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      DATABASE_PATH: /app/data/shelfmark.db
+      SESSION_SECRET: compose-session-secret-not-the-default
+      COOKIE_SECURE: "false"
+      SEED_USER: demo
+      SEED_PASSWORD: demo-pass-1234
+      SEED_ITEMS: "true"
+      LOG_LEVEL: info
+      NODE_ENV: production
+    volumes:
+      - app-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3000/healthz"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  playwright:
+    profiles: ["smoke"]
+    image: mcr.microsoft.com/playwright:v1.52.0-noble
+    working_dir: /work
+    volumes:
+      - .:/work
+      - playwright-nm:/work/node_modules
+    environment:
+      BASE_URL: http://app:3000
+      CI: "true"
+    depends_on:
+      app:
+        condition: service_healthy
+    command: sh -c "npm ci && npx playwright test"
+
+volumes:
+  app-data:
+  playwright-nm:

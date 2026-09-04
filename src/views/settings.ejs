@@ -1,0 +1,64 @@
+<section class="settings-page">
+  <header class="page-head">
+    <div>
+      <h1>Settings</h1>
+      <p class="lede">Account details, password, and how to call the JSON API with a session cookie.</p>
+    </div>
+  </header>
+
+  <section class="panel" data-testid="settings-account">
+    <h2>Account</h2>
+    <dl class="kv">
+      <div>
+        <dt>Username</dt>
+        <dd><%= locals.user ? locals.user.username : "" %></dd>
+      </div>
+      <div>
+        <dt>Signed in</dt>
+        <dd>Yes. Sessions live in memory and do not survive a process restart.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="panel" data-testid="settings-password">
+    <h2>Password</h2>
+    <% if (passwordError) { %>
+      <p class="form-error" role="alert"><%= passwordError %></p>
+    <% } %>
+    <form method="post" action="/settings/password" class="stack">
+      <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+      <label class="field">
+        <span>Current password</span>
+        <input type="password" name="current" autocomplete="current-password" required />
+        <%- include("partials/field-error", { field: "current", errors: errors }) %>
+      </label>
+      <label class="field">
+        <span>New password</span>
+        <input type="password" name="next" autocomplete="new-password" required minlength="8" />
+        <%- include("partials/field-error", { field: "next", errors: errors }) %>
+      </label>
+      <label class="field">
+        <span>Confirm new password</span>
+        <input type="password" name="confirm" autocomplete="new-password" required minlength="8" />
+        <%- include("partials/field-error", { field: "confirm", errors: errors }) %>
+      </label>
+      <button type="submit" class="btn btn-primary">Update password</button>
+    </form>
+  </section>
+
+  <section class="panel" data-testid="settings-api-usage">
+    <h2>Using the API</h2>
+    <p>
+      The JSON API lives at <code>/api/items</code>. At the moment it authenticates
+      with the same session cookie the browser already has. Fish a cookie out of
+      the sign-in form, then call the API:
+    </p>
+    <pre class="code-block"><code>C=$(scripts/login.sh demo demo-pass-1234)
+curl -s -b "$C" http://localhost:3000/api/items
+SHELFMARK_COOKIE="$C" scripts/import.sh scripts/sample-import.jsonl</code></pre>
+    <p class="muted">
+      Writes must send <code>Content-Type: application/json</code>. A missing
+      session answers <code>{"error":"unauthorized"}</code>.
+    </p>
+  </section>
+</section>

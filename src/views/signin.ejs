@@ -1,0 +1,33 @@
+<section class="auth-card">
+  <h1>Sign in</h1>
+  <p class="lede">Use the demo account from the README, or whatever you seeded locally.</p>
+  <% if (error) { %>
+    <p class="form-error" data-testid="signin-error" role="alert"><%= error %></p>
+  <% } %>
+  <form method="post" action="/signin" class="stack">
+    <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+    <input type="hidden" name="next" value="<%= typeof next === "string" ? next : "/items" %>" />
+    <label class="field">
+      <span>Username</span>
+      <input
+        type="text"
+        name="username"
+        autocomplete="username"
+        required
+        value="<%= typeof username === "string" ? username : "" %>"
+        data-testid="signin-username"
+      />
+    </label>
+    <label class="field">
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        required
+        data-testid="signin-password"
+      />
+    </label>
+    <button type="submit" class="btn btn-primary" data-testid="signin-submit">Sign in</button>
+  </form>
+</section>

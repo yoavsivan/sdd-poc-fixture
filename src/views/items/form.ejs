@@ -1,0 +1,65 @@
+<section class="form-page">
+  <header class="page-head">
+    <div>
+      <h1><%= mode === "edit" ? "Edit item" : "New item" %></h1>
+      <p class="lede">A URL is required. Tags are optional, comma-separated.</p>
+    </div>
+    <a class="btn btn-quiet" href="/items">Back to items</a>
+  </header>
+
+  <form method="post" action="<%= action %>" class="stack item-form">
+    <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+
+    <label class="field">
+      <span>URL</span>
+      <input
+        type="url"
+        name="url"
+        required
+        maxlength="2048"
+        value="<%= item.url %>"
+        data-testid="item-url"
+      />
+      <%- include("../partials/field-error", { field: "url", errors: errors }) %>
+    </label>
+
+    <label class="field">
+      <span>Title</span>
+      <input
+        type="text"
+        name="title"
+        required
+        maxlength="200"
+        value="<%= item.title %>"
+        data-testid="item-title"
+      />
+      <%- include("../partials/field-error", { field: "title", errors: errors }) %>
+    </label>
+
+    <label class="field">
+      <span>Note</span>
+      <textarea name="note" rows="5" maxlength="2000" data-testid="item-note"><%= item.note %></textarea>
+      <%- include("../partials/field-error", { field: "note", errors: errors }) %>
+    </label>
+
+    <label class="field">
+      <span>Tags</span>
+      <input
+        type="text"
+        name="tags"
+        value="<%= tagInput %>"
+        placeholder="comma, separated, tags"
+        data-testid="item-tags"
+        data-tag-input
+      />
+      <p class="hint">Lowercase letters, digits, hyphens. At most ten.</p>
+      <%- include("../partials/field-error", { field: "tags", errors: errors }) %>
+      <ul class="chip-row tag-preview" data-tag-preview></ul>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" data-testid="item-save">Save</button>
+      <a class="btn btn-quiet" href="/items">Cancel</a>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,75 @@
+<section class="items-page">
+  <header class="page-head">
+    <div>
+      <h1>Items</h1>
+      <p class="lede">Links you saved, with notes and tags.</p>
+    </div>
+    <a class="btn btn-primary" href="/items/new" data-testid="item-new">New item</a>
+  </header>
+
+  <form class="filter-bar" method="get" action="/items">
+    <% if (filterTag) { %>
+      <input type="hidden" name="tag" value="<%= filterTag %>" />
+    <% } %>
+    <label class="field field-inline">
+      <span class="visually-hidden">Search</span>
+      <input
+        type="search"
+        name="q"
+        value="<%= filterQ %>"
+        placeholder="Search title, URL, or note"
+        aria-label="Search items"
+      />
+    </label>
+    <button type="submit" class="btn">Search</button>
+    <a class="btn btn-quiet" href="/items" data-testid="tag-filter-clear">Clear</a>
+  </form>
+
+  <% if (tags && tags.length) { %>
+    <ul class="tag-filter-list">
+      <% tags.forEach(function (t) { %>
+        <li>
+          <a
+            class="tag-filter<%= filterTag === t.name ? " is-active" : "" %>"
+            href="/items?tag=<%= encodeURIComponent(t.name) %>"
+            data-testid="tag-filter-<%= t.name %>"
+          ><%= t.name %> <span class="muted"><%= t.count %></span></a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (!items.length) { %>
+    <p class="empty" data-testid="items-empty">No items match this view. Save one, or clear the filter.</p>
+  <% } else { %>
+    <ul class="item-list">
+      <% items.forEach(function (item) { %>
+        <li class="item-row" data-testid="item-row">
+          <div class="item-main">
+            <a class="item-title" href="<%= item.url %>"><%= item.title %></a>
+            <p class="item-url muted"><%= item.url %></p>
+            <% if (item.note) { %>
+              <p class="item-note"><%= item.note %></p>
+            <% } %>
+            <% if (item.tags && item.tags.length) { %>
+              <ul class="chip-row">
+                <% item.tags.forEach(function (name) { %>
+                  <li>
+                    <a class="tag-chip" data-testid="tag-chip" href="/items?tag=<%= encodeURIComponent(name) %>"><%= name %></a>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
+          <div class="item-actions">
+            <a class="btn btn-quiet" href="/items/<%= item.id %>/edit">Edit</a>
+            <form method="post" action="/items/<%= item.id %>/delete" data-confirm="Remove this item?">
+              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>

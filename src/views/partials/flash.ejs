@@ -1,0 +1,8 @@
+<% const messages = typeof flash === "object" && Array.isArray(flash) ? flash : (locals.flash || []); %>
+<% if (messages && messages.length) { %>
+  <div class="flash-stack" data-flash-stack>
+    <% messages.forEach(function (msg) { %>
+      <p class="flash" role="status"><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
