@@ -1,0 +1,30 @@
+{
+  "arm": "conductor",
+  "lifecycle": "context-first",
+  "upstream": "https://github.com/gemini-cli-extensions/conductor",
+  "commit": "6e8f9a860bcdd6a2c423473c12e745200688c633",
+  "license": "Apache-2.0",
+  "install": [
+    "git clone --quiet https://github.com/gemini-cli-extensions/conductor /tmp/arm-conductor",
+    "git -C /tmp/arm-conductor checkout --quiet 6e8f9a860bcdd6a2c423473c12e745200688c633"
+  ],
+  "protocol_files": [
+    "/tmp/arm-conductor/skills/conductor-setup/SKILL.md",
+    "/tmp/arm-conductor/skills/conductor-new-track/SKILL.md",
+    "/tmp/arm-conductor/skills/conductor-implement/SKILL.md",
+    "/tmp/arm-conductor/skills/conductor-review/SKILL.md"
+  ],
+  "stock_sequence_f1": [
+    "conductor-setup",
+    "conductor-new-track",
+    "conductor-implement",
+    "conductor-review"
+  ],
+  "stock_sequence_f1p": [
+    "conductor-new-track",
+    "conductor-implement",
+    "conductor-review"
+  ],
+  "spec_root": "conductor/",
+  "notes": "Google's gemini-cli-extensions/conductor, not Melty Labs' conductor.build."
+}

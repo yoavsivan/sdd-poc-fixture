@@ -1,0 +1,3 @@
+acceptance/
+score/specimens/
+score/test_spec_coverage.py

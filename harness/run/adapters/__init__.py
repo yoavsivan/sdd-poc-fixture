@@ -1,0 +1,1 @@
+"""Spawn adapter package."""

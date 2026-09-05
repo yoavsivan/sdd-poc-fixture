@@ -1,0 +1,4 @@
+arm,trial,cohort,role,coverage_f1p,decisions_derived
+conductor,1,v1,scored,81.5,4
+gatekit,1,v1,scored,90.0,2
+spec-kit,1,v1,scored,70.5,5

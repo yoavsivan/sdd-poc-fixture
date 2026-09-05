@@ -1,0 +1,149 @@
+{
+  "algorithm": "sha256",
+  "count": 33,
+  "files": [
+    {
+      "path": "harness/acceptance/f1-prime.spec.ts",
+      "sha256": "318c9df4bd36e5f141fe81d4835235e41b40187a3d62d5402fe76f02c7262ac3"
+    },
+    {
+      "path": "harness/acceptance/f1.spec.ts",
+      "sha256": "b8c505a0a300e18379523a0d3898bbeee3ae93d05d615918d10426cb6456c0bc"
+    },
+    {
+      "path": "harness/acceptance/helpers.ts",
+      "sha256": "61ca52066587a8aea8c185fd4df44b1aba1cfee20d1b0dbf5e1138555b0d254a"
+    },
+    {
+      "path": "harness/acceptance/playwright.config.ts",
+      "sha256": "b23bbd4eb61c614d85c0967cef53487cfda600e76ea9f2f98d82afc4f374e866"
+    },
+    {
+      "path": "harness/features/F1-prime.md",
+      "sha256": "be323d853220080dcc27fb25d358950593877d0c8536a6719f769398bf14b1fc"
+    },
+    {
+      "path": "harness/features/F1.md",
+      "sha256": "1def036e9dbe669e63705b37cf434b337b3c5a366f2cfdc54bf10a610dc47b5b"
+    },
+    {
+      "path": "harness/score/RUBRIC.md",
+      "sha256": "cb7888d91e687cdd7ed5f22e084de0aec66ff02ddd63b7de3e94b4de0078b031"
+    },
+    {
+      "path": "harness/score/specimens/EXPECTED.json",
+      "sha256": "b28eab89eac939f73dcb12ab9d17ee1c400aff272c7dca1e5cba32d7ef00e9da"
+    },
+    {
+      "path": "harness/score/specimens/_synthetic/diff.patch",
+      "sha256": "1882295faa4423f65bdedc601439dddb5869a3c4b518a982c6d3379f00150c1a"
+    },
+    {
+      "path": "harness/score/specimens/_synthetic/surface-manifest.json",
+      "sha256": "cbdb9cd79f1eafd31dd55cc298b4197310d8f9a5ef790b4f219a2aa655d692f3"
+    },
+    {
+      "path": "harness/score/specimens/conductor/full/conductor/tracks/f1-prime/plan.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/conductor/full/conductor/tracks/f1-prime/spec.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/conductor/full/conductor/tracks/f1/plan.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/conductor/full/conductor/tracks/f1/spec.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/conductor/layout-review/conductor/tracks/f1/spec.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/conductor/layout-review/conductor/tracks/f1/tasks.md",
+      "sha256": "af1f5c310f6de909e5108c73bd02b712d449f1957ad2b95067fb80c0caee5abc"
+    },
+    {
+      "path": "harness/score/specimens/conductor/partial/conductor/tracks/f1-prime/plan.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/conductor/partial/conductor/tracks/f1-prime/spec.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/conductor/partial/conductor/tracks/f1/plan.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/conductor/partial/conductor/tracks/f1/spec.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/gatekit/full/features/F1/brief.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/gatekit/full/features/F1/contract.yaml",
+      "sha256": "c192b6f1939c2931b82270b0f932fa691ca8742256962a35e5902d4a3a0fa9f3"
+    },
+    {
+      "path": "harness/score/specimens/gatekit/partial/features/F1/brief.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/gatekit/partial/features/F1/contract.yaml",
+      "sha256": "f6c1a086cf62c21522e14b9ba238c6bf18d0d95aa7d7f8117170578ec3061bc9"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/full/specs/001-api-keys/spec.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/full/specs/001-api-keys/tasks.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/full/specs/002-rotate-keys/spec.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/full/specs/002-rotate-keys/tasks.md",
+      "sha256": "923ea6d57bf2305af0f9753dc76b028bb05b7590acdbab6bb19f7af83c8333ea"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/partial/specs/001-api-keys/spec.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/partial/specs/001-api-keys/tasks.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/partial/specs/002-rotate-keys/spec.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/specimens/spec-kit/partial/specs/002-rotate-keys/tasks.md",
+      "sha256": "3cbf6f6f76dd2faace1be6dba96b818715b8dd156b1bdb420e448af9f00e3dba"
+    },
+    {
+      "path": "harness/score/test_spec_coverage.py",
+      "sha256": "2187befcb356af7a82cbb6911d8d65d350a1d86d633f7ebf4abc633d882601bb"
+    }
+  ],
+  "fixture_tag": {
+    "name": "fixture-v1",
+    "sha": "7dc3d08df3e41807b1b575b738e8afb5f7990b93"
+  },
+  "gatekit_tag": {
+    "name": "v0.1.0",
+    "sha": "3415666df5ccc0382e7e33095aa4ee15389412bd"
+  },
+  "model": "grok-4.6:high",
+  "registration": 1,
+  "written_at": "2026-09-05T03:35:09Z"
+}

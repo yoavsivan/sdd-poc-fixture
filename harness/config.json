@@ -1,0 +1,35 @@
+{
+  "harness_version": 1,
+  "model": "grok-4.6:high",
+  "fixture": {
+    "remote": "origin",
+    "tag": "fixture-v1",
+    "sha": "7dc3d08df3e41807b1b575b738e8afb5f7990b93"
+  },
+  "arms": ["conductor", "gatekit", "spec-kit"],
+  "spawn_order": {
+    "1": ["conductor", "gatekit", "spec-kit"],
+    "2": ["gatekit", "spec-kit", "conductor"],
+    "tie-break": "trigger-fire-order"
+  },
+  "branch_pattern": "trial/{arm}/{n}",
+  "tag_names": {
+    "f1": "done-f1",
+    "f1p": "done-f1p"
+  },
+  "pushed_tag_pattern": "trial/{arm}/{n}/{tag}",
+  "seat_wall_minutes": 60,
+  "seat_wall_grace_minutes": 10,
+  "spawn_stagger_seconds": 60,
+  "poll_interval_seconds": 120,
+  "spawn_adapter": "run/adapters/cursor_rest.py",
+  "held_out_default": "../evidence/held-out/harness",
+  "results_dir": "results/2026-09",
+  "registrations": [
+    {
+      "id": 1,
+      "file": "pre-registration.json",
+      "cohort": "v1"
+    }
+  ]
+}

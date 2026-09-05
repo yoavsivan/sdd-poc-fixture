@@ -1,0 +1,9 @@
+{"turns": [
+  {"index": 0, "role": "user", "text": "begin"},
+  {"index": 1, "role": "assistant", "text": "1. option a\n2. option b\nWhich do you prefer?"},
+  {"index": 2, "role": "user", "text": "option a"},
+  {"index": 3, "role": "assistant", "text": "running stock\nconductor-implement now"},
+  {"index": 4, "role": "assistant", "text": "gatekit: REJECT done — contract check smoke failed (exit 2)"},
+  {"index": 5, "role": "assistant", "text": "gatekit: PASS done — features/F1/DONE.json written"},
+  {"index": 6, "role": "assistant", "text": "last assistant turn"}
+]}

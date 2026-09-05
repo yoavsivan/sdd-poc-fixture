@@ -1,0 +1,29 @@
+{
+  "arm": "gatekit",
+  "lifecycle": "verification-contract-first",
+  "upstream": "https://github.com/yoavsivan/gatekit",
+  "commit": "3415666df5ccc0382e7e33095aa4ee15389412bd",
+  "tag": "v0.1.0",
+  "license": "MIT",
+  "install": [
+    "git clone --quiet https://github.com/yoavsivan/gatekit /tmp/arm-gatekit",
+    "git -C /tmp/arm-gatekit checkout --quiet 3415666df5ccc0382e7e33095aa4ee15389412bd",
+    "export PATH=/tmp/arm-gatekit/bin:$PATH"
+  ],
+  "protocol_files": [
+    "/tmp/arm-gatekit/README.md",
+    "/tmp/arm-gatekit/docs/quickstart-orchestrator.md",
+    "/tmp/arm-gatekit/docs/contract-format.md"
+  ],
+  "stock_sequence_f1": [
+    "gatekit init",
+    "gatekit feature new F1",
+    "gatekit gate check",
+    "gatekit done --feature F1"
+  ],
+  "stock_sequence_f1p": [
+    "gatekit done --feature F1"
+  ],
+  "spec_root": "features/",
+  "notes": "Pinned at tag v0.1.0. The seat uses the SHA, not the tag, at checkout."
+}

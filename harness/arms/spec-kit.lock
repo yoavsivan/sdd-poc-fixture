@@ -1,0 +1,42 @@
+{
+  "arm": "spec-kit",
+  "lifecycle": "template-first",
+  "upstream": "https://github.com/github/spec-kit",
+  "commit": "4a7341a93d944d6efe153b71da4a1adb9c2b578c",
+  "license": "MIT",
+  "install": [
+    "uv tool run --from git+https://github.com/github/spec-kit.git@4a7341a93d944d6efe153b71da4a1adb9c2b578c specify init --here --integration cursor-agent || pipx run --spec git+https://github.com/github/spec-kit.git@4a7341a93d944d6efe153b71da4a1adb9c2b578c specify init --here --integration cursor-agent"
+  ],
+  "protocol_files": [
+    ".cursor/skills/speckit-constitution/SKILL.md",
+    ".cursor/skills/speckit-specify/SKILL.md",
+    ".cursor/skills/speckit-clarify/SKILL.md",
+    ".cursor/skills/speckit-plan/SKILL.md",
+    ".cursor/skills/speckit-tasks/SKILL.md",
+    ".cursor/skills/speckit-analyze/SKILL.md",
+    ".cursor/skills/speckit-implement/SKILL.md",
+    "https://github.com/github/spec-kit/blob/4a7341a93d944d6efe153b71da4a1adb9c2b578c/docs/guides/evolving-specs.md"
+  ],
+  "stock_sequence_f1": [
+    "/speckit.constitution",
+    "/speckit.specify",
+    "/speckit.clarify",
+    "/speckit.plan",
+    "/speckit.tasks",
+    "/speckit.analyze",
+    "/speckit.implement"
+  ],
+  "stock_sequence_f1p": [
+    "/speckit.specify",
+    "/speckit.plan",
+    "/speckit.tasks",
+    "/speckit.implement"
+  ],
+  "spec_root": "specs/",
+  "tool_versions": {
+    "ai_flag": "--integration cursor-agent",
+    "ai_flag_note": "At this commit specify init no longer accepts --ai; the Cursor-style agent key is cursor-agent. Fallback if uv is absent: pipx run.",
+    "generated_layout": ".cursor/skills/speckit-<name>/SKILL.md"
+  },
+  "notes": "F1' uses the flow-forward spec in docs/guides/evolving-specs.md: a new numbered feature via /speckit.specify then plan, tasks, implement."
+}

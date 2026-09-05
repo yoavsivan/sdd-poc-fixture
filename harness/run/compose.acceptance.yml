@@ -1,0 +1,12 @@
+services:
+  playwright:
+    profiles:
+      - acceptance
+    volumes:
+      - ${HARNESS_HELD_OUT}/acceptance:/work/.heldout/acceptance:ro
+    environment:
+      BASE_URL: http://app:3000
+      CI: "true"
+      PLAYWRIGHT_JSON_OUTPUT_NAME: /work/acceptance.json
+    command: >-
+      sh -c "npm ci && npx playwright test -c /work/.heldout/acceptance/playwright.config.ts --reporter=list,json"
