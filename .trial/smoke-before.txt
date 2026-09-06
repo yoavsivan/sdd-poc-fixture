@@ -1,0 +1,1247 @@
+docker compose --profile smoke up --build --abort-on-container-exit --exit-code-from playwright
+ playwright Pulling 
+ ac0c285abb48 Pulling fs layer 
+ 8718a27c6ba2 Pulling fs layer 
+ 5fe2be525f44 Pulling fs layer 
+ 5e1ef7970f6f Pulling fs layer 
+ 5e1ef7970f6f Waiting 
+ ac0c285abb48 Downloading [>                                                  ]  309.4kB/30.59MB
+ 8718a27c6ba2 Downloading [>                                                  ]  538.7kB/101.4MB
+ ac0c285abb48 Downloading [=============>                                     ]  8.405MB/30.59MB
+ 8718a27c6ba2 Downloading [===>                                               ]  7.027MB/101.4MB
+ 5fe2be525f44 Downloading [>                                                  ]  31.96kB/1.901MB
+ ac0c285abb48 Download complete 
+ ac0c285abb48 Extracting [>                                                  ]  327.7kB/30.59MB
+ 8718a27c6ba2 Downloading [===========>                                       ]  22.69MB/101.4MB
+ 5fe2be525f44 Verifying Checksum 
+ 5fe2be525f44 Download complete 
+ ac0c285abb48 Extracting [==============>                                    ]  8.847MB/30.59MB
+ 8718a27c6ba2 Downloading [==================>                                ]  37.29MB/101.4MB
+ ac0c285abb48 Extracting [=============================>                     ]  18.35MB/30.59MB
+ 8718a27c6ba2 Downloading [========================>                          ]  50.27MB/101.4MB
+ 5e1ef7970f6f Downloading [>                                                  ]  538.7kB/765.5MB
+ 8718a27c6ba2 Downloading [==============================>                    ]  62.16MB/101.4MB
+ ac0c285abb48 Extracting [==========================================>        ]  26.21MB/30.59MB
+ 5e1ef7970f6f Downloading [>                                                  ]  12.42MB/765.5MB
+ 8718a27c6ba2 Downloading [====================================>              ]   74.6MB/101.4MB
+ ac0c285abb48 Extracting [=================================================> ]  30.15MB/30.59MB
+ 5e1ef7970f6f Downloading [==>                                                ]  39.45MB/765.5MB
+ ac0c285abb48 Extracting [==================================================>]  30.59MB/30.59MB
+ 8718a27c6ba2 Downloading [==========================================>        ]  87.03MB/101.4MB
+ ac0c285abb48 Pull complete 
+ 5e1ef7970f6f Downloading [====>                                              ]  66.49MB/765.5MB
+ 8718a27c6ba2 Downloading [=================================================> ]    100MB/101.4MB
+ 8718a27c6ba2 Download complete 
+ 5e1ef7970f6f Downloading [======>                                            ]  96.76MB/765.5MB
+ 5e1ef7970f6f Downloading [========>                                          ]  122.7MB/765.5MB
+ 8718a27c6ba2 Extracting [>                                                  ]  557.1kB/101.4MB
+ 5e1ef7970f6f Downloading [=========>                                         ]  148.7MB/765.5MB
+ 8718a27c6ba2 Extracting [==>                                                ]  5.571MB/101.4MB
+ 5e1ef7970f6f Downloading [==========>                                        ]  162.7MB/765.5MB
+ 8718a27c6ba2 Extracting [========>                                          ]  17.27MB/101.4MB
+ 5e1ef7970f6f Downloading [===========>                                       ]  177.9MB/765.5MB
+ 8718a27c6ba2 Extracting [==============>                                    ]  28.41MB/101.4MB
+ 5e1ef7970f6f Downloading [============>                                      ]  192.5MB/765.5MB
+ 8718a27c6ba2 Extracting [====================>                              ]  41.22MB/101.4MB
+ 5e1ef7970f6f Downloading [=============>                                     ]  207.6MB/765.5MB
+ 8718a27c6ba2 Extracting [=========================>                         ]  51.81MB/101.4MB
+ 5e1ef7970f6f Downloading [==============>                                    ]  222.2MB/765.5MB
+ 8718a27c6ba2 Extracting [============================>                      ]  57.38MB/101.4MB
+ 5e1ef7970f6f Downloading [===============>                                   ]  237.3MB/765.5MB
+ 8718a27c6ba2 Extracting [=============================>                     ]  60.16MB/101.4MB
+ 5e1ef7970f6f Downloading [================>                                  ]  251.4MB/765.5MB
+ 8718a27c6ba2 Extracting [===============================>                   ]  62.95MB/101.4MB
+ 5e1ef7970f6f Downloading [=================>                                 ]  265.5MB/765.5MB
+ 5e1ef7970f6f Downloading [==================>                                ]  281.1MB/765.5MB
+ 8718a27c6ba2 Extracting [================================>                  ]  65.18MB/101.4MB
+ 5e1ef7970f6f Downloading [===================>                               ]  296.3MB/765.5MB
+ 8718a27c6ba2 Extracting [===================================>               ]   71.3MB/101.4MB
+ 5e1ef7970f6f Downloading [====================>                              ]  310.3MB/765.5MB
+ 8718a27c6ba2 Extracting [===================================>               ]  72.42MB/101.4MB
+ 5e1ef7970f6f Downloading [=====================>                             ]  321.7MB/765.5MB
+ 8718a27c6ba2 Extracting [====================================>              ]  73.53MB/101.4MB
+ 5e1ef7970f6f Downloading [=====================>                             ]  333.6MB/765.5MB
+ 8718a27c6ba2 Extracting [======================================>            ]  78.54MB/101.4MB
+ 5e1ef7970f6f Downloading [======================>                            ]  343.9MB/765.5MB
+ 8718a27c6ba2 Extracting [=========================================>         ]  84.12MB/101.4MB
+ 5e1ef7970f6f Downloading [=======================>                           ]  354.1MB/765.5MB
+ 8718a27c6ba2 Extracting [============================================>      ]  89.69MB/101.4MB
+ 5e1ef7970f6f Downloading [=======================>                           ]  363.9MB/765.5MB
+ 8718a27c6ba2 Extracting [==============================================>    ]  95.26MB/101.4MB
+ 5e1ef7970f6f Downloading [========================>                          ]  375.8MB/765.5MB
+ 8718a27c6ba2 Extracting [================================================>  ]   98.6MB/101.4MB
+ 5e1ef7970f6f Downloading [=========================>                         ]  386.6MB/765.5MB
+ 8718a27c6ba2 Extracting [=================================================> ]  100.8MB/101.4MB
+ 5e1ef7970f6f Downloading [=========================>                         ]  397.9MB/765.5MB
+ 8718a27c6ba2 Extracting [==================================================>]  101.4MB/101.4MB
+ 8718a27c6ba2 Pull complete 
+ 5fe2be525f44 Extracting [>                                                  ]  32.77kB/1.901MB
+ 5e1ef7970f6f Downloading [==========================>                        ]  408.7MB/765.5MB
+ 5e1ef7970f6f Downloading [===========================>                       ]  420.1MB/765.5MB
+ 5e1ef7970f6f Downloading [============================>                      ]    432MB/765.5MB
+ 5e1ef7970f6f Downloading [============================>                      ]  442.8MB/765.5MB
+ 5e1ef7970f6f Downloading [=============================>                     ]  454.1MB/765.5MB
+ 5e1ef7970f6f Downloading [==============================>                    ]  465.5MB/765.5MB
+ 5e1ef7970f6f Downloading [===============================>                   ]  476.3MB/765.5MB
+ 5e1ef7970f6f Downloading [===============================>                   ]  487.7MB/765.5MB
+ 5fe2be525f44 Extracting [========>                                          ]  327.7kB/1.901MB
+ 5fe2be525f44 Extracting [==================================================>]  1.901MB/1.901MB
+ 5fe2be525f44 Pull complete 
+ 5e1ef7970f6f Downloading [================================>                  ]  498.5MB/765.5MB
+ 5e1ef7970f6f Downloading [=================================>                 ]  509.3MB/765.5MB
+ 5e1ef7970f6f Downloading [==================================>                ]  520.7MB/765.5MB
+ 5e1ef7970f6f Downloading [==================================>                ]  532.5MB/765.5MB
+ 5e1ef7970f6f Downloading [===================================>               ]  544.4MB/765.5MB
+ 5e1ef7970f6f Downloading [====================================>              ]  555.8MB/765.5MB
+ 5e1ef7970f6f Downloading [=====================================>             ]  568.2MB/765.5MB
+ 5e1ef7970f6f Downloading [=====================================>             ]  579.6MB/765.5MB
+ 5e1ef7970f6f Downloading [======================================>            ]  591.5MB/765.5MB
+ 5e1ef7970f6f Downloading [=======================================>           ]  603.4MB/765.5MB
+ 5e1ef7970f6f Downloading [========================================>          ]  615.3MB/765.5MB
+ 5e1ef7970f6f Downloading [=========================================>         ]  627.7MB/765.5MB
+ 5e1ef7970f6f Downloading [=========================================>         ]  639.6MB/765.5MB
+ 5e1ef7970f6f Downloading [==========================================>        ]  651.5MB/765.5MB
+ 5e1ef7970f6f Downloading [===========================================>       ]  664.5MB/765.5MB
+ 5e1ef7970f6f Downloading [============================================>      ]  676.9MB/765.5MB
+ 5e1ef7970f6f Downloading [============================================>      ]  688.8MB/765.5MB
+ 5e1ef7970f6f Downloading [=============================================>     ]  700.7MB/765.5MB
+ 5e1ef7970f6f Downloading [==============================================>    ]    712MB/765.5MB
+ 5e1ef7970f6f Downloading [===============================================>   ]  724.5MB/765.5MB
+ 5e1ef7970f6f Downloading [================================================>  ]  736.9MB/765.5MB
+ 5e1ef7970f6f Downloading [================================================>  ]  749.4MB/765.5MB
+ 5e1ef7970f6f Downloading [=================================================> ]  761.8MB/765.5MB
+ 5e1ef7970f6f Verifying Checksum 
+ 5e1ef7970f6f Download complete 
+ 5e1ef7970f6f Extracting [>                                                  ]  557.1kB/765.5MB
+ 5e1ef7970f6f Extracting [>                                                  ]  10.58MB/765.5MB
+ 5e1ef7970f6f Extracting [=>                                                 ]  22.84MB/765.5MB
+ 5e1ef7970f6f Extracting [==>                                                ]  35.09MB/765.5MB
+ 5e1ef7970f6f Extracting [===>                                               ]  47.35MB/765.5MB
+ 5e1ef7970f6f Extracting [===>                                               ]  59.05MB/765.5MB
+ 5e1ef7970f6f Extracting [====>                                              ]  70.75MB/765.5MB
+ 5e1ef7970f6f Extracting [=====>                                             ]     83MB/765.5MB
+ 5e1ef7970f6f Extracting [======>                                            ]   94.7MB/765.5MB
+ 5e1ef7970f6f Extracting [======>                                            ]  106.4MB/765.5MB
+ 5e1ef7970f6f Extracting [=======>                                           ]  115.3MB/765.5MB
+ 5e1ef7970f6f Extracting [=======>                                           ]  121.4MB/765.5MB
+ 5e1ef7970f6f Extracting [========>                                          ]  126.5MB/765.5MB
+ 5e1ef7970f6f Extracting [========>                                          ]  131.5MB/765.5MB
+ 5e1ef7970f6f Extracting [========>                                          ]  135.9MB/765.5MB
+ 5e1ef7970f6f Extracting [=========>                                         ]  148.7MB/765.5MB
+ 5e1ef7970f6f Extracting [==========>                                        ]  156.5MB/765.5MB
+ 5e1ef7970f6f Extracting [==========>                                        ]  164.3MB/765.5MB
+ 5e1ef7970f6f Extracting [===========>                                       ]  168.8MB/765.5MB
+ 5e1ef7970f6f Extracting [============>                                      ]  188.8MB/765.5MB
+ 5e1ef7970f6f Extracting [=============>                                     ]  201.1MB/765.5MB
+ 5e1ef7970f6f Extracting [=============>                                     ]  213.4MB/765.5MB
+ 5e1ef7970f6f Extracting [==============>                                    ]  225.6MB/765.5MB
+ 5e1ef7970f6f Extracting [===============>                                   ]  237.3MB/765.5MB
+ 5e1ef7970f6f Extracting [================>                                  ]  249.6MB/765.5MB
+ 5e1ef7970f6f Extracting [=================>                                 ]  260.7MB/765.5MB
+ 5e1ef7970f6f Extracting [=================>                                 ]  269.1MB/765.5MB
+ 5e1ef7970f6f Extracting [=================>                                 ]  274.1MB/765.5MB
+ 5e1ef7970f6f Extracting [==================>                                ]  280.8MB/765.5MB
+ 5e1ef7970f6f Extracting [===================>                               ]  291.9MB/765.5MB
+ 5e1ef7970f6f Extracting [===================>                               ]    303MB/765.5MB
+ 5e1ef7970f6f Extracting [====================>                              ]  314.7MB/765.5MB
+ 5e1ef7970f6f Extracting [=====================>                             ]  327.5MB/765.5MB
+ 5e1ef7970f6f Extracting [======================>                            ]  339.2MB/765.5MB
+ 5e1ef7970f6f Extracting [======================>                            ]  350.9MB/765.5MB
+ 5e1ef7970f6f Extracting [=======================>                           ]  362.6MB/765.5MB
+ 5e1ef7970f6f Extracting [========================>                          ]  374.3MB/765.5MB
+ 5e1ef7970f6f Extracting [=========================>                         ]  384.9MB/765.5MB
+ 5e1ef7970f6f Extracting [=========================>                         ]  396.1MB/765.5MB
+ 5e1ef7970f6f Extracting [==========================>                        ]  406.7MB/765.5MB
+ 5e1ef7970f6f Extracting [===========================>                       ]  418.3MB/765.5MB
+ 5e1ef7970f6f Extracting [============================>                      ]  428.9MB/765.5MB
+ 5e1ef7970f6f Extracting [============================>                      ]  440.6MB/765.5MB
+ 5e1ef7970f6f Extracting [=============================>                     ]  451.8MB/765.5MB
+ 5e1ef7970f6f Extracting [==============================>                    ]  463.5MB/765.5MB
+ 5e1ef7970f6f Extracting [===============================>                   ]  475.2MB/765.5MB
+ 5e1ef7970f6f Extracting [===============================>                   ]  485.8MB/765.5MB
+ 5e1ef7970f6f Extracting [================================>                  ]    493MB/765.5MB
+ 5e1ef7970f6f Extracting [================================>                  ]  501.9MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================>                 ]  511.9MB/765.5MB
+ 5e1ef7970f6f Extracting [==================================>                ]  523.6MB/765.5MB
+ 5e1ef7970f6f Extracting [==================================>                ]  535.3MB/765.5MB
+ 5e1ef7970f6f Extracting [===================================>               ]  543.7MB/765.5MB
+ 5e1ef7970f6f Extracting [====================================>              ]  553.7MB/765.5MB
+ 5e1ef7970f6f Extracting [====================================>              ]  564.3MB/765.5MB
+ 5e1ef7970f6f Extracting [=====================================>             ]    576MB/765.5MB
+ 5e1ef7970f6f Extracting [======================================>            ]    591MB/765.5MB
+ 5e1ef7970f6f Extracting [=======================================>           ]  606.6MB/765.5MB
+ 5e1ef7970f6f Extracting [========================================>          ]  618.3MB/765.5MB
+ 5e1ef7970f6f Extracting [=========================================>         ]  628.4MB/765.5MB
+ 5e1ef7970f6f Extracting [=========================================>         ]  640.1MB/765.5MB
+ 5e1ef7970f6f Extracting [==========================================>        ]  652.9MB/765.5MB
+ 5e1ef7970f6f Extracting [===========================================>       ]    664MB/765.5MB
+ 5e1ef7970f6f Extracting [============================================>      ]  675.7MB/765.5MB
+ 5e1ef7970f6f Extracting [============================================>      ]  687.4MB/765.5MB
+ 5e1ef7970f6f Extracting [=============================================>     ]  695.8MB/765.5MB
+ 5e1ef7970f6f Extracting [=============================================>     ]  698.5MB/765.5MB
+ 5e1ef7970f6f Extracting [=============================================>     ]  700.8MB/765.5MB
+ 5e1ef7970f6f Extracting [==============================================>    ]    713MB/765.5MB
+ 5e1ef7970f6f Extracting [===============================================>   ]  721.9MB/765.5MB
+ 5e1ef7970f6f Extracting [================================================>  ]  739.8MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  751.5MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  752.6MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  753.1MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  754.3MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  754.8MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  755.4MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  755.9MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  758.2MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  764.8MB/765.5MB
+ 5e1ef7970f6f Extracting [=================================================> ]  765.4MB/765.5MB
+ 5e1ef7970f6f Extracting [==================================================>]  765.5MB/765.5MB
+ 5e1ef7970f6f Pull complete 
+ playwright Pulled 
+time="2026-09-06T03:10:22Z" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 401B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.8s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 149B done
+#3 DONE 0.0s
+
+#4 [app internal] load build context
+#4 transferring context: 299.77kB done
+#4 DONE 0.0s
+
+#5 [app 1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#5 resolve docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 done
+#5 sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 0B / 28.23MB 0.1s
+#5 sha256:cea7eb9bbe80eabf8356efb28b3796ab904f36a32049aeb6b435920ca93f9285 0B / 3.31kB 0.1s
+#5 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 0B / 49.94MB 0.1s
+#5 sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 5.22kB / 5.22kB done
+#5 sha256:4d676821dff059fd00d277ee4261ef34ea712317fed0737c03941481b5760c96 1.93kB / 1.93kB done
+#5 sha256:6e6261159fd399ebe5a3d556b7d89da9c85c873f3f270918aad6c8107da8b411 6.87kB / 6.87kB done
+#5 sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 28.23MB / 28.23MB 0.2s
+#5 sha256:cea7eb9bbe80eabf8356efb28b3796ab904f36a32049aeb6b435920ca93f9285 3.31kB / 3.31kB 0.2s done
+#5 sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 0B / 1.71MB 0.2s
+#5 extracting sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71
+#5 sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 28.23MB / 28.23MB 0.2s done
+#5 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 35.65MB / 49.94MB 0.3s
+#5 sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 1.71MB / 1.71MB 0.3s done
+#5 sha256:0282d618b52cd2eb8fcf041e780cd66b15e7ebae519a4054c5d293eae6b6d34f 447B / 447B 0.3s done
+#5 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 49.94MB / 49.94MB 0.4s done
+#5 extracting sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 0.5s done
+#5 extracting sha256:cea7eb9bbe80eabf8356efb28b3796ab904f36a32049aeb6b435920ca93f9285 done
+#5 extracting sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d
+#5 extracting sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 0.7s done
+#5 extracting sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03
+#5 extracting sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 0.4s done
+#5 extracting sha256:0282d618b52cd2eb8fcf041e780cd66b15e7ebae519a4054c5d293eae6b6d34f done
+#5 DONE 2.7s
+
+#6 [app 2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#6 0.559 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#6 0.585 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#6 0.595 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#6 0.629 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#6 0.700 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#6 0.709 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [337 kB]
+#6 1.339 Fetched 9375 kB in 1s (11.6 MB/s)
+#6 1.339 Reading package lists...
+#6 1.691 Reading package lists...
+#6 2.026 Building dependency tree...
+#6 2.085 Reading state information...
+#6 2.173 The following additional packages will be installed:
+#6 2.173   binutils binutils-common binutils-x86-64-linux-gnu cpp cpp-12 g++-12 gcc
+#6 2.173   gcc-12 libasan8 libatomic1 libbinutils libbrotli1 libc-dev-bin libc6-dev
+#6 2.173   libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl4 libexpat1 libgcc-12-dev
+#6 2.173   libgomp1 libgprofng0 libgssapi-krb5-2 libisl23 libitm1 libjansson4
+#6 2.173   libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.5-0 liblsan0
+#6 2.173   libmpc3 libmpfr6 libncursesw6 libnghttp2-14 libnsl-dev libnsl2 libpsl5
+#6 2.173   libpython3-stdlib libpython3.11-minimal libpython3.11-stdlib libquadmath0
+#6 2.173   libreadline8 librtmp1 libsasl2-2 libsasl2-modules-db libsqlite3-0 libssh2-1
+#6 2.173   libssl3 libstdc++-12-dev libtirpc-common libtirpc-dev libtirpc3 libtsan2
+#6 2.173   libubsan1 linux-libc-dev media-types openssl python3-minimal python3.11
+#6 2.173   python3.11-minimal readline-common rpcsvc-proto
+#6 2.173 Suggested packages:
+#6 2.173   binutils-doc cpp-doc gcc-12-locales cpp-12-doc g++-multilib g++-12-multilib
+#6 2.173   gcc-12-doc gcc-multilib manpages-dev autoconf automake libtool flex bison
+#6 2.173   gdb gcc-doc gcc-12-multilib glibc-doc krb5-doc krb5-user libstdc++-12-doc
+#6 2.173   make-doc python3-doc python3-tk python3-venv python3.11-venv python3.11-doc
+#6 2.173   binfmt-support readline-doc
+#6 2.173 Recommended packages:
+#6 2.173   manpages manpages-dev libc-devtools krb5-locales libldap-common libgpm2
+#6 2.173   publicsuffix libsasl2-modules
+#6 2.401 The following NEW packages will be installed:
+#6 2.401   binutils binutils-common binutils-x86-64-linux-gnu ca-certificates cpp
+#6 2.401   cpp-12 curl g++ g++-12 gcc gcc-12 libasan8 libatomic1 libbinutils libbrotli1
+#6 2.401   libc-dev-bin libc6-dev libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl4
+#6 2.401   libexpat1 libgcc-12-dev libgomp1 libgprofng0 libgssapi-krb5-2 libisl23
+#6 2.401   libitm1 libjansson4 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+#6 2.401   libldap-2.5-0 liblsan0 libmpc3 libmpfr6 libncursesw6 libnghttp2-14
+#6 2.401   libnsl-dev libnsl2 libpsl5 libpython3-stdlib libpython3.11-minimal
+#6 2.401   libpython3.11-stdlib libquadmath0 libreadline8 librtmp1 libsasl2-2
+#6 2.401   libsasl2-modules-db libsqlite3-0 libssh2-1 libssl3 libstdc++-12-dev
+#6 2.401   libtirpc-common libtirpc-dev libtirpc3 libtsan2 libubsan1 linux-libc-dev
+#6 2.401   make media-types openssl python3 python3-minimal python3.11
+#6 2.401   python3.11-minimal readline-common rpcsvc-proto
+#6 2.423 0 upgraded, 70 newly installed, 0 to remove and 1 not upgraded.
+#6 2.423 Need to get 76.5 MB of archives.
+#6 2.423 After this operation, 300 MB of additional disk space will be used.
+#6 2.423 Get:1 http://deb.debian.org/debian bookworm/main amd64 libssl3 amd64 3.0.20-1~deb12u2 [2036 kB]
+#6 2.445 Get:2 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-minimal amd64 3.11.2-6+deb12u8 [818 kB]
+#6 2.457 Get:3 http://deb.debian.org/debian-security bookworm-security/main amd64 libexpat1 amd64 2.5.0-1+deb12u3 [104 kB]
+#6 2.466 Get:4 http://deb.debian.org/debian bookworm/main amd64 python3.11-minimal amd64 3.11.2-6+deb12u8 [2065 kB]
+#6 2.479 Get:5 http://deb.debian.org/debian bookworm/main amd64 python3-minimal amd64 3.11.2-1+b1 [26.3 kB]
+#6 2.487 Get:6 http://deb.debian.org/debian bookworm/main amd64 media-types all 10.0.0 [26.1 kB]
+#6 2.497 Get:7 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+#6 2.505 Get:8 http://deb.debian.org/debian bookworm/main amd64 libkrb5support0 amd64 1.20.1-2+deb12u5 [33.2 kB]
+#6 2.515 Get:9 http://deb.debian.org/debian bookworm/main amd64 libk5crypto3 amd64 1.20.1-2+deb12u5 [79.7 kB]
+#6 2.524 Get:10 http://deb.debian.org/debian bookworm/main amd64 libkeyutils1 amd64 1.6.3-2 [8808 B]
+#6 2.532 Get:11 http://deb.debian.org/debian bookworm/main amd64 libkrb5-3 amd64 1.20.1-2+deb12u5 [332 kB]
+#6 2.542 Get:12 http://deb.debian.org/debian bookworm/main amd64 libgssapi-krb5-2 amd64 1.20.1-2+deb12u5 [135 kB]
+#6 2.551 Get:13 http://deb.debian.org/debian bookworm/main amd64 libtirpc-common all 1.3.3+ds-1 [14.0 kB]
+#6 2.560 Get:14 http://deb.debian.org/debian bookworm/main amd64 libtirpc3 amd64 1.3.3+ds-1 [85.2 kB]
+#6 2.570 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnsl2 amd64 1.3.0-2 [39.5 kB]
+#6 2.578 Get:16 http://deb.debian.org/debian bookworm/main amd64 readline-common all 8.2-1.3 [69.0 kB]
+#6 2.587 Get:17 http://deb.debian.org/debian bookworm/main amd64 libreadline8 amd64 8.2-1.3 [166 kB]
+#6 2.596 Get:18 http://deb.debian.org/debian bookworm/main amd64 libsqlite3-0 amd64 3.40.1-2+deb12u2 [839 kB]
+#6 2.606 Get:19 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-stdlib amd64 3.11.2-6+deb12u8 [1799 kB]
+#6 2.619 Get:20 http://deb.debian.org/debian bookworm/main amd64 python3.11 amd64 3.11.2-6+deb12u8 [574 kB]
+#6 2.629 Get:21 http://deb.debian.org/debian bookworm/main amd64 libpython3-stdlib amd64 3.11.2-1+b1 [9312 B]
+#6 2.638 Get:22 http://deb.debian.org/debian bookworm/main amd64 python3 amd64 3.11.2-1+b1 [26.3 kB]
+#6 2.647 Get:23 http://deb.debian.org/debian bookworm/main amd64 openssl amd64 3.0.20-1~deb12u2 [1439 kB]
+#6 2.659 Get:24 http://deb.debian.org/debian-security bookworm-security/main amd64 ca-certificates all 20250419~deb12u1 [162 kB]
+#6 2.668 Get:25 http://deb.debian.org/debian bookworm/main amd64 binutils-common amd64 2.40-2 [2487 kB]
+#6 2.682 Get:26 http://deb.debian.org/debian bookworm/main amd64 libbinutils amd64 2.40-2 [572 kB]
+#6 2.693 Get:27 http://deb.debian.org/debian bookworm/main amd64 libctf-nobfd0 amd64 2.40-2 [153 kB]
+#6 2.702 Get:28 http://deb.debian.org/debian bookworm/main amd64 libctf0 amd64 2.40-2 [89.8 kB]
+#6 2.712 Get:29 http://deb.debian.org/debian bookworm/main amd64 libgprofng0 amd64 2.40-2 [812 kB]
+#6 2.723 Get:30 http://deb.debian.org/debian bookworm/main amd64 libjansson4 amd64 2.14-2 [40.8 kB]
+#6 2.731 Get:31 http://deb.debian.org/debian bookworm/main amd64 binutils-x86-64-linux-gnu amd64 2.40-2 [2246 kB]
+#6 2.747 Get:32 http://deb.debian.org/debian bookworm/main amd64 binutils amd64 2.40-2 [65.0 kB]
+#6 2.754 Get:33 http://deb.debian.org/debian bookworm/main amd64 libisl23 amd64 0.25-1.1 [683 kB]
+#6 2.764 Get:34 http://deb.debian.org/debian bookworm/main amd64 libmpfr6 amd64 4.2.0-1 [701 kB]
+#6 2.774 Get:35 http://deb.debian.org/debian bookworm/main amd64 libmpc3 amd64 1.3.1-1 [51.5 kB]
+#6 2.783 Get:36 http://deb.debian.org/debian bookworm/main amd64 cpp-12 amd64 12.2.0-14+deb12u1 [9768 kB]
+#6 2.823 Get:37 http://deb.debian.org/debian bookworm/main amd64 cpp amd64 4:12.2.0-3 [6836 B]
+#6 2.833 Get:38 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#6 2.842 Get:39 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#6 2.851 Get:40 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#6 2.860 Get:41 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#6 2.870 Get:42 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u3 [72.4 kB]
+#6 2.879 Get:43 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#6 2.887 Get:44 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#6 2.896 Get:45 http://deb.debian.org/debian-security bookworm-security/main amd64 libssh2-1 amd64 1.10.0-3+deb12u1 [176 kB]
+#6 2.905 Get:46 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u15 [392 kB]
+#6 2.915 Get:47 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u15 [316 kB]
+#6 2.924 Get:48 http://deb.debian.org/debian bookworm/main amd64 libcc1-0 amd64 12.2.0-14+deb12u1 [41.7 kB]
+#6 2.933 Get:49 http://deb.debian.org/debian bookworm/main amd64 libgomp1 amd64 12.2.0-14+deb12u1 [116 kB]
+#6 2.942 Get:50 http://deb.debian.org/debian bookworm/main amd64 libitm1 amd64 12.2.0-14+deb12u1 [26.1 kB]
+#6 2.951 Get:51 http://deb.debian.org/debian bookworm/main amd64 libatomic1 amd64 12.2.0-14+deb12u1 [9376 B]
+#6 2.959 Get:52 http://deb.debian.org/debian bookworm/main amd64 libasan8 amd64 12.2.0-14+deb12u1 [2193 kB]
+#6 2.974 Get:53 http://deb.debian.org/debian bookworm/main amd64 liblsan0 amd64 12.2.0-14+deb12u1 [969 kB]
+#6 2.985 Get:54 http://deb.debian.org/debian bookworm/main amd64 libtsan2 amd64 12.2.0-14+deb12u1 [2197 kB]
+#6 2.999 Get:55 http://deb.debian.org/debian bookworm/main amd64 libubsan1 amd64 12.2.0-14+deb12u1 [883 kB]
+#6 3.010 Get:56 http://deb.debian.org/debian bookworm/main amd64 libquadmath0 amd64 12.2.0-14+deb12u1 [145 kB]
+#6 3.019 Get:57 http://deb.debian.org/debian bookworm/main amd64 libgcc-12-dev amd64 12.2.0-14+deb12u1 [2437 kB]
+#6 3.033 Get:58 http://deb.debian.org/debian bookworm/main amd64 gcc-12 amd64 12.2.0-14+deb12u1 [19.3 MB]
+#6 3.099 Get:59 http://deb.debian.org/debian bookworm/main amd64 gcc amd64 4:12.2.0-3 [5216 B]
+#6 3.102 Get:60 http://deb.debian.org/debian bookworm/main amd64 libc-dev-bin amd64 2.36-9+deb12u14 [48.1 kB]
+#6 3.112 Get:61 http://deb.debian.org/debian-security bookworm-security/main amd64 linux-libc-dev amd64 6.1.180-1 [2332 kB]
+#6 3.125 Get:62 http://deb.debian.org/debian bookworm/main amd64 libcrypt-dev amd64 1:4.4.33-2 [118 kB]
+#6 3.135 Get:63 http://deb.debian.org/debian bookworm/main amd64 libtirpc-dev amd64 1.3.3+ds-1 [191 kB]
+#6 3.144 Get:64 http://deb.debian.org/debian bookworm/main amd64 libnsl-dev amd64 1.3.0-2 [66.4 kB]
+#6 3.153 Get:65 http://deb.debian.org/debian bookworm/main amd64 rpcsvc-proto amd64 1.4.3-1 [63.3 kB]
+#6 3.161 Get:66 http://deb.debian.org/debian bookworm/main amd64 libc6-dev amd64 2.36-9+deb12u14 [1904 kB]
+#6 3.175 Get:67 http://deb.debian.org/debian bookworm/main amd64 libstdc++-12-dev amd64 12.2.0-14+deb12u1 [2047 kB]
+#6 3.187 Get:68 http://deb.debian.org/debian bookworm/main amd64 g++-12 amd64 12.2.0-14+deb12u1 [10.7 MB]
+#6 3.219 Get:69 http://deb.debian.org/debian bookworm/main amd64 g++ amd64 4:12.2.0-3 [1356 B]
+#6 3.228 Get:70 http://deb.debian.org/debian bookworm/main amd64 make amd64 4.3-4.1 [396 kB]
+#6 3.301 debconf: delaying package configuration, since apt-utils is not installed
+#6 3.314 Fetched 76.5 MB in 1s (92.9 MB/s)
+#6 3.337 Selecting previously unselected package libssl3:amd64.
+#6 3.337 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6096 files and directories currently installed.)
+#6 3.340 Preparing to unpack .../libssl3_3.0.20-1~deb12u2_amd64.deb ...
+#6 3.343 Unpacking libssl3:amd64 (3.0.20-1~deb12u2) ...
+#6 3.447 Selecting previously unselected package libpython3.11-minimal:amd64.
+#6 3.448 Preparing to unpack .../libpython3.11-minimal_3.11.2-6+deb12u8_amd64.deb ...
+#6 3.449 Unpacking libpython3.11-minimal:amd64 (3.11.2-6+deb12u8) ...
+#6 3.505 Selecting previously unselected package libexpat1:amd64.
+#6 3.506 Preparing to unpack .../libexpat1_2.5.0-1+deb12u3_amd64.deb ...
+#6 3.506 Unpacking libexpat1:amd64 (2.5.0-1+deb12u3) ...
+#6 3.527 Selecting previously unselected package python3.11-minimal.
+#6 3.527 Preparing to unpack .../python3.11-minimal_3.11.2-6+deb12u8_amd64.deb ...
+#6 3.531 Unpacking python3.11-minimal (3.11.2-6+deb12u8) ...
+#6 3.653 Setting up libssl3:amd64 (3.0.20-1~deb12u2) ...
+#6 3.657 Setting up libpython3.11-minimal:amd64 (3.11.2-6+deb12u8) ...
+#6 3.663 Setting up libexpat1:amd64 (2.5.0-1+deb12u3) ...
+#6 3.664 Setting up python3.11-minimal (3.11.2-6+deb12u8) ...
+#6 4.068 Selecting previously unselected package python3-minimal.
+#6 4.068 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6424 files and directories currently installed.)
+#6 4.071 Preparing to unpack .../00-python3-minimal_3.11.2-1+b1_amd64.deb ...
+#6 4.072 Unpacking python3-minimal (3.11.2-1+b1) ...
+#6 4.086 Selecting previously unselected package media-types.
+#6 4.086 Preparing to unpack .../01-media-types_10.0.0_all.deb ...
+#6 4.086 Unpacking media-types (10.0.0) ...
+#6 4.102 Selecting previously unselected package libncursesw6:amd64.
+#6 4.102 Preparing to unpack .../02-libncursesw6_6.4-4_amd64.deb ...
+#6 4.103 Unpacking libncursesw6:amd64 (6.4-4) ...
+#6 4.125 Selecting previously unselected package libkrb5support0:amd64.
+#6 4.125 Preparing to unpack .../03-libkrb5support0_1.20.1-2+deb12u5_amd64.deb ...
+#6 4.126 Unpacking libkrb5support0:amd64 (1.20.1-2+deb12u5) ...
+#6 4.142 Selecting previously unselected package libk5crypto3:amd64.
+#6 4.143 Preparing to unpack .../04-libk5crypto3_1.20.1-2+deb12u5_amd64.deb ...
+#6 4.145 Unpacking libk5crypto3:amd64 (1.20.1-2+deb12u5) ...
+#6 4.161 Selecting previously unselected package libkeyutils1:amd64.
+#6 4.161 Preparing to unpack .../05-libkeyutils1_1.6.3-2_amd64.deb ...
+#6 4.161 Unpacking libkeyutils1:amd64 (1.6.3-2) ...
+#6 4.170 Selecting previously unselected package libkrb5-3:amd64.
+#6 4.171 Preparing to unpack .../06-libkrb5-3_1.20.1-2+deb12u5_amd64.deb ...
+#6 4.171 Unpacking libkrb5-3:amd64 (1.20.1-2+deb12u5) ...
+#6 4.199 Selecting previously unselected package libgssapi-krb5-2:amd64.
+#6 4.199 Preparing to unpack .../07-libgssapi-krb5-2_1.20.1-2+deb12u5_amd64.deb ...
+#6 4.200 Unpacking libgssapi-krb5-2:amd64 (1.20.1-2+deb12u5) ...
+#6 4.220 Selecting previously unselected package libtirpc-common.
+#6 4.220 Preparing to unpack .../08-libtirpc-common_1.3.3+ds-1_all.deb ...
+#6 4.222 Unpacking libtirpc-common (1.3.3+ds-1) ...
+#6 4.230 Selecting previously unselected package libtirpc3:amd64.
+#6 4.230 Preparing to unpack .../09-libtirpc3_1.3.3+ds-1_amd64.deb ...
+#6 4.231 Unpacking libtirpc3:amd64 (1.3.3+ds-1) ...
+#6 4.244 Selecting previously unselected package libnsl2:amd64.
+#6 4.244 Preparing to unpack .../10-libnsl2_1.3.0-2_amd64.deb ...
+#6 4.246 Unpacking libnsl2:amd64 (1.3.0-2) ...
+#6 4.258 Selecting previously unselected package readline-common.
+#6 4.258 Preparing to unpack .../11-readline-common_8.2-1.3_all.deb ...
+#6 4.259 Unpacking readline-common (8.2-1.3) ...
+#6 4.273 Selecting previously unselected package libreadline8:amd64.
+#6 4.273 Preparing to unpack .../12-libreadline8_8.2-1.3_amd64.deb ...
+#6 4.273 Unpacking libreadline8:amd64 (8.2-1.3) ...
+#6 4.294 Selecting previously unselected package libsqlite3-0:amd64.
+#6 4.295 Preparing to unpack .../13-libsqlite3-0_3.40.1-2+deb12u2_amd64.deb ...
+#6 4.295 Unpacking libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+#6 4.340 Selecting previously unselected package libpython3.11-stdlib:amd64.
+#6 4.340 Preparing to unpack .../14-libpython3.11-stdlib_3.11.2-6+deb12u8_amd64.deb ...
+#6 4.341 Unpacking libpython3.11-stdlib:amd64 (3.11.2-6+deb12u8) ...
+#6 4.444 Selecting previously unselected package python3.11.
+#6 4.445 Preparing to unpack .../15-python3.11_3.11.2-6+deb12u8_amd64.deb ...
+#6 4.446 Unpacking python3.11 (3.11.2-6+deb12u8) ...
+#6 4.463 Selecting previously unselected package libpython3-stdlib:amd64.
+#6 4.463 Preparing to unpack .../16-libpython3-stdlib_3.11.2-1+b1_amd64.deb ...
+#6 4.463 Unpacking libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+#6 4.474 Setting up python3-minimal (3.11.2-1+b1) ...
+#6 4.562 Selecting previously unselected package python3.
+#6 4.562 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6932 files and directories currently installed.)
+#6 4.564 Preparing to unpack .../00-python3_3.11.2-1+b1_amd64.deb ...
+#6 4.567 Unpacking python3 (3.11.2-1+b1) ...
+#6 4.579 Selecting previously unselected package openssl.
+#6 4.580 Preparing to unpack .../01-openssl_3.0.20-1~deb12u2_amd64.deb ...
+#6 4.581 Unpacking openssl (3.0.20-1~deb12u2) ...
+#6 4.664 Selecting previously unselected package ca-certificates.
+#6 4.665 Preparing to unpack .../02-ca-certificates_20250419~deb12u1_all.deb ...
+#6 4.665 Unpacking ca-certificates (20250419~deb12u1) ...
+#6 4.687 Selecting previously unselected package binutils-common:amd64.
+#6 4.687 Preparing to unpack .../03-binutils-common_2.40-2_amd64.deb ...
+#6 4.689 Unpacking binutils-common:amd64 (2.40-2) ...
+#6 4.847 Selecting previously unselected package libbinutils:amd64.
+#6 4.848 Preparing to unpack .../04-libbinutils_2.40-2_amd64.deb ...
+#6 4.850 Unpacking libbinutils:amd64 (2.40-2) ...
+#6 4.892 Selecting previously unselected package libctf-nobfd0:amd64.
+#6 4.892 Preparing to unpack .../05-libctf-nobfd0_2.40-2_amd64.deb ...
+#6 4.893 Unpacking libctf-nobfd0:amd64 (2.40-2) ...
+#6 4.909 Selecting previously unselected package libctf0:amd64.
+#6 4.910 Preparing to unpack .../06-libctf0_2.40-2_amd64.deb ...
+#6 4.910 Unpacking libctf0:amd64 (2.40-2) ...
+#6 4.924 Selecting previously unselected package libgprofng0:amd64.
+#6 4.924 Preparing to unpack .../07-libgprofng0_2.40-2_amd64.deb ...
+#6 4.926 Unpacking libgprofng0:amd64 (2.40-2) ...
+#6 4.980 Selecting previously unselected package libjansson4:amd64.
+#6 4.981 Preparing to unpack .../08-libjansson4_2.14-2_amd64.deb ...
+#6 4.981 Unpacking libjansson4:amd64 (2.14-2) ...
+#6 4.993 Selecting previously unselected package binutils-x86-64-linux-gnu.
+#6 4.994 Preparing to unpack .../09-binutils-x86-64-linux-gnu_2.40-2_amd64.deb ...
+#6 4.994 Unpacking binutils-x86-64-linux-gnu (2.40-2) ...
+#6 5.142 Selecting previously unselected package binutils.
+#6 5.142 Preparing to unpack .../10-binutils_2.40-2_amd64.deb ...
+#6 5.143 Unpacking binutils (2.40-2) ...
+#6 5.162 Selecting previously unselected package libisl23:amd64.
+#6 5.162 Preparing to unpack .../11-libisl23_0.25-1.1_amd64.deb ...
+#6 5.163 Unpacking libisl23:amd64 (0.25-1.1) ...
+#6 5.212 Selecting previously unselected package libmpfr6:amd64.
+#6 5.212 Preparing to unpack .../12-libmpfr6_4.2.0-1_amd64.deb ...
+#6 5.213 Unpacking libmpfr6:amd64 (4.2.0-1) ...
+#6 5.246 Selecting previously unselected package libmpc3:amd64.
+#6 5.247 Preparing to unpack .../13-libmpc3_1.3.1-1_amd64.deb ...
+#6 5.247 Unpacking libmpc3:amd64 (1.3.1-1) ...
+#6 5.261 Selecting previously unselected package cpp-12.
+#6 5.262 Preparing to unpack .../14-cpp-12_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.262 Unpacking cpp-12 (12.2.0-14+deb12u1) ...
+#6 5.703 Selecting previously unselected package cpp.
+#6 5.704 Preparing to unpack .../15-cpp_4%3a12.2.0-3_amd64.deb ...
+#6 5.705 Unpacking cpp (4:12.2.0-3) ...
+#6 5.721 Selecting previously unselected package libbrotli1:amd64.
+#6 5.722 Preparing to unpack .../16-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#6 5.723 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#6 5.749 Selecting previously unselected package libsasl2-modules-db:amd64.
+#6 5.750 Preparing to unpack .../17-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#6 5.750 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#6 5.761 Selecting previously unselected package libsasl2-2:amd64.
+#6 5.762 Preparing to unpack .../18-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#6 5.762 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#6 5.776 Selecting previously unselected package libldap-2.5-0:amd64.
+#6 5.777 Preparing to unpack .../19-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#6 5.777 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#6 5.796 Selecting previously unselected package libnghttp2-14:amd64.
+#6 5.797 Preparing to unpack .../20-libnghttp2-14_1.52.0-1+deb12u3_amd64.deb ...
+#6 5.797 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#6 5.815 Selecting previously unselected package libpsl5:amd64.
+#6 5.816 Preparing to unpack .../21-libpsl5_0.21.2-1_amd64.deb ...
+#6 5.817 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#6 5.833 Selecting previously unselected package librtmp1:amd64.
+#6 5.834 Preparing to unpack .../22-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#6 5.835 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#6 5.846 Selecting previously unselected package libssh2-1:amd64.
+#6 5.847 Preparing to unpack .../23-libssh2-1_1.10.0-3+deb12u1_amd64.deb ...
+#6 5.848 Unpacking libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#6 5.867 Selecting previously unselected package libcurl4:amd64.
+#6 5.868 Preparing to unpack .../24-libcurl4_7.88.1-10+deb12u15_amd64.deb ...
+#6 5.868 Unpacking libcurl4:amd64 (7.88.1-10+deb12u15) ...
+#6 5.896 Selecting previously unselected package curl.
+#6 5.897 Preparing to unpack .../25-curl_7.88.1-10+deb12u15_amd64.deb ...
+#6 5.897 Unpacking curl (7.88.1-10+deb12u15) ...
+#6 5.927 Selecting previously unselected package libcc1-0:amd64.
+#6 5.927 Preparing to unpack .../26-libcc1-0_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.928 Unpacking libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+#6 5.942 Selecting previously unselected package libgomp1:amd64.
+#6 5.943 Preparing to unpack .../27-libgomp1_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.943 Unpacking libgomp1:amd64 (12.2.0-14+deb12u1) ...
+#6 5.961 Selecting previously unselected package libitm1:amd64.
+#6 5.961 Preparing to unpack .../28-libitm1_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.962 Unpacking libitm1:amd64 (12.2.0-14+deb12u1) ...
+#6 5.971 Selecting previously unselected package libatomic1:amd64.
+#6 5.972 Preparing to unpack .../29-libatomic1_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.973 Unpacking libatomic1:amd64 (12.2.0-14+deb12u1) ...
+#6 5.982 Selecting previously unselected package libasan8:amd64.
+#6 5.983 Preparing to unpack .../30-libasan8_12.2.0-14+deb12u1_amd64.deb ...
+#6 5.983 Unpacking libasan8:amd64 (12.2.0-14+deb12u1) ...
+#6 6.112 Selecting previously unselected package liblsan0:amd64.
+#6 6.113 Preparing to unpack .../31-liblsan0_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.114 Unpacking liblsan0:amd64 (12.2.0-14+deb12u1) ...
+#6 6.174 Selecting previously unselected package libtsan2:amd64.
+#6 6.175 Preparing to unpack .../32-libtsan2_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.176 Unpacking libtsan2:amd64 (12.2.0-14+deb12u1) ...
+#6 6.307 Selecting previously unselected package libubsan1:amd64.
+#6 6.308 Preparing to unpack .../33-libubsan1_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.310 Unpacking libubsan1:amd64 (12.2.0-14+deb12u1) ...
+#6 6.377 Selecting previously unselected package libquadmath0:amd64.
+#6 6.377 Preparing to unpack .../34-libquadmath0_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.378 Unpacking libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+#6 6.398 Selecting previously unselected package libgcc-12-dev:amd64.
+#6 6.399 Preparing to unpack .../35-libgcc-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.401 Unpacking libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#6 6.539 Selecting previously unselected package gcc-12.
+#6 6.540 Preparing to unpack .../36-gcc-12_12.2.0-14+deb12u1_amd64.deb ...
+#6 6.541 Unpacking gcc-12 (12.2.0-14+deb12u1) ...
+#6 7.042 Selecting previously unselected package gcc.
+#6 7.043 Preparing to unpack .../37-gcc_4%3a12.2.0-3_amd64.deb ...
+#6 7.044 Unpacking gcc (4:12.2.0-3) ...
+#6 7.059 Selecting previously unselected package libc-dev-bin.
+#6 7.060 Preparing to unpack .../38-libc-dev-bin_2.36-9+deb12u14_amd64.deb ...
+#6 7.069 Unpacking libc-dev-bin (2.36-9+deb12u14) ...
+#6 7.083 Selecting previously unselected package linux-libc-dev:amd64.
+#6 7.084 Preparing to unpack .../39-linux-libc-dev_6.1.180-1_amd64.deb ...
+#6 7.085 Unpacking linux-libc-dev:amd64 (6.1.180-1) ...
+#6 7.174 Selecting previously unselected package libcrypt-dev:amd64.
+#6 7.175 Preparing to unpack .../40-libcrypt-dev_1%3a4.4.33-2_amd64.deb ...
+#6 7.179 Unpacking libcrypt-dev:amd64 (1:4.4.33-2) ...
+#6 7.199 Selecting previously unselected package libtirpc-dev:amd64.
+#6 7.200 Preparing to unpack .../41-libtirpc-dev_1.3.3+ds-1_amd64.deb ...
+#6 7.201 Unpacking libtirpc-dev:amd64 (1.3.3+ds-1) ...
+#6 7.225 Selecting previously unselected package libnsl-dev:amd64.
+#6 7.226 Preparing to unpack .../42-libnsl-dev_1.3.0-2_amd64.deb ...
+#6 7.226 Unpacking libnsl-dev:amd64 (1.3.0-2) ...
+#6 7.242 Selecting previously unselected package rpcsvc-proto.
+#6 7.243 Preparing to unpack .../43-rpcsvc-proto_1.4.3-1_amd64.deb ...
+#6 7.243 Unpacking rpcsvc-proto (1.4.3-1) ...
+#6 7.262 Selecting previously unselected package libc6-dev:amd64.
+#6 7.262 Preparing to unpack .../44-libc6-dev_2.36-9+deb12u14_amd64.deb ...
+#6 7.264 Unpacking libc6-dev:amd64 (2.36-9+deb12u14) ...
+#6 7.395 Selecting previously unselected package libstdc++-12-dev:amd64.
+#6 7.397 Preparing to unpack .../45-libstdc++-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+#6 7.397 Unpacking libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#6 7.543 Selecting previously unselected package g++-12.
+#6 7.544 Preparing to unpack .../46-g++-12_12.2.0-14+deb12u1_amd64.deb ...
+#6 7.546 Unpacking g++-12 (12.2.0-14+deb12u1) ...
+#6 7.994 Selecting previously unselected package g++.
+#6 7.996 Preparing to unpack .../47-g++_4%3a12.2.0-3_amd64.deb ...
+#6 7.997 Unpacking g++ (4:12.2.0-3) ...
+#6 8.011 Selecting previously unselected package make.
+#6 8.013 Preparing to unpack .../48-make_4.3-4.1_amd64.deb ...
+#6 8.014 Unpacking make (4.3-4.1) ...
+#6 8.054 Setting up media-types (10.0.0) ...
+#6 8.058 Setting up libkeyutils1:amd64 (1.6.3-2) ...
+#6 8.060 Setting up libpsl5:amd64 (0.21.2-1) ...
+#6 8.062 Setting up libtirpc-common (1.3.3+ds-1) ...
+#6 8.063 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#6 8.064 Setting up libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+#6 8.066 Setting up binutils-common:amd64 (2.40-2) ...
+#6 8.078 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#6 8.106 Setting up linux-libc-dev:amd64 (6.1.180-1) ...
+#6 8.141 Setting up libctf-nobfd0:amd64 (2.40-2) ...
+#6 8.161 Setting up libgomp1:amd64 (12.2.0-14+deb12u1) ...
+#6 8.164 Setting up libjansson4:amd64 (2.14-2) ...
+#6 8.165 Setting up libkrb5support0:amd64 (1.20.1-2+deb12u5) ...
+#6 8.167 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#6 8.171 Setting up rpcsvc-proto (1.4.3-1) ...
+#6 8.173 Setting up make (4.3-4.1) ...
+#6 8.175 Setting up libmpfr6:amd64 (4.2.0-1) ...
+#6 8.178 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#6 8.194 Setting up libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+#6 8.212 Setting up libmpc3:amd64 (1.3.1-1) ...
+#6 8.227 Setting up libatomic1:amd64 (12.2.0-14+deb12u1) ...
+#6 8.239 Setting up libncursesw6:amd64 (6.4-4) ...
+#6 8.259 Setting up libk5crypto3:amd64 (1.20.1-2+deb12u5) ...
+#6 8.271 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#6 8.273 Setting up libubsan1:amd64 (12.2.0-14+deb12u1) ...
+#6 8.275 Setting up libcrypt-dev:amd64 (1:4.4.33-2) ...
+#6 8.282 Setting up libasan8:amd64 (12.2.0-14+deb12u1) ...
+#6 8.287 Setting up libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#6 8.299 Setting up libkrb5-3:amd64 (1.20.1-2+deb12u5) ...
+#6 8.307 Setting up libtsan2:amd64 (12.2.0-14+deb12u1) ...
+#6 8.312 Setting up libbinutils:amd64 (2.40-2) ...
+#6 8.315 Setting up libisl23:amd64 (0.25-1.1) ...
+#6 8.317 Setting up libc-dev-bin (2.36-9+deb12u14) ...
+#6 8.318 Setting up openssl (3.0.20-1~deb12u2) ...
+#6 8.321 Setting up readline-common (8.2-1.3) ...
+#6 8.325 Setting up libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+#6 8.327 Setting up liblsan0:amd64 (12.2.0-14+deb12u1) ...
+#6 8.329 Setting up libitm1:amd64 (12.2.0-14+deb12u1) ...
+#6 8.331 Setting up libctf0:amd64 (2.40-2) ...
+#6 8.333 Setting up cpp-12 (12.2.0-14+deb12u1) ...
+#6 8.334 Setting up libreadline8:amd64 (8.2-1.3) ...
+#6 8.335 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#6 8.337 Setting up ca-certificates (20250419~deb12u1) ...
+#6 8.381 debconf: unable to initialize frontend: Dialog
+#6 8.381 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#6 8.381 debconf: falling back to frontend: Readline
+#6 8.381 debconf: unable to initialize frontend: Readline
+#6 8.381 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+#6 8.381 debconf: falling back to frontend: Teletype
+#6 8.679 Updating certificates in /etc/ssl/certs...
+#6 9.127 150 added, 0 removed; done.
+#6 9.147 Setting up libgprofng0:amd64 (2.40-2) ...
+#6 9.150 Setting up libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#6 9.152 Setting up libgssapi-krb5-2:amd64 (1.20.1-2+deb12u5) ...
+#6 9.154 Setting up cpp (4:12.2.0-3) ...
+#6 9.158 Setting up libcurl4:amd64 (7.88.1-10+deb12u15) ...
+#6 9.159 Setting up curl (7.88.1-10+deb12u15) ...
+#6 9.160 Setting up binutils-x86-64-linux-gnu (2.40-2) ...
+#6 9.161 Setting up libtirpc3:amd64 (1.3.3+ds-1) ...
+#6 9.162 Setting up binutils (2.40-2) ...
+#6 9.163 Setting up libtirpc-dev:amd64 (1.3.3+ds-1) ...
+#6 9.164 Setting up gcc-12 (12.2.0-14+deb12u1) ...
+#6 9.165 Setting up libnsl2:amd64 (1.3.0-2) ...
+#6 9.166 Setting up libpython3.11-stdlib:amd64 (3.11.2-6+deb12u8) ...
+#6 9.167 Setting up gcc (4:12.2.0-3) ...
+#6 9.177 Setting up libnsl-dev:amd64 (1.3.0-2) ...
+#6 9.180 Setting up libc6-dev:amd64 (2.36-9+deb12u14) ...
+#6 9.183 Setting up libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+#6 9.186 Setting up python3.11 (3.11.2-6+deb12u8) ...
+#6 9.619 Setting up libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#6 9.623 Setting up python3 (3.11.2-1+b1) ...
+#6 9.629 running python rtupdate hooks for python3.11...
+#6 9.629 running python post-rtupdate hooks for python3.11...
+#6 9.682 Setting up g++-12 (12.2.0-14+deb12u1) ...
+#6 9.687 Setting up g++ (4:12.2.0-3) ...
+#6 9.691 update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+#6 9.695 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#6 9.704 Processing triggers for ca-certificates (20250419~deb12u1) ...
+#6 9.709 Updating certificates in /etc/ssl/certs...
+#6 10.07 0 added, 0 removed; done.
+#6 10.07 Running hooks in /etc/ca-certificates/update.d...
+#6 10.07 done.
+#6 DONE 10.1s
+
+#7 [app 3/7] WORKDIR /app
+#7 DONE 0.7s
+
+#8 [app 4/7] COPY package.json package-lock.json ./
+#8 DONE 0.9s
+
+#9 [app 5/7] RUN npm ci
+#9 1.922 npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+#9 6.766 
+#9 6.766 added 203 packages, and audited 204 packages in 6s
+#9 6.766 
+#9 6.766 39 packages are looking for funding
+#9 6.766   run `npm fund` for details
+#9 6.817 
+#9 6.817 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+#9 6.817 
+#9 6.817 To address issues that do not require attention, run:
+#9 6.817   npm audit fix
+#9 6.817 
+#9 6.817 To address all issues (including breaking changes), run:
+#9 6.817   npm audit fix --force
+#9 6.817 
+#9 6.817 Run `npm audit` for details.
+#9 6.818 npm notice
+#9 6.818 npm notice New major version of npm available! 10.9.8 -> 12.0.2
+#9 6.818 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#9 6.818 npm notice To update run: npm install -g npm@12.0.2
+#9 6.818 npm notice
+#9 DONE 6.8s
+
+#10 [app 6/7] COPY . .
+#10 DONE 1.1s
+
+#11 [app 7/7] RUN npm run build
+#11 1.450 
+#11 1.450 > shelfmark@1.0.0 build
+#11 1.450 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#11 1.450 
+#11 DONE 2.3s
+
+#12 [app] exporting to image
+#12 exporting layers
+#12 exporting layers 1.0s done
+#12 writing image sha256:7d2b88ecbb740e1c6734113d3b4ee589a29d5c279144fe87d04f75f9c95403a6
+#12 writing image sha256:7d2b88ecbb740e1c6734113d3b4ee589a29d5c279144fe87d04f75f9c95403a6 done
+#12 naming to docker.io/library/sdd-poc-fixture-app done
+#12 DONE 1.0s
+
+#13 [app] resolving provenance for metadata file
+#13 DONE 0.0s
+ app  Built
+ Network sdd-poc-fixture_default  Creating
+ Network sdd-poc-fixture_default  Created
+ Volume sdd-poc-fixture_app-data  Creating
+ Volume sdd-poc-fixture_app-data  Created
+ Volume sdd-poc-fixture_playwright-nm  Creating
+ Volume sdd-poc-fixture_playwright-nm  Created
+ Container sdd-poc-fixture-app-1  Creating
+ Container sdd-poc-fixture-app-1  Created
+ Container sdd-poc-fixture-playwright-1  Creating
+ Container sdd-poc-fixture-playwright-1  Created
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql"],"skipped":[]}
+app-1  | [info] seed user {"username":"demo","created":true}
+app-1  | [info] seed items {"inserted":3}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 3ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+playwright-1  | npm error Exit handler never called!
+playwright-1  | npm error This is an error with npm itself. Please report this error at:
+playwright-1  | npm error   <https://github.com/npm/cli/issues>
+playwright-1  | npm error A complete log of this run can be found in: /root/.npm/_logs/2026-09-06T03_11_03_720Z-debug-0.log
+[Kplaywright-1 exited with code 1
+Aborting on container exit...
+ Container sdd-poc-fixture-playwright-1  Stopping
+ Container sdd-poc-fixture-playwright-1  Stopped
+ Container sdd-poc-fixture-app-1  Stopping
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+ Container sdd-poc-fixture-app-1  Stopped
+[Kapp-1 exited with code 137
+
+make: *** [Makefile:21: smoke] Error 1
+docker compose --profile smoke up --build --abort-on-container-exit --exit-code-from playwright
+time="2026-09-06T03:19:55Z" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [app internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 401B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.4s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 149B done
+#3 DONE 0.0s
+
+#4 [app 1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#4 DONE 0.0s
+
+#5 [app internal] load build context
+#5 transferring context: 104.09kB done
+#5 DONE 0.0s
+
+#6 [app 4/7] COPY package.json package-lock.json ./
+#6 CACHED
+
+#7 [app 2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [app 3/7] WORKDIR /app
+#8 CACHED
+
+#9 [app 5/7] RUN npm ci
+#9 CACHED
+
+#10 [app 6/7] COPY . .
+#10 DONE 1.2s
+
+#11 [app 7/7] RUN npm run build
+#11 1.427 
+#11 1.427 > shelfmark@1.0.0 build
+#11 1.427 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#11 1.427 
+#11 DONE 2.4s
+
+#12 [app] exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 writing image sha256:c91f014c20e7edd15f9fa6b3a303b717a589c3be5bb479ccabc0b0ad39177809 done
+#12 naming to docker.io/library/sdd-poc-fixture-app done
+#12 DONE 0.3s
+
+#13 [app] resolving provenance for metadata file
+#13 DONE 0.0s
+ app  Built
+ Container sdd-poc-fixture-app-1  Recreate
+ Container sdd-poc-fixture-app-1  Recreated
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":[],"skipped":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql"]}
+app-1  | [info] seed user {"username":"demo","created":false}
+app-1  | [info] seed items {"inserted":0}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 4ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 1ms
+app-1  | [info] GET /healthz 200 0ms
+app-1  | [info] GET /healthz 200 0ms
+[Kplaywright-1 exited with code 137
+Aborting on container exit...
+ Container sdd-poc-fixture-playwright-1  Stopping
+ Container sdd-poc-fixture-playwright-1  Stopped
+ Container sdd-poc-fixture-app-1  Stopping
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+ Container sdd-poc-fixture-app-1  Stopped
+[Kapp-1 exited with code 137
+
+make: *** [Makefile:21: smoke] Error 137

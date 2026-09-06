@@ -16,7 +16,7 @@
 ## Auth (as of fixture)
 
 - Cookie sessions via the legacy session module: signed `shelfmark.sid`, in-memory store, CSRF on HTML forms.
-- JSON API currently authenticates only with that cookie (`requireApiUser`). Unauthenticated API responses are exactly `{"error":"unauthorized"}`.
+- Named API keys stored in SQLite (`api_keys`). SHA-256 hash of the secret; plaintext shown once at create. `Authorization: Bearer` authenticates `/api/*` as the owning user (`loadApiKeyUser` + `requireApiUser`). Unauthenticated API responses are exactly `{"error":"unauthorized"}`.
 
 ## Testing
 

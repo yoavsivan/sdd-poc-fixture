@@ -18,7 +18,8 @@ A single seeded operator (`demo`) uses the app for personal link saving. There i
 - Create, edit, and delete items. An item is a URL, a title, an optional note, and up to ten tags.
 - Browse items at `/items`, newest first, filtered by an exact tag (`?tag=`) or a substring of title, URL, or note (`?q=`).
 - Change the account password from Settings.
-- Call a JSON API at `/api/items` (list/create) and `/api/items/:id` (fetch/delete). Writes require `Content-Type: application/json`. Unauthenticated API calls return exactly `{"error":"unauthorized"}`.
+- JSON API at `/api/items` (list/create) and `/api/items/:id` (fetch/delete). Writes require `Content-Type: application/json`. Unauthenticated API calls return exactly `{"error":"unauthorized"}`.
+- Named API keys in Settings: create a key, copy the secret once, authenticate `/api/*` with `Authorization: Bearer`. Cookie sessions remain how the UI signs in. Revoke is immediate. List rows show a prefix, masked tail, and `YYYY-MM-DD` dates.
 - Health check at `GET /healthz`.
 
 ## Authentication product rules

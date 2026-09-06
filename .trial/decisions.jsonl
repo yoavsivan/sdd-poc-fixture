@@ -1,0 +1,30 @@
+{"turn": 1, "type": "other", "question": "A brownfield project has been detected. May I perform a read-only scan to analyze the architecture?", "source": "HUMAN.md#project-context", "answer": "Yes. Scan README, package.json, src/, and tests in this tree only."}
+{"turn": 1, "type": "product", "question": "Does the proposed title Shelfmark and brownfield reading-list summary capture the vision?", "source": "HUMAN.md#project-context", "answer": "Yes. Shelfmark is a cookie-session reading list; API keys are the F1 addition."}
+{"turn": 1, "type": "choose-option", "question": "Product definition mode: Interactive interview or Autogenerate from brownfield analysis?", "source": "HUMAN.md#project-context", "answer": "Autogenerate from codebase plus HUMAN.md project-context (brownfield)."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted product.md (Approve / Revise / Refine)?", "source": "HUMAN.md#product", "answer": "Approve. Includes API-key display, entropy, settings copy, newest-first, YYYY-MM-DD."}
+{"turn": 1, "type": "choose-option", "question": "Product guidelines mode: Interactive or Autogenerate?", "source": "HUMAN.md#product", "answer": "Autogenerate from product rules (API keys copy, shown-once, revoke immediate)."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted product-guidelines.md?", "source": "HUMAN.md#product", "answer": "Approve."}
+{"turn": 1, "type": "product", "question": "Confirm inferred stack: TypeScript strict, Express, EJS, SQLite, Vitest, Playwright in Docker?", "source": "HUMAN.md#project-context", "answer": "Yes. Wrap legacy session/query; no new runtime deps; tests only in containers."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted tech-stack.md?", "source": "HUMAN.md#project-context", "answer": "Approve."}
+{"turn": 1, "type": "choose-option", "question": "Proposed style guides typescript, javascript, html-css, general. Additional guides needed?", "source": "HUMAN.md#clarify", "answer": "No additional guides. Those four match TS, legacy CJS, EJS/CSS."}
+{"turn": 1, "type": "choose-option", "question": "Customize style guide selection or add rules?", "source": "HUMAN.md#defaults", "answer": "No. Copy the four proposed guides as-is."}
+{"turn": 1, "type": "choose-option", "question": "Workflow mode: Default or Customize?", "source": "HUMAN.md#project-context", "answer": "Customize development commands to make test-docker and make smoke (no host Node)."}
+{"turn": 1, "type": "scope", "question": "Install recommended agent skills from catalog (Firebase family)?", "source": "HUMAN.md#defaults", "answer": "Skip. No Firebase/GCP signals; extra skills add surface without helping F1."}
+{"turn": 1, "type": "choose-option", "question": "Start defining the first actionable track now?", "source": "HUMAN.md#scope", "answer": "Yes. F1 named API keys and Bearer auth on /api/*."}
+{"turn": 2, "type": "choose-option", "question": "Infer track type Feature for named API keys / Bearer auth?", "source": "HUMAN.md#scope", "answer": "Yes. Feature track F1 as specified."}
+{"turn": 2, "type": "clarify", "question": "Where should keys live in the UI?", "source": "HUMAN.md#clarify", "answer": "Extend Settings (api-keys-section); do not add a parallel auth app."}
+{"turn": 2, "type": "clarify", "question": "How should secrets be stored and looked up?", "source": "HUMAN.md#clarify", "answer": "SQLite migration 0004; hash secret; wrap query.cjs; no new deps."}
+{"turn": 2, "type": "clarify", "question": "Does Bearer apply to UI cookie routes or only /api/*?", "source": "HUMAN.md#scope", "answer": "Only /api/*. Cookie sessions unchanged; do not modify legacy session.cjs."}
+{"turn": 2, "type": "clarify", "question": "Is this sufficient information to draft the spec?", "source": "HUMAN.md#scope", "answer": "Yes. Draft spec from the F1 brief acceptance criteria and data-testids."}
+{"turn": 2, "type": "approve-plan", "question": "Approve spec.md and proceed to planning?", "source": "HUMAN.md#approvals", "answer": "Approve. Every F1 acceptance criterion is in spec.md."}
+{"turn": 2, "type": "approve-plan", "question": "Approve plan.md (TDD phases mapping each AC)?", "source": "HUMAN.md#approvals", "answer": "Approve. Each AC maps to at least one task."}
+{"turn": 2, "type": "scope", "question": "Install catalog skills for this track?", "source": "HUMAN.md#defaults", "answer": "Skip. No matching detection signals."}
+{"turn": 2, "type": "choose-option", "question": "Start implementation of this track now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 3, "type": "choose-option", "question": "Proceed with implementation of Named API keys and Bearer auth?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 3, "type": "approve-completion", "question": "Phase 1-3 verification: tests pass and match F1 ACs?", "source": "HUMAN.md#approvals", "answer": "Yes. make test-docker 54 passed; ACs mapped."}
+{"turn": 3, "type": "approve-completion", "question": "Does smoke and feature match the F1 brief for completion?", "source": "HUMAN.md#approvals", "answer": "Yes. make smoke 4 passed; Bearer, Settings testids, 401 body."}
+{"turn": 3, "type": "product", "question": "Update product.md and tech-stack.md for shipped API keys?", "source": "HUMAN.md#product", "answer": "Yes. Document named keys and Bearer on /api/*."}
+{"turn": 3, "type": "choose-option", "question": "Perform a formal code review of the completed track now?", "source": "HUMAN.md#approvals", "answer": "Yes."}
+{"turn": 3, "type": "choose-option", "question": "Review scope: Named API keys track?", "source": "HUMAN.md#approvals", "answer": "Yes."}
+{"turn": 3, "type": "choose-option", "question": "Archive, delete, or skip track cleanup?", "source": "HUMAN.md#scope", "answer": "Skip. Keep conductor/tracks spec.md and plan.md (scored)."}
+{"turn": 3, "type": "choose-option", "question": "Revert any unit of work after review?", "source": "HUMAN.md#defaults", "answer": "No. Review found no critical/high issues."}

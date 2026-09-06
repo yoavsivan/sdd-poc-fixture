@@ -1,0 +1,1 @@
+Docker was missing on the cloud VM. Installed docker.io, ran dockerd with vfs (overlay2 unsupported) and iptables forwarding so compose could reach npm. First smoke npm ci hung without NAT; after FORWARD ACCEPT, make smoke reported 4 passed. Host Node was not used for app tests.
