@@ -43,12 +43,16 @@ checks:
     kind: command
     run: gatekit drift --feature F1
 
+  - id: smoke
+    kind: e2e
+    run: make smoke
+    timeout: 900
+
   - id: unit-tests
     kind: test
     run: make test-docker
     timeout: 900
 
-  - id: smoke
-    kind: e2e
-    run: make smoke
-    timeout: 900
+  - id: authenticate-present
+    kind: artifact-exists
+    path: src/http/middleware/authenticate.ts

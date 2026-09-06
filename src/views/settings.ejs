@@ -61,7 +61,8 @@
       <pre class="code-block"><code data-testid="api-key-plaintext"><%= apiKeyPlaintext %></code></pre>
     <% } %>
     <form method="post" action="/settings/api-keys" class="stack">
-      <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+      <input type="hidden"
+        name="_csrf" value="<%= locals.csrf %>" />
       <label class="field">
         <span>Name</span>
         <input
@@ -91,7 +92,8 @@
               </p>
             </div>
             <form method="post" action="/settings/api-keys/<%= key.id %>/revoke" data-confirm="Revoke this API key immediately?">
-              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <input type="hidden"
+                name="_csrf" value="<%= locals.csrf %>" />
               <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">Revoke</button>
             </form>
           </li>

@@ -1,0 +1,25 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "code-review",
+  "feature": "F1",
+  "unit": "impl",
+  "cycle": 1,
+  "target": "src/http/middleware/authenticate.ts",
+  "reviewer": "trial-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "correctness": 5,
+    "matches_plan": 4,
+    "tests_real": 5,
+    "spec_current": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "test/unit/api-keys.test.ts — Bearer GET /api/items, 401 body, last-used, revoke, cookie sessions",
+    "make test-docker — 52 passed; make smoke — 4 passed",
+    "src/views/settings.ejs — api-keys-section and listed data-testid controls",
+    "features/F1/brief.md ## Acceptance criteria still names GET /api/items, Bearer, and revoke"
+  ],
+  "reviewed_at": "2026-09-06T11:23:44Z"
+}

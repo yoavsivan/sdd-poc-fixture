@@ -1,0 +1,82 @@
+{
+  "gatekit_done": 1,
+  "feature": "F1",
+  "completed_at": "2026-09-06T11:25:52Z",
+  "contract_sha256": "a95d04c47872fcdc6afd2c8531a6354d9f041f6545155be5a0d91e42364054ad",
+  "checks": [
+    {
+      "id": "plan-has-handoff",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/plan-has-handoff.log",
+      "duration_ms": 0,
+      "run": "spec-mentions plan.md"
+    },
+    {
+      "id": "tasks-complete",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/tasks-complete.log",
+      "duration_ms": 0,
+      "run": "gatekit tasks --feature F1"
+    },
+    {
+      "id": "brief-names-surface",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/brief-names-surface.log",
+      "duration_ms": 0,
+      "run": "spec-mentions brief.md"
+    },
+    {
+      "id": "migration-present",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/migration-present.log",
+      "duration_ms": 1000,
+      "run": "artifact-exists src/db/migrations/0004_*.sql"
+    },
+    {
+      "id": "drift",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/drift.log",
+      "duration_ms": 2000,
+      "run": "gatekit drift --feature F1"
+    },
+    {
+      "id": "smoke",
+      "kind": "e2e",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/smoke.log",
+      "duration_ms": 23000,
+      "run": "make smoke"
+    },
+    {
+      "id": "unit-tests",
+      "kind": "test",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/unit-tests.log",
+      "duration_ms": 8000,
+      "run": "make test-docker"
+    }
+  ],
+  "gates": {
+    "required": [],
+    "satisfied_by": []
+  }
+}
