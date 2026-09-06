@@ -36,3 +36,7 @@
 {"turn": 7, "type": "approve-plan", "question": "Approve rotate plan.md?", "source": "HUMAN.md#approvals", "answer": "Approve. Each AC maps to persistence and Settings tasks; TDD and smoke included."}
 {"turn": 7, "type": "choose-option", "question": "Install extra catalog skills for rotate?", "source": "HUMAN.md#scope", "answer": "Skip."}
 {"turn": 7, "type": "choose-option", "question": "Start implementation of rotate now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 8, "type": "approve-completion", "question": "Rotate phases: 61 unit tests and smoke 4 passed. Confirm?", "source": "HUMAN.md#approvals", "answer": "Yes. Rotate keeps id/name; old secret 401; last rotated shown."}
+{"turn": 8, "type": "product", "question": "Update product.md to mention rotate-in-place?", "source": "HUMAN.md#product", "answer": "Yes. Rotate keeps id and name; secret shown once."}
+{"turn": 8, "type": "choose-option", "question": "Review the rotate track now?", "source": "HUMAN.md#approvals", "answer": "Yes."}
+{"turn": 8, "type": "choose-option", "question": "Archive, delete, or skip rotate track after review?", "source": "HUMAN.md#scope", "answer": "Skip. Keep spec.md and plan.md for scoring."}

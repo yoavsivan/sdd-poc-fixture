@@ -27,7 +27,7 @@ There is no registration, no multi-tenant admin, and no OAuth.
 
 - Cookie sessions remain how the UI signs in; do not replace the legacy session module.
 - Prefer extending the existing Settings page and JSON API over new apps or parallel auth stacks.
-- Named API keys (when added) are owned by the signed-in user: create in Settings, show the secret once, revoke immediately, authenticate `/api/*` as that user via `Authorization: Bearer`.
+- Named API keys (when added) are owned by the signed-in user: create in Settings, show the secret once, revoke immediately, rotate in place (same id and name), authenticate `/api/*` as that user via `Authorization: Bearer`.
 - Item lists are newest first. Timestamps in the UI are ISO-8601 dates (`YYYY-MM-DD`); store UTC internally.
 - Least new surface area; no new runtime dependency unless a brief cannot be met without it.
 
