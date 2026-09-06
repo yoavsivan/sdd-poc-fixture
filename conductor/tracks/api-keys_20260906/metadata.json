@@ -1,8 +1,8 @@
 {
   "id": "api-keys_20260906",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-09-06T03:20:00Z",
-  "updated_at": "2026-09-06T03:20:00Z",
+  "updated_at": "2026-09-06T03:22:03Z",
   "title": "Named API keys and Bearer auth"
 }
