@@ -1,0 +1,2 @@
+{"turn": 2, "type": "approve-plan", "question": "Approve F1 plan: every AC mapped to a task?", "source": "HUMAN.md#approvals", "answer": "Approve: AC1-6 map to T1-T6; contract runs make test-docker, make smoke, drift, spec-mentions."}
+{"turn": 3, "type": "approve-completion", "question": "Approve F1 completion after gatekit done?", "source": "HUMAN.md#approvals", "answer": "Approve: gatekit done --feature F1 exit 0, 8/8 checks including make smoke and make test-docker."}

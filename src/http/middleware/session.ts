@@ -17,6 +17,7 @@ declare global {
       csrf?: string;
       flash?: string[];
       title?: string;
+      apiKeyInvalid?: boolean;
     }
   }
 }

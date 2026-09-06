@@ -6,7 +6,7 @@ import type { SessionStore } from "../legacy/session.cjs";
 import { configureViews, publicDir } from "./views.js";
 import { sessionMiddleware } from "./middleware/session.js";
 import { csrfProtection } from "./middleware/csrf.js";
-import { loadUser } from "./middleware/authenticate.js";
+import { loadApiKey, loadUser } from "./middleware/authenticate.js";
 import { errorHandler, notFound } from "./middleware/errors.js";
 import { authRouter } from "./routes/auth.js";
 import { itemsRouter } from "./routes/items.js";
@@ -24,7 +24,7 @@ export interface AppDeps {
 
 /**
  * Build the Express application. Middleware order lives only here:
- * static → session → csrf → loadUser → routers → 404 → error handler.
+ * static → session → csrf → loadUser → loadApiKey → routers → 404 → error handler.
  */
 export function createApp(deps: AppDeps): express.Express {
   const app = express();
@@ -42,6 +42,7 @@ export function createApp(deps: AppDeps): express.Express {
   app.use(sessionMiddleware(deps.config, deps.store));
   app.use(csrfProtection);
   app.use(loadUser);
+  app.use(loadApiKey);
   app.use((req, res, next) => {
     const session = getSession(req);
     res.locals.csrf = session.data.csrf;

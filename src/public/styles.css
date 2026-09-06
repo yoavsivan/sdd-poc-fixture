@@ -313,6 +313,15 @@ h2 {
   align-items: stretch;
 }
 
+.api-key-mask {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+}
+
+.api-key-create {
+  margin-bottom: 16px;
+}
+
 .empty {
   padding: 24px;
 }

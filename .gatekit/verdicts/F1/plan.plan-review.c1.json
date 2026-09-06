@@ -1,0 +1,25 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "plan-review",
+  "feature": "F1",
+  "unit": "plan",
+  "cycle": 1,
+  "target": "features/F1/plan.md",
+  "reviewer": "grok-4.6-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "brief_coverage": 5,
+    "contract_runnable": 5,
+    "handoff_complete": 4,
+    "scope": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "features/F1/brief.md Acceptance criteria 1-6 and Interface data-testids",
+    "features/F1/plan.md Steps 1-5 and Hand-off table",
+    "features/F1/tasks.md T1-T6",
+    "features/F1/contract.yaml unit-tests make test-docker and smoke make smoke"
+  ],
+  "reviewed_at": "2026-09-06T04:09:49Z"
+}

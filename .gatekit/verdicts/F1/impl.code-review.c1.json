@@ -1,0 +1,25 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "code-review",
+  "feature": "F1",
+  "unit": "impl",
+  "cycle": 1,
+  "target": "src/http/middleware/authenticate.ts",
+  "reviewer": "grok-4.6-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "correctness": 5,
+    "matches_plan": 5,
+    "tests_real": 5,
+    "spec_current": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "src/http/middleware/authenticate.ts loadApiKey Bearer on /api/*",
+    "src/views/settings.ejs api-keys-section data-testids",
+    "test/unit/api-keys.test.ts make test-docker 50 passed",
+    "features/F1/brief.md acceptance criteria 1-6"
+  ],
+  "reviewed_at": "2026-09-06T04:14:00Z"
+}

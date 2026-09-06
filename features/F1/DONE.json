@@ -1,0 +1,92 @@
+{
+  "gatekit_done": 1,
+  "feature": "F1",
+  "completed_at": "2026-09-06T04:17:22Z",
+  "contract_sha256": "847bb9f94e19bd8d45b461a3d4d2915b271650b0041e60e79c43666def3692de",
+  "checks": [
+    {
+      "id": "plan-has-handoff",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/plan-has-handoff.log",
+      "duration_ms": 0,
+      "run": "spec-mentions plan.md"
+    },
+    {
+      "id": "tasks-complete",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/tasks-complete.log",
+      "duration_ms": 0,
+      "run": "gatekit tasks --feature F1"
+    },
+    {
+      "id": "drift",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/drift.log",
+      "duration_ms": 1000,
+      "run": "gatekit drift --feature F1"
+    },
+    {
+      "id": "brief-names-surface",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/brief-names-surface.log",
+      "duration_ms": 0,
+      "run": "spec-mentions brief.md"
+    },
+    {
+      "id": "migration-present",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/migration-present.log",
+      "duration_ms": 0,
+      "run": "artifact-exists src/db/migrations/0004_*.sql"
+    },
+    {
+      "id": "unit-tests",
+      "kind": "test",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/unit-tests.log",
+      "duration_ms": 7000,
+      "run": "make test-docker </dev/null"
+    },
+    {
+      "id": "smoke",
+      "kind": "e2e",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/smoke.log",
+      "duration_ms": 22000,
+      "run": "make smoke </dev/null"
+    },
+    {
+      "id": "plan-file",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/plan-file.log",
+      "duration_ms": 0,
+      "run": "artifact-exists features/F1/plan.md"
+    }
+  ],
+  "gates": {
+    "required": [],
+    "satisfied_by": []
+  }
+}
