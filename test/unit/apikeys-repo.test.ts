@@ -7,6 +7,7 @@ import {
   findApiKeyBySecret,
   listApiKeys,
   revokeApiKey,
+  rotateApiKey,
   touchApiKeyLastUsed,
 } from "../../src/apikeys/repo.ts";
 
@@ -72,6 +73,22 @@ describe("apikeys-repo", () => {
     expect(found?.id).toBe(created.id);
     expect(found?.userId).toBe(a.id);
     expect(findApiKeyBySecret(db, "not-a-key")).toBeUndefined();
+    db.close();
+  });
+
+  it("rotate keeps id and name, retires the old secret, and stamps lastRotatedAt", () => {
+    const { db, a } = setup();
+    const created = createApiKey(db, a.id, "scripts");
+    const rotated = rotateApiKey(db, a.id, created.id);
+    expect(rotated).toBeTruthy();
+    expect(rotated?.id).toBe(created.id);
+    expect(rotated?.name).toBe("scripts");
+    expect(rotated?.plaintext).not.toBe(created.plaintext);
+    expect(rotated?.plaintext.length).toBeGreaterThan(0);
+    expect(findApiKeyBySecret(db, created.plaintext)).toBeUndefined();
+    expect(findApiKeyBySecret(db, rotated!.plaintext)?.id).toBe(created.id);
+    expect(rotated?.lastRotatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+    expect(listApiKeys(db, a.id)).toHaveLength(1);
     db.close();
   });
 
