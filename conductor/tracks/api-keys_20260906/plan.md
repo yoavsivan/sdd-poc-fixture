@@ -4,7 +4,7 @@ TDD per `conductor/workflow.md`. Every task writes failing tests before implemen
 
 ## Phase 1: Persist named API keys
 
-- [ ] Task: Write failing tests for API key storage
+- [~] Task: Write failing tests for API key storage
   - [ ] Add unit tests that expect migration `0004_api_keys.sql` to create an `api_keys` table
   - [ ] Add repo tests: create named key (hash stored, plaintext returned once), list newest first, lookup by secret, revoke removes the secret, last-used starts empty
   - [ ] Run `make test-docker` and confirm the new tests fail
