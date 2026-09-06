@@ -13,6 +13,9 @@ describe("views", () => {
     expect(res.text).toContain('data-testid="settings-account"');
     expect(res.text).toContain('data-testid="settings-password"');
     expect(res.text).toContain('data-testid="settings-api-usage"');
+    expect(res.text).toContain('data-testid="api-keys-section"');
+    expect(res.text).toContain('data-testid="api-key-name"');
+    expect(res.text).toContain('data-testid="api-key-create"');
   });
 
   it("GET /items?q=<no-match-suffix> (signed in) renders items-empty", async () => {

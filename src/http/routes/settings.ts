@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type Database from "better-sqlite3";
+import { createApiKey, listApiKeys, revokeApiKey } from "../../api-keys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
 import { requireUser } from "../middleware/authenticate.js";
@@ -25,21 +26,43 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
   session.data.flash = list;
 }
 
+function takePlaintext(req: Parameters<typeof getSession>[0]): string | null {
+  const session = getSession(req);
+  const value = session.data.apiKeyPlaintext;
+  session.data.apiKeyPlaintext = undefined;
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+function parseId(raw: string): number | null {
+  if (!/^[0-9]+$/.test(raw)) return null;
+  const n = Number.parseInt(raw, 10);
+  if (!Number.isInteger(n) || n < 1) return null;
+  return n;
+}
+
+function settingsView(req: Parameters<typeof getSession>[0], res: { locals: { user?: { id: number } } }, extra: Record<string, unknown>) {
+  const user = res.locals.user!;
+  return {
+    title: "Settings",
+    flash: takeFlash(req),
+    errors: {},
+    passwordError: null,
+    apiKeys: listApiKeys(dbOf(req), user.id),
+    apiKeyPlaintext: takePlaintext(req),
+    apiKeyNameValue: "",
+    ...extra,
+  };
+}
+
 /**
- * Account page and password change. The "using the API" section is a seam
- * a later change can extend with another section in the same template.
+ * Account page, password change, and named API keys.
  */
 export function settingsRouter(): Router {
   const router = Router();
   router.use(requireUser);
 
   router.get("/", (req, res) => {
-    res.render("settings", {
-      title: "Settings",
-      flash: takeFlash(req),
-      errors: {},
-      passwordError: null,
-    });
+    res.render("settings", settingsView(req, res, {}));
   });
 
   router.post("/password", (req, res) => {
@@ -62,16 +85,48 @@ export function settingsRouter(): Router {
       errors.confirm = "New password and confirmation do not match";
     }
     if (Object.keys(errors).length > 0) {
-      res.status(400).render("settings", {
-        title: "Settings",
+      res.status(400).render("settings", settingsView(req, res, {
         flash: [],
         errors,
         passwordError,
-      });
+      }));
       return;
     }
     updatePassword(dbOf(req), user.id, next);
     pushFlash(req, "Password updated.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys", (req, res) => {
+    const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+    const errors: Record<string, string> = {};
+    if (!name) {
+      errors.name = "Name is required";
+    } else if (name.length > 80) {
+      errors.name = "Name must be 80 characters or fewer";
+    }
+    if (Object.keys(errors).length > 0) {
+      res.status(400).render("settings", settingsView(req, res, {
+        flash: [],
+        errors,
+        apiKeyNameValue: typeof req.body?.name === "string" ? req.body.name : "",
+        apiKeyPlaintext: null,
+      }));
+      return;
+    }
+    const created = createApiKey(dbOf(req), res.locals.user!.id, name);
+    const session = getSession(req);
+    session.data.apiKeyPlaintext = created.plaintext;
+    pushFlash(req, "API key created. Copy the secret now; it is shown once.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/revoke", (req, res) => {
+    const id = parseId(String(req.params.id));
+    if (id != null) {
+      revokeApiKey(dbOf(req), res.locals.user!.id, id);
+    }
+    pushFlash(req, "API key revoked. The secret no longer works.");
     res.redirect(302, "/settings");
   });
 

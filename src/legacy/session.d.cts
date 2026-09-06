@@ -10,6 +10,8 @@ export interface SessionData {
   userId?: number;
   csrf?: string;
   flash?: string[];
+  /** One-time API key plaintext; cleared after the next Settings render. */
+  apiKeyPlaintext?: string;
 }
 
 export interface SessionStore {

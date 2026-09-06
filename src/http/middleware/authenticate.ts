@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import type Database from "better-sqlite3";
+import { findActiveBySecret, touchLastUsed } from "../../api-keys/repo.js";
 import { findById, toPublicUser } from "../../users/repo.js";
 import { getSession } from "./session.js";
 
@@ -47,6 +48,42 @@ export const requireUser: RequestHandler = (req, res, next) => {
     res.redirect(302, `/signin?next=${target}`);
     return;
   }
+  next();
+};
+
+function bearerSecret(header: string | undefined): string | null {
+  if (!header) return null;
+  const match = /^Bearer\s+(\S+)\s*$/i.exec(header);
+  if (!match) return null;
+  return match[1];
+}
+
+/**
+ * Resolve Authorization: Bearer for /api/* when no cookie user is present.
+ * Cookie sessions remain the UI path; this does not touch the legacy session module.
+ */
+export const loadApiKeyUser: RequestHandler = (req, res, next) => {
+  if (res.locals.user) {
+    next();
+    return;
+  }
+  const secret = bearerSecret(req.get("authorization") ?? undefined);
+  if (!secret) {
+    next();
+    return;
+  }
+  const row = findActiveBySecret(dbOf(req), secret);
+  if (!row) {
+    next();
+    return;
+  }
+  const user = findById(dbOf(req), row.user_id);
+  if (!user) {
+    next();
+    return;
+  }
+  touchLastUsed(dbOf(req), row.id);
+  res.locals.user = toPublicUser(user);
   next();
 };
 

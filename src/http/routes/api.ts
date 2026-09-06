@@ -4,7 +4,7 @@ import { createItem, getItem, listItems, removeItem } from "../../items/repo.js"
 import { normalizeTags } from "../../items/tags.js";
 import { toItemResponse } from "../../items/types.js";
 import { hasFieldErrors, validateItemFields } from "../../items/validate.js";
-import { requireApiUser } from "../middleware/authenticate.js";
+import { loadApiKeyUser, requireApiUser } from "../middleware/authenticate.js";
 import { jsonOnly } from "../middleware/json-only.js";
 
 function dbOf(req: { app: { locals: Record<string, unknown> } }): Database.Database {
@@ -35,7 +35,7 @@ function str(v: unknown): string {
  */
 export function apiRouter(): Router {
   const router = Router();
-  router.use(jsonOnly, requireApiUser);
+  router.use(jsonOnly, loadApiKeyUser, requireApiUser);
 
   router.get("/items", (req, res) => {
     const tag = str(req.query.tag).trim();
