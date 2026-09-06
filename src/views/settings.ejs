@@ -93,14 +93,26 @@
                   · Last used
                   <time data-testid="api-key-last-used"><%= key.lastUsed %></time>
                 <% } %>
+                <% if (key.lastRotated) { %>
+                  · Last rotated
+                  <time data-testid="api-key-last-rotated"><%= key.lastRotated %></time>
+                <% } %>
               </p>
             </div>
+            <div class="api-key-actions">
+            <form method="post" action="/settings/api-keys/<%= key.id %>/rotate">
+              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <button type="submit" class="btn" data-testid="api-key-rotate">
+                Rotate
+              </button>
+            </form>
             <form method="post" action="/settings/api-keys/<%= key.id %>/revoke">
               <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
               <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">
                 Revoke
               </button>
             </form>
+            </div>
           </li>
         <% }); %>
       </ul>

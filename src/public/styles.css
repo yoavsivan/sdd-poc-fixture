@@ -397,6 +397,12 @@ h2 {
   font-weight: 600;
 }
 
+.api-key-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

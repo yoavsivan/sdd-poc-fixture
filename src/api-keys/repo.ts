@@ -15,6 +15,7 @@ export interface ApiKeyRecord {
   created_at: string;
   last_used_at: string | null;
   revoked_at: string | null;
+  rotated_at: string | null;
 }
 
 export interface CreatedApiKey {
@@ -31,11 +32,12 @@ function mapRow(row: ApiKeyRecord): ApiKeyRecord {
     ...row,
     last_used_at: parseNullable(row.last_used_at),
     revoked_at: parseNullable(row.revoked_at),
+    rotated_at: parseNullable(row.rotated_at),
   };
 }
 
 const COLS =
-  "id, user_id, name, prefix, suffix, token_hash, created_at, last_used_at, revoked_at";
+  "id, user_id, name, prefix, suffix, token_hash, created_at, last_used_at, revoked_at, rotated_at";
 
 export function createApiKey(
   db: Database.Database,
@@ -114,4 +116,34 @@ export function revokeApiKey(db: Database.Database, userId: number, id: number):
     update("api_keys", { revoked_at: new Date().toISOString() }, "id = :id", { id }),
   );
   return true;
+}
+
+/**
+ * Replace the secret in place. Same id and name. Old hash no longer authenticates.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): CreatedApiKey | undefined {
+  const row = getById(db, id);
+  if (!row || row.user_id !== userId || row.revoked_at) return undefined;
+  const minted = mintSecret();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: minted.prefix,
+        suffix: minted.suffix,
+        token_hash: minted.tokenHash,
+        rotated_at: new Date().toISOString(),
+      },
+      "id = :id",
+      { id },
+    ),
+  );
+  const record = getById(db, id);
+  if (!record) throw new Error("rotateApiKey: row missing after update");
+  return { record, plaintext: minted.plaintext };
 }

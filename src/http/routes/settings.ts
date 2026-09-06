@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type Database from "better-sqlite3";
-import { createApiKey, listActiveKeys, revokeApiKey } from "../../api-keys/repo.js";
+import { createApiKey, listActiveKeys, revokeApiKey, rotateApiKey } from "../../api-keys/repo.js";
 import { maskSecret, utcDateOnly } from "../../api-keys/secret.js";
 import type { ApiKeyRecord } from "../../api-keys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
@@ -48,6 +48,7 @@ export interface ApiKeyView {
   masked: string;
   created: string;
   lastUsed: string | null;
+  lastRotated: string | null;
 }
 
 function toView(row: ApiKeyRecord): ApiKeyView {
@@ -57,6 +58,7 @@ function toView(row: ApiKeyRecord): ApiKeyView {
     masked: maskSecret(row.prefix, row.suffix),
     created: utcDateOnly(row.created_at),
     lastUsed: row.last_used_at ? utcDateOnly(row.last_used_at) : null,
+    lastRotated: row.rotated_at ? utcDateOnly(row.rotated_at) : null,
   };
 }
 
@@ -109,6 +111,19 @@ export function settingsRouter(): Router {
     if (id != null) {
       const ok = revokeApiKey(dbOf(req), res.locals.user!.id, id);
       if (ok) pushFlash(req, "API key revoked. That secret no longer works.");
+    }
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const id = parseId(String(req.params.id));
+    if (id != null) {
+      const rotated = rotateApiKey(dbOf(req), res.locals.user!.id, id);
+      if (rotated) {
+        const session = getSession(req);
+        session.data.apiKeyPlaintext = rotated.plaintext;
+        pushFlash(req, "API key rotated. Copy the new secret now — it will not be shown again.");
+      }
     }
     res.redirect(302, "/settings");
   });

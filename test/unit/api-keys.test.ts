@@ -152,4 +152,39 @@ describe("api-keys http", () => {
     const listed = await request(app).get("/settings").set("Cookie", cookie);
     expect(listed.text).not.toContain('data-testid="api-key-row"');
   });
+
+  it("rotate keeps id and name, shows new secret once, retires the old secret", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const { secret: oldSecret, html: created } = await createNamedKey(app, cookie, "scripts");
+    expect(created).toContain('data-testid="api-key-rotate"');
+    const before = await request(app).get("/api/items").set("Authorization", `Bearer ${oldSecret}`);
+    expect(before.status).toBe(200);
+    const settings = await request(app).get("/settings").set("Cookie", cookie);
+    const csrf = extractCsrf(settings.text);
+    const rotated = await request(app)
+      .post("/settings/api-keys/1/rotate")
+      .set("Cookie", cookie)
+      .type("form")
+      .redirects(0)
+      .send({ _csrf: csrf });
+    expect(rotated.status).toBe(302);
+    const shown = await request(app).get("/settings").set("Cookie", cookie);
+    expect(shown.text).toContain('data-testid="api-key-row"');
+    expect(shown.text.match(/data-testid="api-key-row"/g)?.length).toBe(1);
+    const newSecret = extractPlaintext(shown.text);
+    expect(newSecret.length).toBeGreaterThan(0);
+    expect(newSecret).not.toBe(oldSecret);
+    expect(shown.text).toMatch(/data-testid="api-key-last-rotated">\d{4}-\d{2}-\d{2}</);
+    const reload = await request(app).get("/settings").set("Cookie", cookie);
+    expect(reload.text).not.toContain('data-testid="api-key-plaintext"');
+    expect(reload.text).toMatch(/data-testid="api-key-last-rotated">\d{4}-\d{2}-\d{2}</);
+    const oldFail = await request(app).get("/api/items").set("Authorization", `Bearer ${oldSecret}`);
+    expect(oldFail.status).toBe(401);
+    expect(oldFail.text).toBe('{"error":"unauthorized"}');
+    const newOk = await request(app).get("/api/items").set("Authorization", `Bearer ${newSecret}`);
+    expect(newOk.status).toBe(200);
+    expect(newOk.body).toHaveProperty("items");
+    expect(newOk.body).toHaveProperty("count");
+  });
 });
