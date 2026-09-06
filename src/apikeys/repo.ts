@@ -13,6 +13,7 @@ interface ApiKeyRow {
   last4: string;
   created_at: string;
   last_used_at: string | null;
+  last_rotated_at: string | null;
 }
 
 export interface ApiKeyRecord {
@@ -23,6 +24,7 @@ export interface ApiKeyRecord {
   last4: string;
   createdAt: string;
   lastUsedAt: string | null;
+  lastRotatedAt: string | null;
 }
 
 export interface CreatedApiKey extends ApiKeyRecord {
@@ -38,6 +40,7 @@ function toRecord(row: ApiKeyRow): ApiKeyRecord {
     last4: row.last4,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
+    lastRotatedAt: row.last_rotated_at,
   };
 }
 
@@ -45,7 +48,7 @@ function fetchById(db: Database.Database, id: number): ApiKeyRow | undefined {
   return get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at, last_rotated_at
        FROM api_keys WHERE id = :id`,
       { id },
     ),
@@ -84,7 +87,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyRecord
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at, last_rotated_at
        FROM api_keys
        WHERE user_id = :userId
        ORDER BY created_at DESC, id DESC`,
@@ -102,7 +105,7 @@ export function findApiKeyBySecret(db: Database.Database, plaintext: string): Ap
   const row = get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at, last_rotated_at
        FROM api_keys
        WHERE secret_hash = :hash`,
       { hash: hashSecret(plaintext) },
@@ -130,4 +133,42 @@ export function touchApiKeyLastUsed(db: Database.Database, id: number): void {
     db,
     update("api_keys", { last_used_at: new Date().toISOString() }, "id = :id", { id }),
   );
+}
+
+/**
+ * Replace the secret for an owned key. Keeps id and name. Returns the new plaintext once.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): CreatedApiKey | undefined {
+  const existing = get<ApiKeyRow>(
+    db,
+    compile(
+      `SELECT id, user_id, name, prefix, last4, created_at, last_used_at, last_rotated_at
+       FROM api_keys WHERE id = :id AND user_id = :userId`,
+      { id, userId },
+    ),
+  );
+  if (!existing) return undefined;
+  const minted = mintApiKeySecret();
+  const last_rotated_at = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: minted.prefix,
+        last4: minted.last4,
+        secret_hash: minted.secretHash,
+        last_rotated_at,
+      },
+      "id = :id AND user_id = :userId",
+      { id, userId },
+    ),
+  );
+  const row = fetchById(db, id);
+  if (!row) throw new Error("rotateApiKey: row missing after update");
+  return { ...toRecord(row), plaintext: minted.plaintext };
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type Database from "better-sqlite3";
-import { createApiKey, listApiKeys, revokeApiKey } from "../../apikeys/repo.js";
+import { createApiKey, listApiKeys, revokeApiKey, rotateApiKey } from "../../apikeys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
 import { isoDateUtc } from "../dates.js";
@@ -49,6 +49,7 @@ function apiKeyViews(db: Database.Database, userId: number) {
     last4: key.last4,
     createdDate: isoDateUtc(key.createdAt),
     lastUsedDate: isoDateUtc(key.lastUsedAt),
+    lastRotatedDate: isoDateUtc(key.lastRotatedAt),
   }));
 }
 
@@ -101,6 +102,19 @@ export function settingsRouter(): Router {
       revokeApiKey(dbOf(req), user.id, id);
     }
     pushFlash(req, "API key revoked. That secret no longer works.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const user = res.locals.user!;
+    const id = parseId(String(req.params.id));
+    if (id != null) {
+      const rotated = rotateApiKey(dbOf(req), user.id, id);
+      if (rotated) {
+        getSession(req).data.apiKeyPlaintext = rotated.plaintext;
+        pushFlash(req, "API key rotated. Copy the new secret now — it is shown once.");
+      }
+    }
     res.redirect(302, "/settings");
   });
 
