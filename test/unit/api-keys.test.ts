@@ -21,6 +21,12 @@ function extractLastUsed(html: string): string {
   return m[1].trim();
 }
 
+function extractLastRotated(html: string): string {
+  const m = html.match(/data-testid="api-key-last-rotated"[^>]*>([^<]+)</);
+  if (!m) throw new Error("last-rotated locator not found");
+  return m[1].trim();
+}
+
 async function createNamedKey(
   app: ReturnType<typeof makeTestApp>,
   cookie: string,
@@ -141,5 +147,40 @@ describe("api-keys", () => {
     const again = await request(app).get("/api/items").set("Authorization", `Bearer ${secret}`);
     expect(again.status).toBe(401);
     expect(again.text).toBe('{"error":"unauthorized"}');
+  });
+
+  it("rotate keeps name, shows new secret once, retires the old secret, shows last rotated", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const created = await createNamedKey(app, cookie, "cli");
+    const oldSecret = extractPlaintext(created.text);
+    expect(created.text.match(/data-testid="api-key-row"/g)?.length).toBe(1);
+
+    const page = await request(app).get("/settings").set("Cookie", cookie);
+    const csrf = extractCsrf(page.text);
+    const idMatch = page.text.match(/action="\/settings\/api-keys\/(\d+)\/rotate"/);
+    expect(idMatch).toBeTruthy();
+    const rotated = await request(app)
+      .post(`/settings/api-keys/${idMatch![1]}/rotate`)
+      .set("Cookie", cookie)
+      .type("form")
+      .send({ _csrf: csrf });
+    expect(rotated.status).toBe(200);
+    const newSecret = extractPlaintext(rotated.text);
+    expect(newSecret.length).toBeGreaterThan(0);
+    expect(newSecret).not.toBe(oldSecret);
+    expect(rotated.text).toContain("cli");
+    expect(rotated.text.match(/data-testid="api-key-row"/g)?.length).toBe(1);
+
+    const oldRes = await request(app).get("/api/items").set("Authorization", `Bearer ${oldSecret}`);
+    expect(oldRes.status).toBe(401);
+    expect(oldRes.text).toBe('{"error":"unauthorized"}');
+    const newRes = await request(app).get("/api/items").set("Authorization", `Bearer ${newSecret}`);
+    expect(newRes.status).toBe(200);
+
+    const reload = await request(app).get("/settings").set("Cookie", cookie);
+    expect(reload.text).not.toContain('data-testid="api-key-plaintext"');
+    expect(extractLastRotated(reload.text)).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(reload.text.match(/data-testid="api-key-row"/g)?.length).toBe(1);
   });
 });

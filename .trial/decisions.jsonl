@@ -4,3 +4,7 @@
 {"turn": 2, "type": "scope", "question": "Empty API key name", "source": "HUMAN.md#defaults", "answer": "Reject empty/whitespace name; smallest surface that still meets AC"}
 {"turn": 3, "type": "approve-plan", "question": "Approve F1 plan if every AC maps to a task", "source": "HUMAN.md#approvals", "answer": "Approved: AC1-6 map to T006-T015; constitution gates pass"}
 {"turn": 4, "type": "approve-completion", "question": "Approve F1 completion after smoke and unit tests", "source": "HUMAN.md#approvals", "answer": "Approved: make test-docker 51 passed; make smoke 4 passed; locators and 401 body match brief"}
+{"turn": 5, "type": "other", "question": "Which Spec Kit change flow for F1 prime rotate keys", "source": "HUMAN.md#scope", "answer": "Flow-forward new numbered spec 002-rotate-api-keys then plan tasks implement"}
+{"turn": 5, "type": "clarify", "question": "Does rotate keep id and name; last rotated format", "source": "HUMAN.md#product", "answer": "Same id and name; last rotated YYYY-MM-DD UTC; old secret dies immediately"}
+{"turn": 6, "type": "approve-plan", "question": "Approve F1 prime plan AC mapping", "source": "HUMAN.md#approvals", "answer": "Approved: rotate keep id/name, old 401, new bearer, last-rotated map to T003-T008"}
+{"turn": 7, "type": "approve-completion", "question": "Approve F1 prime completion after tests and smoke", "source": "HUMAN.md#approvals", "answer": "Approved: test-docker 52 passed; smoke 4 passed; rotate locators and 401 body match brief"}

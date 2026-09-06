@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type Database from "better-sqlite3";
-import { createApiKey, listApiKeys, revokeApiKey } from "../../apikeys/repo.js";
+import { createApiKey, listApiKeys, revokeApiKey, rotateApiKey } from "../../apikeys/repo.js";
 import { maskSecret, uiDate } from "../../apikeys/secret.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
@@ -53,6 +53,7 @@ function settingsLocals(
     masked: maskSecret(k.prefix, k.secret_tail),
     created: uiDate(k.created_at),
     lastUsed: uiDate(k.last_used_at),
+    lastRotated: uiDate(k.last_rotated_at),
   }));
   return {
     title: "Settings",
@@ -95,6 +96,34 @@ export function settingsRouter(): Router {
       settingsLocals(req, res, {
         flash: ["API key created. Copy the secret now — it will not be shown again."],
         plaintext: created.plaintext,
+      }),
+    );
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const id = parseId(String(req.params.id));
+    if (id == null) {
+      res.status(404).render("error", {
+        title: "Not found",
+        status: 404,
+        message: "That API key was not found.",
+      });
+      return;
+    }
+    const rotated = rotateApiKey(dbOf(req), res.locals.user!.id, id);
+    if (!rotated) {
+      res.status(404).render("error", {
+        title: "Not found",
+        status: 404,
+        message: "That API key was not found.",
+      });
+      return;
+    }
+    res.status(200).render(
+      "settings",
+      settingsLocals(req, res, {
+        flash: ["API key rotated. Copy the new secret now — it will not be shown again."],
+        plaintext: rotated.plaintext,
       }),
     );
   });

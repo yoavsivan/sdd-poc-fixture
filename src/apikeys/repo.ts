@@ -14,6 +14,7 @@ export interface ApiKeyRecord {
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
+  last_rotated_at: string | null;
   revoked_at: string | null;
 }
 
@@ -26,6 +27,7 @@ function toRecord(row: ApiKeyRecord): ApiKeyRecord {
   return {
     ...row,
     last_used_at: row.last_used_at ?? null,
+    last_rotated_at: row.last_rotated_at ?? null,
     revoked_at: row.revoked_at ?? null,
   };
 }
@@ -66,7 +68,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyRecord
   const rows = all<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys
        WHERE user_id = :userId AND revoked_at IS NULL
        ORDER BY created_at DESC, id DESC`,
@@ -84,7 +86,7 @@ export function getById(
   const row = get<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys
        WHERE id = :id AND user_id = :userId`,
       { id, userId },
@@ -105,7 +107,7 @@ export function findActiveByPlaintext(
   const row = get<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, secret_tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys
        WHERE secret_hash = :secret_hash AND revoked_at IS NULL`,
       { secret_hash },
@@ -131,4 +133,35 @@ export function revokeApiKey(db: Database.Database, userId: number, id: number):
     }),
   );
   return true;
+}
+
+/**
+ * Replace the secret on an existing active key. Id and name stay the same.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): CreatedApiKey | undefined {
+  const row = getById(db, userId, id);
+  if (!row || row.revoked_at) return undefined;
+  const plaintext = mintPlaintext();
+  const last_rotated_at = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: displayPrefix(plaintext),
+        secret_tail: maskedTail(plaintext),
+        secret_hash: hashSecret(plaintext),
+        last_rotated_at,
+      },
+      "id = :id AND user_id = :userId AND revoked_at IS NULL",
+      { id, userId },
+    ),
+  );
+  const updated = getById(db, userId, id);
+  if (!updated) return undefined;
+  return { record: updated, plaintext };
 }

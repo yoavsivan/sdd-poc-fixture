@@ -385,6 +385,12 @@ h2 {
   margin: 4px 0;
 }
 
+.api-key-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .form-actions {
   display: flex;
   gap: 8px;
