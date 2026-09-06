@@ -13,6 +13,7 @@ export interface ApiKeyRecord {
   userId: number;
   name: string;
   prefix: string;
+  displayTail: string;
   secretHash: string;
   createdAt: string;
   lastUsedAt: string | null;
@@ -32,6 +33,7 @@ interface ApiKeyRow {
   user_id: number;
   name: string;
   prefix: string;
+  display_tail: string;
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
@@ -47,32 +49,25 @@ function mintPlaintext(): { plaintext: string; prefix: string } {
   return { prefix, plaintext: `smk_${prefix}_${secret}` };
 }
 
-function maskFor(prefix: string, plaintext: string): string {
-  const tail = plaintext.length >= 4 ? plaintext.slice(-4) : plaintext;
-  return `${prefix}…${tail}`;
-}
-
 function toRecord(row: ApiKeyRow): ApiKeyRecord {
   return {
     id: row.id,
     userId: row.user_id,
     name: row.name,
     prefix: row.prefix,
+    displayTail: row.display_tail,
     secretHash: row.secret_hash,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
   };
 }
 
-function toPublic(row: ApiKeyRow, plaintextForMask?: string): ApiKeyPublic {
-  const masked = plaintextForMask
-    ? maskFor(row.prefix, plaintextForMask)
-    : `${row.prefix}…`;
+function toPublic(row: ApiKeyRow): ApiKeyPublic {
   return {
     id: row.id,
     name: row.name,
     prefix: row.prefix,
-    masked,
+    masked: `${row.prefix}…${row.display_tail}`,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
   };
@@ -94,7 +89,7 @@ function fetchRow(
   return get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
        FROM api_keys
        WHERE id = :id AND user_id = :userId`,
       { id, userId },
@@ -116,6 +111,7 @@ export function createApiKey(
   }
   const { plaintext, prefix } = mintPlaintext();
   const secret_hash = hashSecret(plaintext);
+  const display_tail = plaintext.slice(-4);
   const created_at = new Date().toISOString();
   const result = run(
     db,
@@ -123,6 +119,7 @@ export function createApiKey(
       user_id: userId,
       name: trimmed,
       prefix,
+      display_tail,
       secret_hash,
       created_at,
     }),
@@ -130,7 +127,7 @@ export function createApiKey(
   const id = Number(result.lastInsertRowid);
   const row = fetchRow(db, userId, id);
   if (!row) throw new Error("createApiKey: row missing after insert");
-  return { key: toPublic(row, plaintext), plaintext };
+  return { key: toPublic(row), plaintext };
 }
 
 /**
@@ -140,7 +137,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyPublic
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
        FROM api_keys
        WHERE user_id = :userId
        ORDER BY created_at DESC, id DESC`,
@@ -162,7 +159,7 @@ export function findApiKeyByPlaintext(
   const row = get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
        FROM api_keys
        WHERE secret_hash = :secret_hash`,
       { secret_hash },

@@ -32,6 +32,8 @@ describe("api-keys-repo", () => {
     const second = createApiKey(db, user.id, "CI");
     const listed = listApiKeys(db, user.id);
     expect(listed.map((k) => k.name)).toEqual(["CI", "Scripts"]);
+    expect(listed[1].masked.startsWith(first.key.prefix)).toBe(true);
+    expect(listed[1].masked.endsWith(first.plaintext.slice(-4))).toBe(true);
     expect(listed[0].id).toBe(second.key.id);
     expect(findApiKeyByPlaintext(db, first.plaintext)?.id).toBe(first.key.id);
     expect(findApiKeyByPlaintext(db, "not-a-key")).toBeUndefined();
