@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import type Database from "better-sqlite3";
+import { findApiKeyByPlaintext, touchApiKeyLastUsed } from "../../api-keys/repo.js";
 import { findById, toPublicUser } from "../../users/repo.js";
 import { getSession } from "./session.js";
 
@@ -47,6 +48,41 @@ export const requireUser: RequestHandler = (req, res, next) => {
     res.redirect(302, `/signin?next=${target}`);
     return;
   }
+  next();
+};
+
+function readBearer(req: { get: (name: string) => string | undefined }): string | null {
+  const header = req.get("authorization");
+  if (!header) return null;
+  const match = /^Bearer\s+(\S+)/i.exec(header.trim());
+  if (!match) return null;
+  return match[1];
+}
+
+/**
+ * API-only: if Authorization: Bearer is present, resolve it to the owning user.
+ * An invalid Bearer clears the cookie user so /api/* returns 401.
+ */
+export const loadApiKey: RequestHandler = (req, res, next) => {
+  const token = readBearer(req);
+  if (token === null) {
+    next();
+    return;
+  }
+  const key = findApiKeyByPlaintext(dbOf(req), token);
+  if (!key) {
+    res.locals.user = undefined;
+    next();
+    return;
+  }
+  const row = findById(dbOf(req), key.userId);
+  if (!row) {
+    res.locals.user = undefined;
+    next();
+    return;
+  }
+  touchApiKeyLastUsed(dbOf(req), key.id);
+  res.locals.user = toPublicUser(row);
   next();
 };
 

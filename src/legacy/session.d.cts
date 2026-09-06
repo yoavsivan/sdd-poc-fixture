@@ -10,6 +10,7 @@ export interface SessionData {
   userId?: number;
   csrf?: string;
   flash?: string[];
+  apiKeyPlaintext?: string;
 }
 
 export interface SessionStore {

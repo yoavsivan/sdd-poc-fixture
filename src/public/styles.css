@@ -354,6 +354,29 @@ h2 {
   margin: 0;
 }
 
+.key-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.key-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.key-name {
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+
 .code-block {
   background: #1c1914;
   color: #f4f1ea;

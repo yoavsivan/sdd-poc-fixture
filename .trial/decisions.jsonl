@@ -1,0 +1,23 @@
+{"turn": 1, "type": "choose-option", "question": "Brownfield detected. May I perform a read-only scan to analyze the architecture?", "source": "HUMAN.md#project-context", "answer": "Yes. Scan the fixture; product is Shelfmark reading-list with cookie sessions."}
+{"turn": 1, "type": "product", "question": "Does the proposed title Shelfmark and reading-list summary capture the vision?", "source": "HUMAN.md#project-context", "answer": "Yes. Paste URL, notes, tags; find by tag or title word."}
+{"turn": 1, "type": "choose-option", "question": "Product definition mode: Interactive or Autogenerate?", "source": "HUMAN.md#project-context", "answer": "Autogenerate from HUMAN.md project-context and codebase (brownfield)."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted product.md?", "source": "HUMAN.md#product", "answer": "Approve."}
+{"turn": 1, "type": "choose-option", "question": "Product guidelines mode: Interactive or Autogenerate?", "source": "HUMAN.md#product", "answer": "Autogenerate; API keys copy and timestamps from product section."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted product-guidelines.md?", "source": "HUMAN.md#product", "answer": "Approve."}
+{"turn": 1, "type": "choose-option", "question": "Confirm inferred tech stack (TS/Express/SQLite/Vitest/Playwright Docker)?", "source": "HUMAN.md#project-context", "answer": "Yes. Wrap legacy session/query; no new runtime deps; make smoke/test-docker."}
+{"turn": 1, "type": "approve-plan", "question": "Approve drafted tech-stack.md?", "source": "HUMAN.md#project-context", "answer": "Approve."}
+{"turn": 1, "type": "choose-option", "question": "Copy TypeScript, JavaScript, HTML/CSS, general style guides? Additional needed?", "source": "HUMAN.md#clarify", "answer": "Yes those four. No additional guides."}
+{"turn": 1, "type": "choose-option", "question": "Workflow mode: Default or Customize?", "source": "HUMAN.md#defaults", "answer": "Default workflow; adapt commands to make test-docker and make smoke."}
+{"turn": 1, "type": "choose-option", "question": "Install extra catalog skills (Firebase/GCP)?", "source": "HUMAN.md#defaults", "answer": "No. None match this stack; skip extra skills."}
+{"turn": 1, "type": "choose-option", "question": "Start defining the first actionable track now?", "source": "HUMAN.md#scope", "answer": "Yes. F1 named API keys and Bearer auth on /api/*."}
+{"turn": 2, "type": "choose-option", "question": "Is this track a Feature (named API keys / Bearer on /api/*)?", "source": "HUMAN.md#scope", "answer": "Yes. Feature track for F1 API-key authentication."}
+{"turn": 2, "type": "clarify", "question": "Where should keys be created and stored?", "source": "HUMAN.md#clarify", "answer": "Settings UI + SQLite migration 0004; extend JSON API auth, not a new app."}
+{"turn": 2, "type": "clarify", "question": "Key format, list display, timestamps?", "source": "HUMAN.md#product", "answer": "Prefix+secret (>=32 random bytes); mask tail in list; YYYY-MM-DD; UTC stored."}
+{"turn": 2, "type": "clarify", "question": "401 body, Bearer header, cookie sessions?", "source": "HUMAN.md#scope", "answer": "401 {\"error\":\"unauthorized\"}; Bearer on /api/*; cookies unchanged; no legacy rewrite."}
+{"turn": 2, "type": "clarify", "question": "Rotate, scopes, OAuth in this track?", "source": "HUMAN.md#scope", "answer": "Out of scope. Rotate is F1' only."}
+{"turn": 2, "type": "choose-option", "question": "Sufficient information to draft the spec?", "source": "HUMAN.md#defaults", "answer": "Yes. Draft spec from F1 brief and HUMAN.md."}
+{"turn": 2, "type": "approve-plan", "question": "Approve spec.md and proceed to planning?", "source": "HUMAN.md#approvals", "answer": "Approve. Every F1 AC is in the spec."}
+{"turn": 2, "type": "approve-plan", "question": "Approve plan.md (schema, Bearer, settings, smoke)?", "source": "HUMAN.md#approvals", "answer": "Approve. Each AC maps to a TDD task."}
+{"turn": 2, "type": "choose-option", "question": "Install extra skills for this track?", "source": "HUMAN.md#defaults", "answer": "No matching catalog skills. Skip."}
+{"turn": 2, "type": "choose-option", "question": "Start implementation now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 3, "type": "choose-option", "question": "Proceed with implementation of Named API keys and Bearer auth?", "source": "HUMAN.md#scope", "answer": "Yes."}

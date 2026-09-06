@@ -1,0 +1,138 @@
+docker compose --profile smoke up --build --abort-on-container-exit --exit-code-from playwright
+time="2026-09-06T06:41:25Z" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 401B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.1s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 149B done
+#3 DONE 0.0s
+
+#4 [app 1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#4 DONE 0.0s
+
+#5 [app internal] load build context
+#5 transferring context: 7.93kB done
+#5 DONE 0.0s
+
+#6 [app 3/7] WORKDIR /app
+#6 CACHED
+
+#7 [app 2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [app 4/7] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [app 5/7] RUN npm ci
+#9 CACHED
+
+#10 [app 6/7] COPY . .
+#10 DONE 0.0s
+
+#11 [app 7/7] RUN npm run build
+#11 0.258 
+#11 0.258 > shelfmark@1.0.0 build
+#11 0.258 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#11 0.258 
+#11 DONE 1.1s
+
+#12 [app] exporting to image
+#12 exporting layers
+#12 exporting layers 1.5s done
+#12 writing image sha256:af119eb133293bf560300e04efb00f0fe8fb4ce79cf8113c77e2179a0aa5bbc4 done
+#12 naming to docker.io/library/sdd-poc-fixture-app done
+#12 DONE 1.5s
+
+#13 [app] resolving provenance for metadata file
+#13 DONE 0.0s
+ app  Built
+time="2026-09-06T06:41:28Z" level=warning msg="volume \"sdd-poc-fixture_playwright-nm\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+ Container sdd-poc-fixture-app-1  Recreate
+ Container sdd-poc-fixture-app-1  Recreated
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":["0004_api_keys.sql"],"skipped":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql"]}
+app-1  | [info] seed user {"username":"demo","created":false}
+app-1  | [info] seed items {"inserted":0}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 4ms
+playwright-1  | npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+playwright-1  | 
+playwright-1  | added 202 packages, and audited 203 packages in 1s
+playwright-1  | 
+playwright-1  | 39 packages are looking for funding
+playwright-1  |   run `npm fund` for details
+playwright-1  | 
+playwright-1  | 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+playwright-1  | 
+playwright-1  | To address issues that do not require attention, run:
+playwright-1  |   npm audit fix
+playwright-1  | 
+playwright-1  | To address all issues (including breaking changes), run:
+playwright-1  |   npm audit fix --force
+playwright-1  | 
+playwright-1  | Run `npm audit` for details.
+app-1         | [info] GET /healthz 200 0ms
+playwright-1  | 
+playwright-1  | Running 4 tests using 1 worker
+playwright-1  | 
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 3ms
+app-1         | [info] POST /signin 302 35ms
+app-1         | [info] GET /items 200 3ms
+playwright-1  |   ✓  1 test/smoke/smoke.spec.ts:4:1 › sign-in (213ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 34ms
+app-1         | [info] GET /items 200 3ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 2ms
+playwright-1  |   ✓  2 test/smoke/smoke.spec.ts:15:1 › add item (247ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 3ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 0ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 304 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items?tag=alpha-mtpg1irn-5hq9ex 200 1ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+playwright-1  |   ✓  3 test/smoke/smoke.spec.ts:31:1 › tag filter (445ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 1ms
+app-1         | [info] POST /items 302 0ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /api/items?q=mtpg1j43-nxlv27 200 1ms
+app-1         | [info] GET /api/items 401 0ms
+playwright-1  |   ✓  4 test/smoke/smoke.spec.ts:57:1 › /api/items with cookie (240ms)
+playwright-1  | 
+playwright-1  |   4 passed (1.8s)
+[Kplaywright-1 exited with code 0
+Aborting on container exit...
+ Container sdd-poc-fixture-playwright-1  Stopping
+ Container sdd-poc-fixture-playwright-1  Stopped
+ Container sdd-poc-fixture-app-1  Stopping
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+ Container sdd-poc-fixture-app-1  Stopped
+[Kapp-1 exited with code 137
