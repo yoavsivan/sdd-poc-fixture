@@ -6,7 +6,7 @@ import type { SessionStore } from "../legacy/session.cjs";
 import { configureViews, publicDir } from "./views.js";
 import { sessionMiddleware } from "./middleware/session.js";
 import { csrfProtection } from "./middleware/csrf.js";
-import { loadUser } from "./middleware/authenticate.js";
+import { loadApiKey, loadUser } from "./middleware/authenticate.js";
 import { errorHandler, notFound } from "./middleware/errors.js";
 import { authRouter } from "./routes/auth.js";
 import { itemsRouter } from "./routes/items.js";
@@ -42,6 +42,7 @@ export function createApp(deps: AppDeps): express.Express {
   app.use(sessionMiddleware(deps.config, deps.store));
   app.use(csrfProtection);
   app.use(loadUser);
+  app.use(loadApiKey);
   app.use((req, res, next) => {
     const session = getSession(req);
     res.locals.csrf = session.data.csrf;

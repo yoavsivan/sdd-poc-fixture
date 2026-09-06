@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import type Database from "better-sqlite3";
+import { findActiveByPlaintext, touchLastUsed } from "../../apikeys/repo.js";
 import { findById, toPublicUser } from "../../users/repo.js";
 import { getSession } from "./session.js";
 
@@ -14,6 +15,18 @@ function nextTarget(req: { originalUrl?: string; url: string }): string {
   if (!raw.startsWith("/")) return "/items";
   if (raw.startsWith("//")) return "/items";
   return raw;
+}
+
+function isApiPath(path: string): boolean {
+  return path === "/api" || path.startsWith("/api/");
+}
+
+/** Present Bearer token, or null if the Authorization scheme is not Bearer. */
+function bearerToken(header: unknown): string | null {
+  if (typeof header !== "string") return null;
+  const match = /^\s*Bearer(?:\s+(.*))?$/i.exec(header);
+  if (!match) return null;
+  return (match[1] ?? "").trim();
 }
 
 /**
@@ -35,6 +48,32 @@ export const loadUser: RequestHandler = (req, res, next) => {
     return;
   }
   res.locals.user = toPublicUser(row);
+  next();
+};
+
+/**
+ * On `/api/*`, a Bearer header authenticates exclusively as the key owner.
+ * HTML routes ignore Bearer so cookie sessions stay how the UI signs in.
+ */
+export const loadApiKey: RequestHandler = (req, res, next) => {
+  if (!isApiPath(req.path)) {
+    next();
+    return;
+  }
+  const token = bearerToken(req.headers.authorization);
+  if (token === null) {
+    next();
+    return;
+  }
+  const key = findActiveByPlaintext(dbOf(req), token);
+  if (!key) {
+    res.locals.user = undefined;
+    next();
+    return;
+  }
+  touchLastUsed(dbOf(req), key.id);
+  const row = findById(dbOf(req), key.user_id);
+  res.locals.user = row ? toPublicUser(row) : undefined;
   next();
 };
 
