@@ -1,7 +1,7 @@
 {
   "id": "api-key-rotate_20260906",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-09-06T03:46:00Z",
   "updated_at": "2026-09-06T03:46:00Z",
   "title": "Rotate API keys"
