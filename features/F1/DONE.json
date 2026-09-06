@@ -1,0 +1,92 @@
+{
+  "gatekit_done": 1,
+  "feature": "F1",
+  "completed_at": "2026-09-06T05:41:27Z",
+  "contract_sha256": "be623ac52f5a9dce780240a6944d494481c1a3f4e382308b713d8a4bb7306feb",
+  "checks": [
+    {
+      "id": "plan-has-handoff",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/plan-has-handoff.log",
+      "duration_ms": 0,
+      "run": "spec-mentions plan.md"
+    },
+    {
+      "id": "tasks-complete",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/tasks-complete.log",
+      "duration_ms": 0,
+      "run": "gatekit tasks --feature F1 </dev/null"
+    },
+    {
+      "id": "drift",
+      "kind": "command",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/drift.log",
+      "duration_ms": 2000,
+      "run": "gatekit drift --feature F1 </dev/null"
+    },
+    {
+      "id": "brief-names-surface",
+      "kind": "spec-mentions",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/brief-names-surface.log",
+      "duration_ms": 0,
+      "run": "spec-mentions brief.md"
+    },
+    {
+      "id": "migration-present",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/migration-present.log",
+      "duration_ms": 0,
+      "run": "artifact-exists src/db/migrations/0004_api_keys.sql"
+    },
+    {
+      "id": "unit-tests",
+      "kind": "test",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/unit-tests.log",
+      "duration_ms": 6000,
+      "run": "make test-docker </dev/null"
+    },
+    {
+      "id": "smoke",
+      "kind": "e2e",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/smoke.log",
+      "duration_ms": 21000,
+      "run": "make smoke </dev/null"
+    },
+    {
+      "id": "settings-view",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/settings-view.log",
+      "duration_ms": 0,
+      "run": "artifact-exists src/views/settings.ejs"
+    }
+  ],
+  "gates": {
+    "required": [],
+    "satisfied_by": []
+  }
+}

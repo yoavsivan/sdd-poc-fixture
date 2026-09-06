@@ -13,6 +13,7 @@ describe("migrations", () => {
       "0001_users.sql",
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
+      "0004_api_keys.sql",
     ]);
     expect(result.skipped).toEqual([]);
     const names = db.prepare("SELECT name FROM schema_migrations ORDER BY name").all() as {
@@ -27,6 +28,7 @@ describe("migrations", () => {
     expect(tableNames).toContain("items");
     expect(tableNames).toContain("tags");
     expect(tableNames).toContain("item_tags");
+    expect(tableNames).toContain("api_keys");
     db.close();
   });
 
@@ -39,6 +41,7 @@ describe("migrations", () => {
       "0001_users.sql",
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
+      "0004_api_keys.sql",
     ]);
     db.close();
   });

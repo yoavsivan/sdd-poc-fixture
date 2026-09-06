@@ -2,7 +2,7 @@
   <header class="page-head">
     <div>
       <h1>Settings</h1>
-      <p class="lede">Account details, password, and how to call the JSON API with a session cookie.</p>
+      <p class="lede">Account details, password, and API keys for calling the JSON API without a cookie.</p>
     </div>
   </header>
 
@@ -46,12 +46,69 @@
     </form>
   </section>
 
+  <section class="panel" data-testid="api-keys-section">
+    <h2>API keys</h2>
+    <p>
+      Create a named key to call <code>/api/*</code> with
+      <code>Authorization: Bearer</code>. The secret is shown once at create —
+      copy it then. Revoke is immediate: that secret stops working right away.
+    </p>
+    <% if (apiKeyPlaintext) { %>
+      <p class="flash" data-testid="api-key-plaintext"><%= apiKeyPlaintext %></p>
+    <% } %>
+    <% if (apiKeyNameError) { %>
+      <p class="form-error" role="alert"><%= apiKeyNameError %></p>
+    <% } %>
+    <form method="post" action="/settings/api-keys" class="stack api-key-create-form">
+      <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+      <label class="field">
+        <span>Key name</span>
+        <input
+          type="text"
+          name="api-key-name"
+          data-testid="api-key-name"
+          autocomplete="off"
+          required
+        />
+      </label>
+      <button type="submit" class="btn btn-primary" data-testid="api-key-create">Create key</button>
+    </form>
+    <% if (apiKeys && apiKeys.length) { %>
+      <ul class="api-key-list">
+        <% apiKeys.forEach(function (key) { %>
+          <li class="api-key-row" data-testid="api-key-row">
+            <div class="api-key-main">
+              <strong class="api-key-title"><%= key.name %></strong>
+              <p class="muted api-key-mask"><%= key.masked %></p>
+              <p class="muted">
+                Created
+                <time data-testid="api-key-created"><%= key.created %></time>
+                <% if (key.lastUsed) { %>
+                  · Last used
+                  <time data-testid="api-key-last-used"><%= key.lastUsed %></time>
+                <% } else { %>
+                  · Last used
+                  <time data-testid="api-key-last-used"></time>
+                <% } %>
+              </p>
+            </div>
+            <form method="post" action="/settings/api-keys/<%= key.id %>/revoke">
+              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">Revoke</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </section>
+
   <section class="panel" data-testid="settings-api-usage">
     <h2>Using the API</h2>
     <p>
-      The JSON API lives at <code>/api/items</code>. At the moment it authenticates
-      with the same session cookie the browser already has. Fish a cookie out of
-      the sign-in form, then call the API:
+      The JSON API lives at <code>/api/items</code>. Sign in with a cookie as
+      before, or create an API key above and send
+      <code>Authorization: Bearer</code> with the secret. A missing or unknown
+      credential answers <code>{"error":"unauthorized"}</code>.
     </p>
     <pre class="code-block"><code>C=$(scripts/login.sh demo demo-pass-1234)
 curl -s -b "$C" http://localhost:3000/api/items

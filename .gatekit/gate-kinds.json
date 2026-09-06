@@ -1,0 +1,50 @@
+{
+  "gatekit_gate_kinds": 1,
+  "scale": { "min": 1, "max": 5 },
+  "verdicts": ["PASS", "FIX", "FAIL"],
+  "verdict_semantics": {
+    "PASS": "every dimension at or above its minimum and no blocking items; the unit may proceed",
+    "FIX": "a defect that can be fixed inside the current plan; the executor fixes and the reviewer writes cycle N+1",
+    "FAIL": "a wrong premise — the plan or the brief cannot work as written; stop and report, do not iterate"
+  },
+  "verdict_fields": [
+    "gatekit_verdict", "kind", "feature", "unit", "cycle", "target", "reviewer",
+    "verdict", "scores", "blocking", "advisory", "evidence", "reviewed_at"
+  ],
+  "blocking_item_fields": ["id", "where", "problem", "fix"],
+  "path_pattern": ".gatekit/verdicts/{feature}/{unit}.{kind}.c{cycle}.json",
+  "kinds": {
+    "plan-review": {
+      "purpose": "Before anyone implements: does the plan and contract cover the brief, and can the contract actually run?",
+      "reviews": "features/<id>/brief.md, contract.yaml, plan.md, tasks.md",
+      "dimensions": {
+        "brief_coverage":    { "min": 4, "question": "Does every acceptance criterion in brief.md map to at least one task and one contract check?" },
+        "contract_runnable": { "min": 4, "question": "Can every check in contract.yaml run from a clean checkout with no hidden setup, and does it fail when the criterion is not met?" },
+        "handoff_complete":  { "min": 3, "question": "Does the Hand-off section name planner, executor, reviewer, budget and a stop condition an executor can act on?" },
+        "scope":             { "min": 3, "question": "Is out-of-scope explicit, and is nothing in plan.md outside brief.md?" }
+      },
+      "evidence": { "min_items": 2, "rule": "each item cites a file path, with a heading or line, that the reviewer read" }
+    },
+    "code-review": {
+      "purpose": "After implementation: is the code correct, does it match the plan, are the tests real, and does the spec still describe it?",
+      "reviews": "the diff since contract.yaml base, features/<id>/DONE.json and the evidence logs it names",
+      "dimensions": {
+        "correctness":  { "min": 4, "question": "Does the code do what the brief's acceptance criteria say, including the failure paths?" },
+        "matches_plan": { "min": 4, "question": "Does the diff follow plan.md, with any departure written down in plan.md or tasks.md?" },
+        "tests_real":   { "min": 4, "question": "Did the contract's test/e2e checks actually run (evidence logs present, exit codes recorded), and would they fail if the feature were broken?" },
+        "spec_current": { "min": 3, "question": "Does brief.md still describe the shipped surface — routes, controls, behaviours — after this change?" }
+      },
+      "evidence": { "min_items": 2, "rule": "each item cites a file path or a command the reviewer ran, never a paraphrase of the executor's summary" }
+    },
+    "spec-review": {
+      "purpose": "After a follow-up change: does the spec still tell the truth about the code?",
+      "reviews": "features/<id>/brief.md and contract.yaml against the code at HEAD",
+      "dimensions": {
+        "describes_surface":   { "min": 4, "question": "Is every route and UI control the code exposes named in brief.md?" },
+        "no_stale_statements": { "min": 4, "question": "Is there no sentence in brief.md that the code now contradicts?" },
+        "contract_current":    { "min": 3, "question": "Does contract.yaml still check the behaviour the brief promises, including what the follow-up added?" }
+      },
+      "evidence": { "min_items": 1, "rule": "each item cites a brief.md line and the code location it was checked against" }
+    }
+  }
+}
