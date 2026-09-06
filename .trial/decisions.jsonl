@@ -24,3 +24,6 @@
 {"turn": 3, "type": "approve-completion", "question": "Phase schema/Bearer/settings/smoke verification: does this meet expectations?", "source": "HUMAN.md#approvals", "answer": "Yes. test-docker 52 passed; smoke 4 passed; F1 ACs covered."}
 {"turn": 3, "type": "product", "question": "Update product.md and tech-stack.md for API keys?", "source": "HUMAN.md#product", "answer": "Yes. Document Bearer keys; cookies still sign in the UI."}
 {"turn": 3, "type": "choose-option", "question": "Perform a formal code review of the completed track now?", "source": "HUMAN.md#approvals", "answer": "Yes."}
+{"turn": 4, "type": "choose-option", "question": "Review findings: apply masked tail fix?", "source": "HUMAN.md#approvals", "answer": "Apply Fixes. Store display_tail so the list shows prefix plus masked tail."}
+{"turn": 4, "type": "choose-option", "question": "Archive, delete, or skip the completed track?", "source": "HUMAN.md#defaults", "answer": "Skip. Leave the track in conductor/tracks so spec/plan remain scorable."}
+{"turn": 4, "type": "approve-completion", "question": "Approve F1 completion after review and tests?", "source": "HUMAN.md#approvals", "answer": "Approve. Feature matches F1 brief; test-docker and smoke passed."}
