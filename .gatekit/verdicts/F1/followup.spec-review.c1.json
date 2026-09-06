@@ -1,0 +1,23 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "spec-review",
+  "feature": "F1",
+  "unit": "followup",
+  "cycle": 1,
+  "target": "features/F1/brief.md",
+  "reviewer": "trial-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "describes_surface": 5,
+    "no_stale_statements": 4,
+    "contract_current": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "features/F1/brief.md names api-key-rotate and api-key-last-rotated; src/views/settings.ejs renders those testids",
+    "features/F1/brief.md POST /api-keys/:id/rotate; src/http/routes/settings.ts router.post /api-keys/:id/rotate",
+    "features/F1/contract.yaml brief-names-surface and rotate-migration 0005 match the follow-up"
+  ],
+  "reviewed_at": "2026-09-06T11:28:28Z"
+}

@@ -1,8 +1,8 @@
 {
   "gatekit_done": 1,
   "feature": "F1",
-  "completed_at": "2026-09-06T11:25:52Z",
-  "contract_sha256": "a95d04c47872fcdc6afd2c8531a6354d9f041f6545155be5a0d91e42364054ad",
+  "completed_at": "2026-09-06T11:29:15Z",
+  "contract_sha256": "eee2c78b8510658aaa555bd8f17b0e3aca78e8caa62587b2ba789925fd29b3e1",
   "checks": [
     {
       "id": "plan-has-handoff",
@@ -41,8 +41,18 @@
       "expect_exit": 0,
       "result": "pass",
       "evidence": ".gatekit/evidence/F1/migration-present.log",
-      "duration_ms": 1000,
+      "duration_ms": 0,
       "run": "artifact-exists src/db/migrations/0004_*.sql"
+    },
+    {
+      "id": "rotate-migration",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/rotate-migration.log",
+      "duration_ms": 0,
+      "run": "artifact-exists src/db/migrations/0005_*.sql"
     },
     {
       "id": "drift",
