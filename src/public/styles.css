@@ -377,6 +377,13 @@ h2 {
   font-weight: 600;
 }
 
+.key-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
 .code-block {
   background: #1c1914;
   color: #f4f1ea;

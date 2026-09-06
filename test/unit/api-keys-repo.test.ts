@@ -5,6 +5,7 @@ import {
   findApiKeyByPlaintext,
   listApiKeys,
   revokeApiKey,
+  rotateApiKey,
   touchApiKeyLastUsed,
 } from "../../src/api-keys/repo.ts";
 import { openDb } from "../../src/db/open.ts";
@@ -58,6 +59,20 @@ describe("api-keys-repo", () => {
     expect(listed.lastUsedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     expect(dateOnlyUtc(listed.lastUsedAt)).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(dateOnlyUtc(listed.createdAt)).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    db.close();
+  });
+
+  it("rotate keeps id and name, retires the old secret, sets rotated_at", () => {
+    const { db, user } = setup();
+    const created = createApiKey(db, user.id, "CI");
+    const rotated = rotateApiKey(db, user.id, created.key.id);
+    expect(rotated).toBeTruthy();
+    expect(rotated!.key.id).toBe(created.key.id);
+    expect(rotated!.key.name).toBe("CI");
+    expect(rotated!.plaintext).not.toBe(created.plaintext);
+    expect(findApiKeyByPlaintext(db, created.plaintext)).toBeUndefined();
+    expect(findApiKeyByPlaintext(db, rotated!.plaintext)?.id).toBe(created.key.id);
+    expect(rotated!.key.rotatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     db.close();
   });
 });

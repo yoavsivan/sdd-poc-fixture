@@ -5,6 +5,7 @@ import {
   dateOnlyUtc,
   listApiKeys,
   revokeApiKey,
+  rotateApiKey,
   type ApiKeyPublic,
 } from "../../api-keys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
@@ -51,6 +52,7 @@ function viewKeys(keys: ApiKeyPublic[]) {
     ...key,
     createdDate: dateOnlyUtc(key.createdAt),
     lastUsedDate: dateOnlyUtc(key.lastUsedAt),
+    lastRotatedDate: dateOnlyUtc(key.rotatedAt),
   }));
 }
 
@@ -141,6 +143,19 @@ export function settingsRouter(): Router {
       revokeApiKey(dbOf(req), user.id, id);
     }
     pushFlash(req, "API key revoked. That secret no longer works.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const id = parseId(String(req.params.id));
+    const user = res.locals.user!;
+    if (id != null) {
+      const rotated = rotateApiKey(dbOf(req), user.id, id);
+      if (rotated) {
+        getSession(req).data.apiKeyPlaintext = rotated.plaintext;
+        pushFlash(req, "API key rotated. Copy the new secret now; it will not be shown again.");
+      }
+    }
     res.redirect(302, "/settings");
   });
 

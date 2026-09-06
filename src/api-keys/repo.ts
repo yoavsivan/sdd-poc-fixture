@@ -17,6 +17,7 @@ export interface ApiKeyRecord {
   secretHash: string;
   createdAt: string;
   lastUsedAt: string | null;
+  rotatedAt: string | null;
 }
 
 export interface ApiKeyPublic {
@@ -26,6 +27,7 @@ export interface ApiKeyPublic {
   masked: string;
   createdAt: string;
   lastUsedAt: string | null;
+  rotatedAt: string | null;
 }
 
 interface ApiKeyRow {
@@ -37,6 +39,7 @@ interface ApiKeyRow {
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
+  rotated_at: string | null;
 }
 
 function hashSecret(plaintext: string): string {
@@ -59,6 +62,7 @@ function toRecord(row: ApiKeyRow): ApiKeyRecord {
     secretHash: row.secret_hash,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
+    rotatedAt: row.rotated_at,
   };
 }
 
@@ -70,6 +74,7 @@ function toPublic(row: ApiKeyRow): ApiKeyPublic {
     masked: `${row.prefix}…${row.display_tail}`,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
+    rotatedAt: row.rotated_at,
   };
 }
 
@@ -89,7 +94,7 @@ function fetchRow(
   return get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at, rotated_at
        FROM api_keys
        WHERE id = :id AND user_id = :userId`,
       { id, userId },
@@ -137,7 +142,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyPublic
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at, rotated_at
        FROM api_keys
        WHERE user_id = :userId
        ORDER BY created_at DESC, id DESC`,
@@ -159,7 +164,7 @@ export function findApiKeyByPlaintext(
   const row = get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at
+      `SELECT id, user_id, name, prefix, display_tail, secret_hash, created_at, last_used_at, rotated_at
        FROM api_keys
        WHERE secret_hash = :secret_hash`,
       { secret_hash },
@@ -187,4 +192,32 @@ export function revokeApiKey(db: Database.Database, userId: number, id: number):
     compile("DELETE FROM api_keys WHERE id = :id AND user_id = :userId", { id, userId }),
   );
   return result.changes > 0;
+}
+
+/**
+ * Replace the secret for an owned key. Id and name stay the same.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): { key: ApiKeyPublic; plaintext: string } | undefined {
+  const existing = fetchRow(db, userId, id);
+  if (!existing) return undefined;
+  const { plaintext, prefix } = mintPlaintext();
+  const secret_hash = hashSecret(plaintext);
+  const display_tail = plaintext.slice(-4);
+  const rotated_at = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      { prefix, display_tail, secret_hash, rotated_at },
+      "id = :id AND user_id = :userId",
+      { id, userId },
+    ),
+  );
+  const row = fetchRow(db, userId, id);
+  if (!row) return undefined;
+  return { key: toPublic(row), plaintext };
 }

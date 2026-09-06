@@ -32,3 +32,7 @@
 {"turn": 5, "type": "choose-option", "question": "Sufficient info to draft rotate spec?", "source": "HUMAN.md#defaults", "answer": "Yes."}
 {"turn": 5, "type": "approve-plan", "question": "Approve rotate spec and plan?", "source": "HUMAN.md#approvals", "answer": "Approve. All F1' ACs map to tasks."}
 {"turn": 5, "type": "choose-option", "question": "Start rotate implementation now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 6, "type": "approve-completion", "question": "Rotate phases and smoke meet expectations?", "source": "HUMAN.md#approvals", "answer": "Yes. test-docker 54 passed; smoke 4 passed; F1' ACs covered."}
+{"turn": 6, "type": "product", "question": "Update product.md for key rotation?", "source": "HUMAN.md#product", "answer": "Yes. Settings can rotate a key in place."}
+{"turn": 6, "type": "choose-option", "question": "Review the rotate track now?", "source": "HUMAN.md#approvals", "answer": "Yes. No high issues; skip archive."}
+{"turn": 6, "type": "choose-option", "question": "Archive, delete, or skip rotate track?", "source": "HUMAN.md#defaults", "answer": "Skip. Keep spec/plan in conductor/tracks."}

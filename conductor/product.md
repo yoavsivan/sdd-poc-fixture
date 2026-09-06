@@ -14,7 +14,7 @@ A single operator (team size 1) using the app locally. Scripts talk to the JSON 
 - Save, edit, delete, and filter items (URL, title, optional note, up to ten tags).
 - HTML UI at `/items` and `/settings`. Newest items first.
 - JSON API for items. Cookie sessions remain how the UI signs in. API keys, when added, authenticate `/api/*` as the owning user without a cookie.
-- Settings for the account, password change, and (when added) named API keys.
+- Settings for the account, password change, named API keys, and rotating a key in place (same id and name).
 
 ## Constraints
 
