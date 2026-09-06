@@ -29,3 +29,10 @@
 {"turn": 6, "type": "choose-option", "question": "Review 610 lines (>300). Proceed with iterative review of api-keys track?", "source": "HUMAN.md#approvals", "answer": "Yes. Review the track diff; tests already 59 passed and smoke 4 passed."}
 {"turn": 6, "type": "choose-option", "question": "Review found no issues. Archive, delete, or skip track cleanup?", "source": "HUMAN.md#scope", "answer": "Skip. Keep spec.md and plan.md in conductor/tracks for scoring."}
 {"turn": 6, "type": "choose-option", "question": "Revert any unit of work from the review?", "source": "default", "answer": "No."}
+{"turn": 7, "type": "choose-option", "question": "Confirm track type Feature for rotate API keys (F1')?", "source": "HUMAN.md#scope", "answer": "Yes. Follow-up feature: rotate keeps id and name, new secret once, last rotated."}
+{"turn": 7, "type": "clarify", "question": "Does rotate mint a second concurrent secret or replace the hash in place?", "source": "HUMAN.md#scope", "answer": "Replace in place. One secret; old fails immediately. No renaming, no concurrent secrets."}
+{"turn": 7, "type": "clarify", "question": "Is this sufficient to draft the rotate spec?", "source": "HUMAN.md#scope", "answer": "Sufficient. Spec is exactly F1' acceptance criteria and locators."}
+{"turn": 7, "type": "approve-plan", "question": "Approve rotate spec.md?", "source": "HUMAN.md#approvals", "answer": "Approve. All three F1' criteria are in the spec."}
+{"turn": 7, "type": "approve-plan", "question": "Approve rotate plan.md?", "source": "HUMAN.md#approvals", "answer": "Approve. Each AC maps to persistence and Settings tasks; TDD and smoke included."}
+{"turn": 7, "type": "choose-option", "question": "Install extra catalog skills for rotate?", "source": "HUMAN.md#scope", "answer": "Skip."}
+{"turn": 7, "type": "choose-option", "question": "Start implementation of rotate now?", "source": "HUMAN.md#scope", "answer": "Yes."}
