@@ -15,6 +15,7 @@ export interface ApiKeyRow {
   created_at: string;
   last_used_at: string | null;
   revoked_at: string | null;
+  rotated_at: string | null;
 }
 
 export interface ApiKeyListItem {
@@ -24,6 +25,7 @@ export interface ApiKeyListItem {
   last4: string;
   createdDate: string;
   lastUsedDate: string | null;
+  lastRotatedDate: string | null;
   revoked: boolean;
 }
 
@@ -45,6 +47,7 @@ function toListItem(row: ApiKeyRow): ApiKeyListItem {
     last4: row.last4,
     createdDate,
     lastUsedDate: utcDateStamp(row.last_used_at),
+    lastRotatedDate: utcDateStamp(row.rotated_at),
     revoked: row.revoked_at != null,
   };
 }
@@ -89,7 +92,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyListIt
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at, rotated_at
        FROM api_keys
        WHERE user_id = :userId
        ORDER BY created_at DESC, id DESC`,
@@ -111,7 +114,7 @@ export function findActiveBySecret(
   return get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at, rotated_at
        FROM api_keys
        WHERE secret_hash = :hash AND revoked_at IS NULL`,
       { hash },
@@ -156,6 +159,49 @@ export function revokeApiKey(
   return result.changes > 0;
 }
 
+/**
+ * Replace the secret on an existing live key. Same id and name; old secret dies.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  keyId: number,
+): CreatedApiKey | undefined {
+  const row = get<ApiKeyRow>(
+    db,
+    compile(
+      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at, rotated_at
+       FROM api_keys
+       WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`,
+      { id: keyId, userId },
+    ),
+  );
+  if (!row) return undefined;
+  const minted = generateApiKeySecret();
+  const now = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: minted.prefix,
+        last4: minted.last4,
+        secret_hash: minted.hash,
+        rotated_at: now,
+      },
+      "id = :id AND user_id = :userId AND revoked_at IS NULL",
+      { id: keyId, userId },
+    ),
+  );
+  return {
+    id: row.id,
+    name: row.name,
+    plaintext: minted.plaintext,
+    prefix: minted.prefix,
+    last4: minted.last4,
+  };
+}
+
 export function getApiKey(
   db: Database.Database,
   userId: number,
@@ -164,7 +210,7 @@ export function getApiKey(
   const row = get<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, last4, secret_hash, created_at, last_used_at, revoked_at, rotated_at
        FROM api_keys
        WHERE id = :id AND user_id = :userId`,
       { id: keyId, userId },

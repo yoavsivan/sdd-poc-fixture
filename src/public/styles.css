@@ -395,6 +395,13 @@ h2 {
   margin-top: 12px;
 }
 
+.key-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

@@ -6,6 +6,7 @@ import {
   findActiveBySecret,
   listApiKeys,
   revokeApiKey,
+  rotateApiKey,
   touchLastUsed,
 } from "../../src/api-keys/repo.ts";
 import { hashSecret } from "../../src/api-keys/secret.ts";
@@ -60,6 +61,23 @@ describe("api-keys-repo", () => {
     expect(revokeApiKey(db, user.id, created.id)).toBe(true);
     expect(findActiveBySecret(db, created.plaintext)).toBeUndefined();
     expect(revokeApiKey(db, user.id, created.id)).toBe(false);
+    db.close();
+  });
+
+  it("rotate keeps id and name and retires the old secret", () => {
+    const { db, user } = setup();
+    const created = createApiKey(db, user.id, "scripts");
+    const rotated = rotateApiKey(db, user.id, created.id);
+    expect(rotated).toBeTruthy();
+    expect(rotated!.id).toBe(created.id);
+    expect(rotated!.name).toBe("scripts");
+    expect(rotated!.plaintext).not.toBe(created.plaintext);
+    expect(findActiveBySecret(db, created.plaintext)).toBeUndefined();
+    expect(findActiveBySecret(db, rotated!.plaintext)?.id).toBe(created.id);
+    const listed = listApiKeys(db, user.id);
+    expect(listed[0].id).toBe(created.id);
+    expect(listed[0].name).toBe("scripts");
+    expect(listed[0].lastRotatedDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     db.close();
   });
 });

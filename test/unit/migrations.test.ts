@@ -6,7 +6,7 @@ import { openDb } from "../../src/db/open.ts";
 import { migrate } from "../../src/db/migrate.ts";
 
 describe("migrations", () => {
-  it("fresh db applies 0001..0004 in order and records them", () => {
+  it("fresh db applies 0001..0005 in order and records them", () => {
     const db = openDb(":memory:");
     const result = migrate(db);
     expect(result.applied).toEqual([
@@ -14,6 +14,7 @@ describe("migrations", () => {
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
       "0004_api_keys.sql",
+      "0005_api_keys_rotated_at.sql",
     ]);
     expect(result.skipped).toEqual([]);
     const names = db.prepare("SELECT name FROM schema_migrations ORDER BY name").all() as {
@@ -42,6 +43,7 @@ describe("migrations", () => {
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
       "0004_api_keys.sql",
+      "0005_api_keys_rotated_at.sql",
     ]);
     db.close();
   });
