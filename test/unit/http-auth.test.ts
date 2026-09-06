@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
 import request from "supertest";
+import type Database from "better-sqlite3";
+import { createApiKey } from "../../src/apikeys/repo.ts";
+import { findByUsername } from "../../src/users/repo.ts";
 import { makeTestApp } from "../helpers/app.ts";
 import { extractCsrf, signInCookie } from "../helpers/cookie.ts";
 
@@ -89,5 +92,70 @@ describe("http-auth", () => {
       .send({ url: "https://example.com", title: "No token" });
     expect(res.status).toBe(403);
     expect(res.text).toMatch(/could not be submitted/i);
+  });
+
+  it("GET /api/items with valid Bearer and no cookie → 200 items and count", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const created = await request(app)
+      .post("/api/items")
+      .set("Cookie", cookie)
+      .set("Content-Type", "application/json")
+      .send({ url: "https://example.com/from-ui", title: "From the UI" });
+    expect(created.status).toBe(201);
+    const db = app.locals.db as Database.Database;
+    const user = findByUsername(db, "demo");
+    if (!user) throw new Error("seed user missing");
+    const key = createApiKey(db, user.id, "scripts");
+    const res = await request(app)
+      .get("/api/items")
+      .set("Authorization", `Bearer ${key.plaintext}`);
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body.items)).toBe(true);
+    expect(res.body.count).toBe(res.body.items.length);
+    expect(res.body.items.some((item: { title: string }) => item.title === "From the UI")).toBe(
+      true,
+    );
+  });
+
+  it('GET /api/items with Authorization Bearer not-a-key → 401 {"error":"unauthorized"}', async () => {
+    const app = makeTestApp();
+    const res = await request(app).get("/api/items").set("Authorization", "Bearer not-a-key");
+    expect(res.status).toBe(401);
+    expect(res.text).toBe('{"error":"unauthorized"}');
+  });
+
+  it("GET /api/items with cookie and no Bearer still returns 200", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    await request(app)
+      .post("/api/items")
+      .set("Cookie", cookie)
+      .set("Content-Type", "application/json")
+      .send({ url: "https://example.com/cookie", title: "Cookie item" });
+    const res = await request(app).get("/api/items").set("Cookie", cookie);
+    expect(res.status).toBe(200);
+    expect(res.body.count).toBeGreaterThanOrEqual(1);
+  });
+
+  it("GET /items with cookie still renders item-row", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const page = await request(app).get("/items/new").set("Cookie", cookie);
+    const csrf = extractCsrf(page.text);
+    await request(app)
+      .post("/items")
+      .set("Cookie", cookie)
+      .type("form")
+      .send({
+        _csrf: csrf,
+        url: "https://example.com/row",
+        title: "Row item",
+        note: "",
+        tags: "",
+      });
+    const list = await request(app).get("/items").set("Cookie", cookie);
+    expect(list.status).toBe(200);
+    expect(list.text).toContain('data-testid="item-row"');
   });
 });

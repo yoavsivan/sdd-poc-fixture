@@ -20,7 +20,7 @@ TDD per `conductor/workflow.md`. Every task writes failing tests before implemen
 
 Maps to AC 3, 4, 5.
 
-- [ ] Task: Write failing tests for Bearer auth
+- [~] Task: Write failing tests for Bearer auth
   - [ ] `GET /api/items` with `Authorization: Bearer <valid secret>` and no cookie → 200 `{ items, count }` including an item created via the API/UI as that user
   - [ ] Missing header → 401 exact body `{"error":"unauthorized"}`
   - [ ] `Authorization: Bearer not-a-key` → 401 exact body
