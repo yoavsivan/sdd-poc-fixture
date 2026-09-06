@@ -38,7 +38,7 @@ Maps to AC 3, 4, 5.
 
 Maps to AC 1, 2, 6.
 
-- [ ] Task: Write failing tests for the Settings API-key UI
+- [~] Task: Write failing tests for the Settings API-key UI
   - [ ] Signed-in `GET /settings` includes `api-keys-section`, name field, create button
   - [ ] `POST` create with a name shows non-empty `api-key-plaintext` and an `api-key-row` with name and `api-key-created` (`YYYY-MM-DD`)
   - [ ] A subsequent `GET /settings` hides `api-key-plaintext` and still lists the row (prefix + masked tail, not the full secret)
