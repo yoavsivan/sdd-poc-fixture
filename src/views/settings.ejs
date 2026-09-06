@@ -52,6 +52,7 @@
       Create a named key to call <code>/api/*</code> with
       <code>Authorization: Bearer</code>. The secret is shown once at create —
       copy it then. Revoke is immediate: that secret stops working right away.
+      Rotate keeps the same key and shows a new secret once.
     </p>
     <% if (apiKeyPlaintext) { %>
       <p class="flash" data-testid="api-key-plaintext"><%= apiKeyPlaintext %></p>
@@ -90,12 +91,25 @@
                   · Last used
                   <time data-testid="api-key-last-used"></time>
                 <% } %>
+                <% if (key.lastRotated) { %>
+                  · Last rotated
+                  <time data-testid="api-key-last-rotated"><%= key.lastRotated %></time>
+                <% } else { %>
+                  · Last rotated
+                  <time data-testid="api-key-last-rotated"></time>
+                <% } %>
               </p>
             </div>
+            <div class="api-key-actions">
+            <form method="post" action="/settings/api-keys/<%= key.id %>/rotate">
+              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <button type="submit" class="btn" data-testid="api-key-rotate">Rotate</button>
+            </form>
             <form method="post" action="/settings/api-keys/<%= key.id %>/revoke">
               <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
               <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">Revoke</button>
             </form>
+            </div>
           </li>
         <% }) %>
       </ul>

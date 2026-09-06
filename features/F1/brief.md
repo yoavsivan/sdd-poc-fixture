@@ -6,10 +6,8 @@ that every route and UI control the code adds is named here.
 ## Intent
 
 A signed-in user of Shelfmark can create a named API key in Settings and use it as a Bearer token so
-the JSON API authenticates without a cookie. Today `GET /api/items` only accepts the browser session
-cookie. F1 adds named API keys: the user creates a key, sees the plaintext shown once, and later
-calls `/api/*` with `Authorization: Bearer` holding that secret. Cookie sessions stay how the UI
-signs in.
+the JSON API authenticates without a cookie. F1 added named API keys; F1' adds Rotate so a leaked
+secret can be replaced without a second row. Cookie sessions stay how the UI signs in.
 
 ## Acceptance criteria
 
@@ -34,8 +32,13 @@ signs in.
 - Create posts to `POST /api-keys` (mounted as `POST /settings/api-keys`). Revoke posts to
   `POST /api-keys/:id/revoke` (mounted as `POST /settings/api-keys/:id/revoke`). Both forms
   include the existing `_csrf` hidden field used by the rest of Settings.
+- Rotate via `api-key-rotate` keeps the same key id and name, mints a new secret, and shows it
+  once at `api-key-plaintext`. `POST /api-keys/:id/rotate` (mounted as
+  `POST /settings/api-keys/:id/rotate`) includes `_csrf`. The old secret then returns 401
+  `{"error":"unauthorized"}`; the new secret works on `Authorization: Bearer`. After rotation,
+  last rotated is shown at `api-key-last-rotated` (`YYYY-MM-DD`).
 
 ## Out of scope
 
-OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, rotating a
-key (that is F1').
+OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, per-key
+read-only scope, multiple concurrent secrets, renaming a key.

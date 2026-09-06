@@ -40,6 +40,9 @@ checks:
       - '{"error":"unauthorized"}'
       - 'POST /api-keys'
       - 'POST /api-keys/:id/revoke'
+      - api-key-rotate
+      - api-key-last-rotated
+      - 'POST /api-keys/:id/rotate'
 
   - id: migration-present
     kind: artifact-exists
@@ -54,6 +57,10 @@ checks:
     kind: e2e
     run: make smoke </dev/null
     timeout: 600
+
+  - id: rotation-migration
+    kind: artifact-exists
+    path: src/db/migrations/0005_api_keys_last_rotated.sql
 
   - id: settings-view
     kind: artifact-exists

@@ -1,8 +1,8 @@
 {
   "gatekit_done": 1,
   "feature": "F1",
-  "completed_at": "2026-09-06T05:41:27Z",
-  "contract_sha256": "be623ac52f5a9dce780240a6944d494481c1a3f4e382308b713d8a4bb7306feb",
+  "completed_at": "2026-09-06T05:45:34Z",
+  "contract_sha256": "2e3178d1feb0047bda2eeee3bd7a6f620b60457be160e7b533b8f9f12ecfe3a1",
   "checks": [
     {
       "id": "plan-has-handoff",
@@ -73,6 +73,16 @@
       "evidence": ".gatekit/evidence/F1/smoke.log",
       "duration_ms": 21000,
       "run": "make smoke </dev/null"
+    },
+    {
+      "id": "rotation-migration",
+      "kind": "artifact-exists",
+      "exit": 0,
+      "expect_exit": 0,
+      "result": "pass",
+      "evidence": ".gatekit/evidence/F1/rotation-migration.log",
+      "duration_ms": 0,
+      "run": "artifact-exists src/db/migrations/0005_api_keys_last_rotated.sql"
     },
     {
       "id": "settings-view",

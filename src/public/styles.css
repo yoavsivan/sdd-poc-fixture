@@ -334,6 +334,13 @@ h2 {
   margin-top: 12px;
 }
 
+.api-key-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
 .api-key-mask {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.85rem;

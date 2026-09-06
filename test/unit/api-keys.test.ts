@@ -124,4 +124,36 @@ describe("api keys", () => {
     expect(second.plaintext.length).toBeGreaterThan(40);
     expect(first.plaintext.startsWith("smk_")).toBe(true);
   });
+
+  it("rotate keeps id and name, retires the old secret, shows last rotated", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const oldSecret = await createNamedKey(app, cookie, "keep-name");
+    const listed = await request(app).get("/settings").set("Cookie", cookie);
+    expect(listed.text).toContain("keep-name");
+    const idMatch = listed.text.match(/action="\/settings\/api-keys\/(\d+)\/rotate"/);
+    expect(idMatch?.[1]).toBeTruthy();
+    const id = idMatch![1];
+    const csrf = extractCsrf(listed.text);
+    await request(app)
+      .post(`/settings/api-keys/${id}/rotate`)
+      .redirects(0)
+      .set("Cookie", cookie)
+      .type("form")
+      .send({ _csrf: csrf });
+    const shown = await request(app).get("/settings").set("Cookie", cookie);
+    const match = shown.text.match(/data-testid="api-key-plaintext"[^>]*>([^<]+)</);
+    const newSecret = match![1].trim();
+    expect(newSecret).toBeTruthy();
+    expect(newSecret).not.toBe(oldSecret);
+    expect(shown.text).toContain("keep-name");
+    expect(shown.text).toMatch(/data-testid="api-key-last-rotated"[^>]*>\d{4}-\d{2}-\d{2}</);
+    const rows = shown.text.split('data-testid="api-key-row"');
+    expect(rows.length - 1).toBe(1);
+    const oldRes = await request(app).get("/api/items").set("Authorization", `Bearer ${oldSecret}`);
+    expect(oldRes.status).toBe(401);
+    expect(oldRes.text).toBe('{"error":"unauthorized"}');
+    const newRes = await request(app).get("/api/items").set("Authorization", `Bearer ${newSecret}`);
+    expect(newRes.status).toBe(200);
+  });
 });

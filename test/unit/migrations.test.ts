@@ -14,6 +14,7 @@ describe("migrations", () => {
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
       "0004_api_keys.sql",
+      "0005_api_keys_last_rotated.sql",
     ]);
     expect(result.skipped).toEqual([]);
     const names = db.prepare("SELECT name FROM schema_migrations ORDER BY name").all() as {
@@ -42,6 +43,7 @@ describe("migrations", () => {
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
       "0004_api_keys.sql",
+      "0005_api_keys_last_rotated.sql",
     ]);
     db.close();
   });

@@ -17,6 +17,7 @@ export interface ApiKeyRow {
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
+  last_rotated_at: string | null;
   revoked_at: string | null;
 }
 
@@ -28,6 +29,7 @@ export interface ApiKeyPublic {
   lastFour: string;
   createdAt: string;
   lastUsedAt: string | null;
+  lastRotatedAt: string | null;
 }
 
 function hashSecret(plaintext: string): string {
@@ -43,6 +45,7 @@ function toPublic(row: ApiKeyRow): ApiKeyPublic {
     lastFour: row.last_four,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
+    lastRotatedAt: row.last_rotated_at,
   };
 }
 
@@ -56,6 +59,9 @@ export function formatIsoDate(utc: string | null | undefined): string {
 export function maskedSecret(prefix: string, lastFour: string): string {
   return `${prefix}…${lastFour}`;
 }
+
+const KEY_SELECT = `SELECT id, user_id, name, prefix, last_four, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
+       FROM api_keys`;
 
 export function generateApiKeyPlaintext(): { prefix: string; plaintext: string; lastFour: string } {
   const prefix = `smk_${crypto.randomBytes(PREFIX_RANDOM_BYTES).toString("hex")}`;
@@ -88,14 +94,7 @@ export function createApiKey(
     }),
   );
   const id = Number(result.lastInsertRowid);
-  const row = get<ApiKeyRow>(
-    db,
-    compile(
-      `SELECT id, user_id, name, prefix, last_four, secret_hash, created_at, last_used_at, revoked_at
-       FROM api_keys WHERE id = :id`,
-      { id },
-    ),
-  );
+  const row = get<ApiKeyRow>(db, compile(`${KEY_SELECT} WHERE id = :id`, { id }));
   if (!row) throw new Error("createApiKey: row missing after insert");
   return { key: toPublic(row), plaintext };
 }
@@ -104,8 +103,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyPublic
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, last_four, secret_hash, created_at, last_used_at, revoked_at
-       FROM api_keys
+      `${KEY_SELECT}
        WHERE user_id = :userId AND revoked_at IS NULL
        ORDER BY created_at DESC, id DESC`,
       { userId },
@@ -121,12 +119,9 @@ export function findActiveApiKeyByPlaintext(
   if (!plaintext) return undefined;
   const row = get<ApiKeyRow>(
     db,
-    compile(
-      `SELECT id, user_id, name, prefix, last_four, secret_hash, created_at, last_used_at, revoked_at
-       FROM api_keys
-       WHERE secret_hash = :hash AND revoked_at IS NULL`,
-      { hash: hashSecret(plaintext) },
-    ),
+    compile(`${KEY_SELECT} WHERE secret_hash = :hash AND revoked_at IS NULL`, {
+      hash: hashSecret(plaintext),
+    }),
   );
   return row ? toPublic(row) : undefined;
 }
@@ -139,15 +134,48 @@ export function touchApiKeyLastUsed(db: Database.Database, id: number): void {
 export function revokeApiKey(db: Database.Database, userId: number, id: number): boolean {
   const row = get<ApiKeyRow>(
     db,
-    compile(
-      `SELECT id, user_id, name, prefix, last_four, secret_hash, created_at, last_used_at, revoked_at
-       FROM api_keys
-       WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`,
-      { id, userId },
-    ),
+    compile(`${KEY_SELECT} WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`, {
+      id,
+      userId,
+    }),
   );
   if (!row) return false;
   const now = new Date().toISOString();
   run(db, update("api_keys", { revoked_at: now }, "id = :id", { id }));
   return true;
 }
+
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): { key: ApiKeyPublic; plaintext: string } | undefined {
+  const existing = get<ApiKeyRow>(
+    db,
+    compile(`${KEY_SELECT} WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`, {
+      id,
+      userId,
+    }),
+  );
+  if (!existing) return undefined;
+  const { prefix, plaintext, lastFour } = generateApiKeyPlaintext();
+  const now = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix,
+        last_four: lastFour,
+        secret_hash: hashSecret(plaintext),
+        last_rotated_at: now,
+      },
+      "id = :id",
+      { id },
+    ),
+  );
+  const row = get<ApiKeyRow>(db, compile(`${KEY_SELECT} WHERE id = :id`, { id }));
+  if (!row) throw new Error("rotateApiKey: row missing after update");
+  return { key: toPublic(row), plaintext };
+}
+

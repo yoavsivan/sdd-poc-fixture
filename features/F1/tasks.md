@@ -8,3 +8,5 @@ the default contract runs it as the `tasks-complete` check.
 - [x] T2 — Settings UI: `api-keys-section`, create (`api-key-name`, `api-key-create`), one-time `api-key-plaintext`, rows (`api-key-row`, `api-key-created`, `api-key-last-used`, `api-key-revoke`); `POST /api-keys` and `POST /api-keys/:id/revoke` Evidence: src/http/routes/settings.ts src/views/settings.ejs
 - [x] T3 — Bearer auth on `/api/*` without cookie; missing/invalid header → 401 `{"error":"unauthorized"}`; cookie sessions unchanged Evidence: src/http/middleware/authenticate.ts test/unit/api-keys.test.ts
 - [x] T4 — Unit tests via `make test-docker` and existing `make smoke` stay green Evidence: make test-docker
+- [x] T5 — Rotate keeps id and name, shows new plaintext once, retires the old secret, shows `api-key-last-rotated`; `POST /api-keys/:id/rotate` Evidence: src/api-keys/repo.ts src/views/settings.ejs test/unit/api-keys.test.ts
+
