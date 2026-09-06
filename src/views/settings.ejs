@@ -76,8 +76,13 @@
             <p class="muted api-key-mask"><%= key.mask %></p>
             <p class="muted">Created <time data-testid="api-key-created"><%= key.created %></time></p>
             <p class="muted">Last used <time data-testid="api-key-last-used"><%= key.lastUsed %></time></p>
+            <p class="muted">Last rotated <time data-testid="api-key-last-rotated"><%= key.lastRotated %></time></p>
           </div>
           <div class="item-actions">
+            <form method="post" action="/settings/api-keys/<%= key.id %>/rotate">
+              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
+              <button type="submit" class="btn" data-testid="api-key-rotate">Rotate</button>
+            </form>
             <form method="post" action="/settings/api-keys/<%= key.id %>/revoke" data-confirm="Revoke this API key immediately?">
               <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
               <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">Revoke</button>

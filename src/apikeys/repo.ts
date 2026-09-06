@@ -8,6 +8,9 @@ const { compile, insert, update } = legacyQuery;
 const PREFIX_LEN = 12;
 const TAIL_LEN = 4;
 
+const KEY_COLUMNS =
+  "id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at";
+
 export interface ApiKeyRecord {
   id: number;
   userId: number;
@@ -16,6 +19,7 @@ export interface ApiKeyRecord {
   tail: string;
   createdAt: string;
   lastUsedAt: string | null;
+  lastRotatedAt: string | null;
 }
 
 interface ApiKeyRow {
@@ -27,10 +31,22 @@ interface ApiKeyRow {
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
+  last_rotated_at: string | null;
 }
 
 function hashSecret(plaintext: string): string {
   return crypto.createHash("sha256").update(plaintext, "utf8").digest("hex");
+}
+
+function mintPlaintext(): { plaintext: string; prefix: string; tail: string; hash: string } {
+  const secret = crypto.randomBytes(32).toString("base64url");
+  const plaintext = `smk_${secret}`;
+  return {
+    plaintext,
+    prefix: plaintext.slice(0, PREFIX_LEN),
+    tail: plaintext.slice(-TAIL_LEN),
+    hash: hashSecret(plaintext),
+  };
 }
 
 function toRecord(row: ApiKeyRow): ApiKeyRecord {
@@ -42,7 +58,15 @@ function toRecord(row: ApiKeyRow): ApiKeyRecord {
     tail: row.tail,
     createdAt: row.created_at,
     lastUsedAt: row.last_used_at,
+    lastRotatedAt: row.last_rotated_at,
   };
+}
+
+function getKey(db: Database.Database, id: number): ApiKeyRow | undefined {
+  return get<ApiKeyRow>(
+    db,
+    compile(`SELECT ${KEY_COLUMNS} FROM api_keys WHERE id = :id`, { id }),
+  );
 }
 
 /** ISO-8601 calendar date in UTC for Settings timestamps. */
@@ -64,40 +88,29 @@ export function createApiKey(
   name: string,
 ): { key: ApiKeyRecord; plaintext: string } {
   const trimmed = name.trim();
-  const secret = crypto.randomBytes(32).toString("base64url");
-  const plaintext = `smk_${secret}`;
-  const prefix = plaintext.slice(0, PREFIX_LEN);
-  const tail = plaintext.slice(-TAIL_LEN);
+  const minted = mintPlaintext();
   const created_at = new Date().toISOString();
   const result = run(
     db,
     insert("api_keys", {
       user_id: userId,
       name: trimmed,
-      prefix,
-      tail,
-      secret_hash: hashSecret(plaintext),
+      prefix: minted.prefix,
+      tail: minted.tail,
+      secret_hash: minted.hash,
       created_at,
     }),
   );
-  const id = Number(result.lastInsertRowid);
-  const row = get<ApiKeyRow>(
-    db,
-    compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at
-       FROM api_keys WHERE id = :id`,
-      { id },
-    ),
-  );
+  const row = getKey(db, Number(result.lastInsertRowid));
   if (!row) throw new Error("createApiKey: row missing after insert");
-  return { key: toRecord(row), plaintext };
+  return { key: toRecord(row), plaintext: minted.plaintext };
 }
 
 export function listApiKeys(db: Database.Database, userId: number): ApiKeyRecord[] {
   const rows = all<ApiKeyRow>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at
+      `SELECT ${KEY_COLUMNS}
        FROM api_keys
        WHERE user_id = :userId
        ORDER BY created_at DESC, id DESC`,
@@ -114,12 +127,9 @@ export function findApiKeyBySecret(
   if (!plaintext) return undefined;
   const row = get<ApiKeyRow>(
     db,
-    compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at
-       FROM api_keys
-       WHERE secret_hash = :hash`,
-      { hash: hashSecret(plaintext) },
-    ),
+    compile(`SELECT ${KEY_COLUMNS} FROM api_keys WHERE secret_hash = :hash`, {
+      hash: hashSecret(plaintext),
+    }),
   );
   return row ? toRecord(row) : undefined;
 }
@@ -129,6 +139,43 @@ export function touchApiKeyLastUsed(db: Database.Database, id: number): void {
     db,
     update("api_keys", { last_used_at: new Date().toISOString() }, "id = :id", { id }),
   );
+}
+
+/**
+ * Replace the secret in place. Same id and name; old hash no longer matches.
+ */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): { key: ApiKeyRecord; plaintext: string } | undefined {
+  const existing = get<ApiKeyRow>(
+    db,
+    compile(`SELECT ${KEY_COLUMNS} FROM api_keys WHERE id = :id AND user_id = :userId`, {
+      id,
+      userId,
+    }),
+  );
+  if (!existing) return undefined;
+  const minted = mintPlaintext();
+  const last_rotated_at = new Date().toISOString();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: minted.prefix,
+        tail: minted.tail,
+        secret_hash: minted.hash,
+        last_rotated_at,
+      },
+      "id = :id AND user_id = :userId",
+      { id, userId },
+    ),
+  );
+  const row = getKey(db, id);
+  if (!row) throw new Error("rotateApiKey: row missing after update");
+  return { key: toRecord(row), plaintext: minted.plaintext };
 }
 
 export function revokeApiKey(db: Database.Database, userId: number, id: number): boolean {

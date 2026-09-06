@@ -1,0 +1,23 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "spec-review",
+  "feature": "F1",
+  "unit": "followup",
+  "cycle": 1,
+  "target": "features/F1/brief.md",
+  "reviewer": "grok-4.6-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "describes_surface": 5,
+    "no_stale_statements": 5,
+    "contract_current": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "features/F1/brief.md Follow-up rotate keys names api-key-rotate and POST /api-keys/:id/rotate",
+    "src/views/settings.ejs data-testid api-key-rotate and api-key-last-rotated",
+    "features/F1/contract.yaml brief-names-surface terms include api-key-rotate"
+  ],
+  "reviewed_at": "2026-09-06T04:20:00Z"
+}

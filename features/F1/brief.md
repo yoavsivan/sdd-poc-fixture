@@ -35,5 +35,13 @@ is immediate. Timestamps are stored UTC internally.
 
 ## Out of scope
 
-OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, rotating a key
-(that is F1').
+OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, per-key
+read-only scope, multiple concurrent secrets, and renaming a key.
+
+## Follow-up: rotate keys
+
+A user replaces a leaked secret without creating a second row. `POST /api-keys/:id/rotate`
+(`api-key-rotate`) keeps the same id and name, mints a new secret shown once (`api-key-plaintext`),
+and retires the old secret immediately (401 `{"error":"unauthorized"}` on `Authorization: Bearer`).
+The new secret works on `Authorization: Bearer`. After rotation, last rotated is shown
+(`api-key-last-rotated`) as an ISO-8601 date `YYYY-MM-DD`.

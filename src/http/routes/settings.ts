@@ -7,6 +7,7 @@ import {
   listApiKeys,
   maskedSecret,
   revokeApiKey,
+  rotateApiKey,
 } from "../../apikeys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
@@ -64,6 +65,7 @@ function settingsLocals(
     mask: maskedSecret(k.prefix, k.tail),
     created: isoDateUtc(k.createdAt),
     lastUsed: isoDateUtc(k.lastUsedAt),
+    lastRotated: isoDateUtc(k.lastRotatedAt),
   }));
   return {
     title: "Settings",
@@ -137,6 +139,18 @@ export function settingsRouter(): Router {
     const minted = createApiKey(dbOf(req), res.locals.user!.id, name);
     getSession(req).data.apiKeyPlaintext = minted.plaintext;
     pushFlash(req, "API key created. Copy the secret now — it is shown once.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const id = parseId(String(req.params.id));
+    if (id != null) {
+      const rotated = rotateApiKey(dbOf(req), res.locals.user!.id, id);
+      if (rotated) {
+        getSession(req).data.apiKeyPlaintext = rotated.plaintext;
+        pushFlash(req, "API key rotated. Copy the new secret now — it is shown once.");
+      }
+    }
     res.redirect(302, "/settings");
   });
 

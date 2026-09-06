@@ -3,7 +3,7 @@
 feature: F1
 base: 7dc3d08df3e41807b1b575b738e8afb5f7990b93
 
-# Empty so a single-agent flow works; verdicts are still written and gate-checked.
+# Empty so a single-agent flow works; spec-review is written and gate-checked for F1'.
 required_gates:
 
 checks:
@@ -37,10 +37,16 @@ checks:
       - '{"error":"unauthorized"}'
       - POST /api-keys
       - GET /api/items
+      - api-key-rotate
+      - api-key-last-rotated
 
   - id: migration-present
     kind: artifact-exists
     path: src/db/migrations/0004_*.sql
+
+  - id: rotate-migration
+    kind: artifact-exists
+    path: src/db/migrations/0005_*.sql
 
   - id: unit-tests
     kind: test

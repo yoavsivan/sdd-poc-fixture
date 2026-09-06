@@ -1,2 +1,5 @@
 {"turn": 2, "type": "approve-plan", "question": "Approve F1 plan: every AC mapped to a task?", "source": "HUMAN.md#approvals", "answer": "Approve: AC1-6 map to T1-T6; contract runs make test-docker, make smoke, drift, spec-mentions."}
 {"turn": 3, "type": "approve-completion", "question": "Approve F1 completion after gatekit done?", "source": "HUMAN.md#approvals", "answer": "Approve: gatekit done --feature F1 exit 0, 8/8 checks including make smoke and make test-docker."}
+{"turn": 4, "type": "other", "question": "Stock flow for F1 rotate follow-up?", "source": "HUMAN.md#defaults", "answer": "Amend F1 brief/contract (orchestrator Follow-up change); do not create a new feature."}
+{"turn": 5, "type": "approve-completion", "question": "Approve F1 rotate after gatekit done?", "source": "HUMAN.md#approvals", "answer": "Will approve only after gatekit done --feature F1 passes including smoke and unit-tests."}
+{"turn": 6, "type": "approve-completion", "question": "Approve F1 rotate completion after gatekit done?", "source": "HUMAN.md#approvals", "answer": "Approve: gatekit done --feature F1 exit 0 with 9/9 checks including rotate-migration, unit-tests, smoke."}
