@@ -28,3 +28,10 @@
 {"turn": 3, "type": "choose-option", "question": "Review scope: Named API keys track?", "source": "HUMAN.md#approvals", "answer": "Yes."}
 {"turn": 3, "type": "choose-option", "question": "Archive, delete, or skip track cleanup?", "source": "HUMAN.md#scope", "answer": "Skip. Keep conductor/tracks spec.md and plan.md (scored)."}
 {"turn": 3, "type": "choose-option", "question": "Revert any unit of work after review?", "source": "HUMAN.md#defaults", "answer": "No. Review found no critical/high issues."}
+{"turn": 4, "type": "choose-option", "question": "Track type Feature for rotate keys (F1')?", "source": "HUMAN.md#scope", "answer": "Yes. Follow-up feature: rotate in place."}
+{"turn": 4, "type": "clarify", "question": "Does rotate mint a new row or keep the same id and name?", "source": "HUMAN.md#scope", "answer": "Same row: keep id and name; new secret; old secret 401."}
+{"turn": 4, "type": "clarify", "question": "Where does Rotate live in the UI?", "source": "HUMAN.md#clarify", "answer": "Per-row control in Settings api-keys-section; data-testid api-key-rotate."}
+{"turn": 4, "type": "clarify", "question": "Sufficient to draft the F1' spec?", "source": "HUMAN.md#scope", "answer": "Yes. Draft from F1-prime acceptance criteria."}
+{"turn": 4, "type": "approve-plan", "question": "Approve rotate spec.md and plan.md?", "source": "HUMAN.md#approvals", "answer": "Approve. All three F1' ACs mapped to tasks."}
+{"turn": 4, "type": "scope", "question": "Install extra catalog skills for rotate?", "source": "HUMAN.md#defaults", "answer": "Skip."}
+{"turn": 4, "type": "choose-option", "question": "Start implementation of rotate track now?", "source": "HUMAN.md#scope", "answer": "Yes."}
