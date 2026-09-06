@@ -21,3 +21,6 @@
 {"turn": 2, "type": "choose-option", "question": "Install extra skills for this track?", "source": "HUMAN.md#defaults", "answer": "No matching catalog skills. Skip."}
 {"turn": 2, "type": "choose-option", "question": "Start implementation now?", "source": "HUMAN.md#scope", "answer": "Yes."}
 {"turn": 3, "type": "choose-option", "question": "Proceed with implementation of Named API keys and Bearer auth?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 3, "type": "approve-completion", "question": "Phase schema/Bearer/settings/smoke verification: does this meet expectations?", "source": "HUMAN.md#approvals", "answer": "Yes. test-docker 52 passed; smoke 4 passed; F1 ACs covered."}
+{"turn": 3, "type": "product", "question": "Update product.md and tech-stack.md for API keys?", "source": "HUMAN.md#product", "answer": "Yes. Document Bearer keys; cookies still sign in the UI."}
+{"turn": 3, "type": "choose-option", "question": "Perform a formal code review of the completed track now?", "source": "HUMAN.md#approvals", "answer": "Yes."}

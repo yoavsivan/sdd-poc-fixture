@@ -2,7 +2,7 @@
 
 Shelfmark is a small web app for saving links with notes and tags. A signed-in user pastes a URL, adds a note and a few tags, and later finds the link by tag or by a word in the title.
 
-It is a brownfield reading-list fixture: enough real code to carry project history, with cookie sessions for the UI and a JSON API at `/api/items`. Sign-in uses the seeded account `demo` / `demo-pass-1234`. There is no API-key authentication until that feature is added as a track.
+It is a brownfield reading-list fixture: enough real code to carry project history, with cookie sessions for the UI and a JSON API at `/api/items`. Sign-in uses the seeded account `demo` / `demo-pass-1234`. Named API keys in Settings authenticate `/api/*` as the owning user with `Authorization: Bearer`.
 
 ## Users
 

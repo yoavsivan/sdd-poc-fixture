@@ -14,7 +14,7 @@ SQLite. Migrations are lexicographic `*.sql` files under `src/db/migrations/` ap
 
 ## Auth (as of setup)
 
-Cookie sessions (`shelfmark.sid`). JSON API returns exactly `{"error":"unauthorized"}` when unsigned. CSRF on HTML form posts; `/api/*` skips CSRF and requires `Content-Type: application/json` on writes.
+Cookie sessions (`shelfmark.sid`) for the UI. Named API keys (SHA-256 of the plaintext, SQLite `api_keys`) authenticate `/api/*` via `Authorization: Bearer`. JSON API returns exactly `{"error":"unauthorized"}` when unsigned or when the Bearer secret is unknown. CSRF on HTML form posts; `/api/*` skips CSRF and requires `Content-Type: application/json` on writes.
 
 ## Tooling
 
