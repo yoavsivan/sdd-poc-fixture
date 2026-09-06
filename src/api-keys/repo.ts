@@ -14,6 +14,7 @@ export interface ApiKeyRecord {
   secret_hash: string;
   created_at: string;
   last_used_at: string | null;
+  last_rotated_at: string | null;
   revoked_at: string | null;
 }
 
@@ -23,6 +24,7 @@ export interface ApiKeyView {
   masked: string;
   created: string;
   lastUsed: string;
+  lastRotated: string;
 }
 
 export interface CreatedApiKey {
@@ -39,6 +41,7 @@ function toView(row: ApiKeyRecord): ApiKeyView {
     masked: maskApiKey(row.prefix, row.tail),
     created: isoDateUtc(row.created_at),
     lastUsed: isoDateUtc(row.last_used_at),
+    lastRotated: isoDateUtc(row.last_rotated_at),
   };
 }
 
@@ -75,7 +78,7 @@ export function createApiKey(
   const row = get<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys WHERE id = :id`,
       { id },
     ),
@@ -88,7 +91,7 @@ export function listApiKeys(db: Database.Database, userId: number): ApiKeyView[]
   const rows = all<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys
        WHERE user_id = :userId AND revoked_at IS NULL
        ORDER BY created_at DESC, id DESC`,
@@ -106,7 +109,7 @@ export function findActiveBySecret(
   return get<ApiKeyRecord>(
     db,
     compile(
-      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, revoked_at
+      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
        FROM api_keys
        WHERE secret_hash = :secretHash AND revoked_at IS NULL`,
       { secretHash: hashSecret(plaintext) },
@@ -129,4 +132,48 @@ export function revokeApiKey(db: Database.Database, userId: number, id: number):
     ),
   );
   return result.changes > 0;
+}
+
+/** Replace the secret in place. Same id and name; old secret stops working immediately. */
+export function rotateApiKey(
+  db: Database.Database,
+  userId: number,
+  id: number,
+): CreatedApiKey | undefined {
+  const existing = get<ApiKeyRecord>(
+    db,
+    compile(
+      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
+       FROM api_keys
+       WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`,
+      { id, userId },
+    ),
+  );
+  if (!existing) return undefined;
+  const secret = generateApiKeySecret();
+  const last_rotated_at = nowUtc();
+  run(
+    db,
+    update(
+      "api_keys",
+      {
+        prefix: secret.prefix,
+        tail: secret.tail,
+        secret_hash: secret.secretHash,
+        last_rotated_at,
+      },
+      "id = :id AND user_id = :userId",
+      { id, userId },
+    ),
+  );
+  const row = get<ApiKeyRecord>(
+    db,
+    compile(
+      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
+       FROM api_keys WHERE id = :id`,
+      { id },
+    ),
+  );
+  if (!row) throw new Error("rotateApiKey: row missing after update");
+  return { id: row.id, name: row.name, plaintext: secret.plaintext, view: toView(row) };
 }

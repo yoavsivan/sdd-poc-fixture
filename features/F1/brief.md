@@ -6,8 +6,8 @@ that every route and UI control the code adds is named here.
 ## Intent
 
 A signed-in user of Shelfmark can create a named API key in Settings and use it as a Bearer token
-so that the JSON API authenticates without a cookie. Today `GET /api/items` only accepts the
-browser session cookie. F1 adds API keys so a script can call `/api/*` as that user.
+so that the JSON API authenticates without a cookie. F1 added API keys so a script can call `/api/*`
+as that user. F1' adds Rotate so a leaked secret can be replaced without creating a second row.
 
 ## Acceptance criteria
 
@@ -30,9 +30,13 @@ Prose, one criterion per bullet, each observable from outside the code. Routes a
   returns 401 with the exact body `{"error":"unauthorized"}`.
 - Settings copy labels the section “API keys”, explains that the secret is shown once, and that
   revoke is immediate.
+- Rotate via `api-key-rotate` (`POST /api-keys/:id/rotate`) keeps the same key id and name, shows
+  the new secret once in `api-key-plaintext`, and retires the old secret immediately. The old
+  secret then returns 401 `{"error":"unauthorized"}`; the new secret works on `Authorization: Bearer`.
+- After rotation, `api-key-last-rotated` shows the UTC last-rotated time as `YYYY-MM-DD`.
 
 ## Out of scope
 
-OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, rotating a
-key (that is F1'). Do not replace the legacy session module. Do not change the playwright compose
-service, Playwright version, or `test/smoke/`.
+OAuth, cookies-as-keys, per-key scopes, rate limits, admin UI for other users' keys, per-key
+read-only scope, multiple concurrent secrets, renaming a key. Do not replace the legacy session
+module. Do not change the playwright compose service, Playwright version, or `test/smoke/`.

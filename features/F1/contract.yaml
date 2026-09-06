@@ -32,12 +32,19 @@ checks:
       - api-key-created
       - api-key-last-used
       - api-key-revoke
+      - api-key-rotate
+      - api-key-last-rotated
+      - POST /api-keys/:id/rotate
       - '{"error":"unauthorized"}'
       - 'Authorization: Bearer'
 
   - id: migration-present
     kind: artifact-exists
     path: src/db/migrations/0004_*.sql
+
+  - id: rotate-migration
+    kind: artifact-exists
+    path: src/db/migrations/0005_*.sql
 
   - id: drift
     kind: command

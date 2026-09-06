@@ -158,4 +158,42 @@ describe("api-keys", () => {
     expect(again.status).toBe(401);
     expect(again.text).toBe('{"error":"unauthorized"}');
   });
+
+  it("rotate keeps id and name, shows new secret once, retires the old secret, and shows last rotated", async () => {
+    const app = makeTestApp();
+    const cookie = await signInCookie(app);
+    const created = await createNamedKey(app, cookie, "keep-name");
+    const oldSecret = created.plaintext;
+    const rowCount = (created.html.match(/data-testid="api-key-row"/g) || []).length;
+    const csrf = extractCsrf(created.html);
+    const rotateMatch = created.html.match(/action="\/settings\/api-keys\/(\d+)\/rotate"/);
+    expect(rotateMatch).toBeTruthy();
+    const keyId = rotateMatch![1];
+    const rotated = await request(app)
+      .post(`/settings/api-keys/${keyId}/rotate`)
+      .redirects(0)
+      .set("Cookie", created.cookie)
+      .type("form")
+      .send({ _csrf: csrf });
+    expect(rotated.status).toBe(302);
+    const nextCookie = firstSid(rotated.headers["set-cookie"]) || created.cookie;
+    const shown = await request(app).get("/settings").set("Cookie", nextCookie);
+    const newSecret = testid(shown.text, "api-key-plaintext")[0] || "";
+    expect(newSecret.length).toBeGreaterThan(0);
+    expect(newSecret).not.toBe(oldSecret);
+    expect((shown.text.match(/data-testid="api-key-row"/g) || []).length).toBe(rowCount);
+    expect(shown.text).toContain("keep-name");
+    const lastRotated = testid(shown.text, "api-key-last-rotated")[0];
+    expect(lastRotated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    const oldCall = await request(app)
+      .get("/api/items")
+      .set("Authorization", `Bearer ${oldSecret}`);
+    expect(oldCall.status).toBe(401);
+    expect(oldCall.text).toBe('{"error":"unauthorized"}');
+    const newCall = await request(app)
+      .get("/api/items")
+      .set("Authorization", `Bearer ${newSecret}`);
+    expect(newCall.status).toBe(200);
+    expect(newCall.body).toHaveProperty("items");
+  });
 });

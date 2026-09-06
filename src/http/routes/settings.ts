@@ -5,6 +5,7 @@ import {
   listApiKeys,
   normalizeKeyName,
   revokeApiKey,
+  rotateApiKey,
 } from "../../api-keys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
@@ -134,6 +135,17 @@ export function settingsRouter(): Router {
       revokeApiKey(dbOf(req), res.locals.user!.id, id);
     }
     pushFlash(req, "API key revoked. That secret no longer works.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/rotate", (req, res) => {
+    const id = parseId(String(req.params.id));
+    const rotated =
+      id == null ? undefined : rotateApiKey(dbOf(req), res.locals.user!.id, id);
+    if (rotated) {
+      getSession(req).data.apiKeyPlaintext = rotated.plaintext;
+      pushFlash(req, "API key rotated. Copy the new secret now; it is shown only once.");
+    }
     res.redirect(302, "/settings");
   });
 
