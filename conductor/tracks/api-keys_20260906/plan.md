@@ -31,3 +31,6 @@ TDD: failing unit tests in Docker (`make test-docker`) before implementation. Do
 - [x] Task: Confirm existing browser smoke
   - [x] Run `make smoke` and confirm `4 passed`
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions 9b5e058
