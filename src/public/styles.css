@@ -368,6 +368,35 @@ h2 {
   gap: 8px;
 }
 
+.api-key-create {
+  margin: 16px 0;
+}
+
+.api-key-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.api-key-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.api-key-name {
+  margin: 0;
+  font-weight: 600;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

@@ -1,5 +1,8 @@
 import { Router } from "express";
 import type Database from "better-sqlite3";
+import { createApiKey, listActiveKeys, revokeApiKey } from "../../api-keys/repo.js";
+import { maskSecret, utcDateOnly } from "../../api-keys/secret.js";
+import type { ApiKeyRecord } from "../../api-keys/repo.js";
 import { findById, updatePassword } from "../../users/repo.js";
 import { verifyPassword } from "../../users/password.js";
 import { requireUser } from "../middleware/authenticate.js";
@@ -25,21 +28,89 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
   session.data.flash = list;
 }
 
+function takePlaintext(req: Parameters<typeof getSession>[0]): string | null {
+  const session = getSession(req);
+  const value = session.data.apiKeyPlaintext;
+  delete session.data.apiKeyPlaintext;
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+function parseId(raw: string): number | null {
+  if (!/^[0-9]+$/.test(raw)) return null;
+  const n = Number.parseInt(raw, 10);
+  if (!Number.isInteger(n) || n < 1) return null;
+  return n;
+}
+
+export interface ApiKeyView {
+  id: number;
+  name: string;
+  masked: string;
+  created: string;
+  lastUsed: string | null;
+}
+
+function toView(row: ApiKeyRecord): ApiKeyView {
+  return {
+    id: row.id,
+    name: row.name,
+    masked: maskSecret(row.prefix, row.suffix),
+    created: utcDateOnly(row.created_at),
+    lastUsed: row.last_used_at ? utcDateOnly(row.last_used_at) : null,
+  };
+}
+
+function settingsPage(
+  req: Parameters<typeof getSession>[0],
+  res: { locals: { user?: { id: number } } },
+  extra: { errors?: Record<string, string>; passwordError?: string | null },
+) {
+  const user = res.locals.user!;
+  const apiKeys = listActiveKeys(dbOf(req), user.id).map(toView);
+  return {
+    title: "Settings",
+    flash: extra.errors && Object.keys(extra.errors).length > 0 ? [] : takeFlash(req),
+    errors: extra.errors ?? {},
+    passwordError: extra.passwordError ?? null,
+    apiKeys,
+    apiKeyPlaintext: takePlaintext(req),
+  };
+}
+
 /**
- * Account page and password change. The "using the API" section is a seam
- * a later change can extend with another section in the same template.
+ * Account page, password change, and named API keys.
  */
 export function settingsRouter(): Router {
   const router = Router();
   router.use(requireUser);
 
   router.get("/", (req, res) => {
-    res.render("settings", {
-      title: "Settings",
-      flash: takeFlash(req),
-      errors: {},
-      passwordError: null,
-    });
+    res.render("settings", settingsPage(req, res, {}));
+  });
+
+  router.post("/api-keys", (req, res) => {
+    const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+    if (!name) {
+      res.status(400).render(
+        "settings",
+        settingsPage(req, res, { errors: { name: "Name is required" } }),
+      );
+      return;
+    }
+    const created = createApiKey(dbOf(req), res.locals.user!.id, name);
+    const session = getSession(req);
+    session.data.apiKeyPlaintext = created.plaintext;
+    pushFlash(req, "API key created. Copy the secret now — it will not be shown again.");
+    res.redirect(302, "/settings");
+  });
+
+  router.post("/api-keys/:id/revoke", (req, res) => {
+    const id = parseId(String(req.params.id));
+    if (id != null) {
+      const ok = revokeApiKey(dbOf(req), res.locals.user!.id, id);
+      if (ok) pushFlash(req, "API key revoked. That secret no longer works.");
+    }
+    res.redirect(302, "/settings");
   });
 
   router.post("/password", (req, res) => {
@@ -62,12 +133,10 @@ export function settingsRouter(): Router {
       errors.confirm = "New password and confirmation do not match";
     }
     if (Object.keys(errors).length > 0) {
-      res.status(400).render("settings", {
-        title: "Settings",
-        flash: [],
-        errors,
-        passwordError,
-      });
+      res.status(400).render(
+        "settings",
+        settingsPage(req, res, { errors, passwordError }),
+      );
       return;
     }
     updatePassword(dbOf(req), user.id, next);
