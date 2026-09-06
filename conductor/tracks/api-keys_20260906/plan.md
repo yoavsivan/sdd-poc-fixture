@@ -2,19 +2,19 @@
 
 TDD per `conductor/workflow.md`. Every task writes failing tests before implementation. Verification uses `make test-docker` (not the host Node toolchain). Each phase ends with a Workflow checkpoint.
 
-## Phase 1: Persist named API keys
+## Phase 1: Persist named API keys [checkpoint: c78d733]
 
-- [~] Task: Write failing tests for API key storage
-  - [ ] Add unit tests that expect migration `0004_api_keys.sql` to create an `api_keys` table
-  - [ ] Add repo tests: create named key (hash stored, plaintext returned once), list newest first, lookup by secret, revoke removes the secret, last-used starts empty
-  - [ ] Run `make test-docker` and confirm the new tests fail
-- [ ] Task: Implement API key persistence
-  - [ ] Add `src/db/migrations/0004_api_keys.sql` (user_id FK, name, prefix, last4, secret_hash, created_at, last_used_at)
-  - [ ] Add `src/apikeys/` repo wrapping `src/legacy/query.cjs` via `src/db/exec.ts`
-  - [ ] Generate ≥32 random bytes before encoding; secret format is a short prefix plus the encoded secret
-  - [ ] Store SHA-256 of the plaintext; never persist the secret
-  - [ ] Run `make test-docker` and confirm tests pass
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Write failing tests for API key storage 1b7f863
+  - [x] Add unit tests that expect migration `0004_api_keys.sql` to create an `api_keys` table
+  - [x] Add repo tests: create named key (hash stored, plaintext returned once), list newest first, lookup by secret, revoke removes the secret, last-used starts empty
+  - [x] Run `make test-docker` and confirm the new tests fail
+- [x] Task: Implement API key persistence c78d733
+  - [x] Add `src/db/migrations/0004_api_keys.sql` (user_id FK, name, prefix, last4, secret_hash, created_at, last_used_at)
+  - [x] Add `src/apikeys/` repo wrapping `src/legacy/query.cjs` via `src/db/exec.ts`
+  - [x] Generate ≥32 random bytes before encoding; secret format is a short prefix plus the encoded secret
+  - [x] Store SHA-256 of the plaintext; never persist the secret
+  - [x] Run `make test-docker` and confirm tests pass
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) c78d733
 
 ## Phase 2: Bearer authentication on `/api/*`
 

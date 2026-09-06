@@ -20,3 +20,4 @@
 {"turn": 2, "type": "approve-plan", "question": "Approve drafted plan.md to proceed to implementation?", "source": "HUMAN.md#approvals", "answer": "Approve. Each AC maps to a phase-2 or phase-3 task; TDD and smoke regression included."}
 {"turn": 2, "type": "choose-option", "question": "Install recommended catalog skills for this track?", "source": "HUMAN.md#scope", "answer": "Skip. No Firebase/GCP signals; extra skills out of scope."}
 {"turn": 2, "type": "choose-option", "question": "Start implementation of the API keys track now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 3, "type": "approve-completion", "question": "Phase 1 persist API keys: tests passed. Confirm checkpoint?", "source": "HUMAN.md#approvals", "answer": "Yes. make test-docker 51 passed. Persistence matches the spec."}
