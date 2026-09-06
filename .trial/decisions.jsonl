@@ -35,3 +35,7 @@
 {"turn": 4, "type": "approve-plan", "question": "Approve rotate spec.md and plan.md?", "source": "HUMAN.md#approvals", "answer": "Approve. All three F1' ACs mapped to tasks."}
 {"turn": 4, "type": "scope", "question": "Install extra catalog skills for rotate?", "source": "HUMAN.md#defaults", "answer": "Skip."}
 {"turn": 4, "type": "choose-option", "question": "Start implementation of rotate track now?", "source": "HUMAN.md#scope", "answer": "Yes."}
+{"turn": 5, "type": "approve-completion", "question": "F1' rotate complete: tests and ACs match?", "source": "HUMAN.md#approvals", "answer": "Yes. 56 unit tests and 4 smoke passed."}
+{"turn": 5, "type": "product", "question": "Sync product.md for rotate?", "source": "HUMAN.md#product", "answer": "Yes. Rotate keeps id/name; last rotated date."}
+{"turn": 5, "type": "choose-option", "question": "Review the rotate track now?", "source": "HUMAN.md#approvals", "answer": "Yes. No critical/high issues; skip archive."}
+{"turn": 5, "type": "choose-option", "question": "Archive, delete, or skip rotate track?", "source": "HUMAN.md#scope", "answer": "Skip. Keep spec.md and plan.md."}

@@ -1,0 +1,77 @@
+docker compose build app
+time="2026-09-06T03:46:56Z" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 401B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.2s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 149B done
+#3 DONE 0.0s
+
+#4 [app 1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#4 DONE 0.0s
+
+#5 [app internal] load build context
+#5 transferring context: 65.81kB done
+#5 DONE 0.0s
+
+#6 [app 2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [app 3/7] WORKDIR /app
+#7 CACHED
+
+#8 [app 4/7] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [app 5/7] RUN npm ci
+#9 CACHED
+
+#10 [app 6/7] COPY . .
+#10 DONE 0.8s
+
+#11 [app 7/7] RUN npm run build
+#11 0.974 
+#11 0.974 > shelfmark@1.0.0 build
+#11 0.974 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#11 0.974 
+#11 DONE 1.8s
+
+#12 [app] exporting to image
+#12 exporting layers
+#12 exporting layers 0.5s done
+#12 writing image sha256:a67183c4d4f30f3015acf0bf74648500adf6b0613ce0797475fe251c467ed037 done
+#12 naming to docker.io/library/sdd-poc-fixture-app done
+#12 DONE 0.5s
+
+#13 [app] resolving provenance for metadata file
+#13 DONE 0.0s
+ app  Built
+docker compose run --rm --no-deps app npx vitest run
+
+ RUN  v2.1.9 /app
+
+ ✓ test/unit/api-keys-http.test.ts (6 tests) 428ms
+ ✓ test/unit/http-routes.test.ts (7 tests) 676ms
+ ✓ test/unit/legacy-session.test.ts (6 tests) 4ms
+ ✓ test/unit/http-auth.test.ts (8 tests) 448ms
+ ✓ test/unit/import-script.test.ts (3 tests) 215ms
+ ✓ test/unit/api-keys-repo.test.ts (4 tests) 234ms
+ ✓ test/unit/items-repo.test.ts (6 tests) 359ms
+ ✓ test/unit/legacy-query.test.ts (6 tests) 10ms
+ ✓ test/unit/migrations.test.ts (3 tests) 8ms
+ ✓ test/unit/views.test.ts (2 tests) 162ms
+ ✓ test/unit/tags.test.ts (2 tests) 3ms
+ ✓ test/unit/password.test.ts (2 tests) 120ms
+ ✓ test/unit/api-keys-secret.test.ts (1 test) 2ms
+
+ Test Files  13 passed (13)
+      Tests  56 passed (56)
+   Start at  03:47:02
+   Duration  4.74s (transform 171ms, setup 0ms, collect 660ms, tests 2.67s, environment 2ms, prepare 427ms)
+

@@ -19,7 +19,7 @@ A single seeded operator (`demo`) uses the app for personal link saving. There i
 - Browse items at `/items`, newest first, filtered by an exact tag (`?tag=`) or a substring of title, URL, or note (`?q=`).
 - Change the account password from Settings.
 - JSON API at `/api/items` (list/create) and `/api/items/:id` (fetch/delete). Writes require `Content-Type: application/json`. Unauthenticated API calls return exactly `{"error":"unauthorized"}`.
-- Named API keys in Settings: create a key, copy the secret once, authenticate `/api/*` with `Authorization: Bearer`. Cookie sessions remain how the UI signs in. Revoke is immediate. List rows show a prefix, masked tail, and `YYYY-MM-DD` dates.
+- Named API keys in Settings: create a key, copy the secret once, authenticate `/api/*` with `Authorization: Bearer`. Cookie sessions remain how the UI signs in. Revoke is immediate. Rotate keeps the same key id and name, shows a new secret once, and retires the old secret immediately. List rows show a prefix, masked tail, and `YYYY-MM-DD` dates (created, last used, last rotated).
 - Health check at `GET /healthz`.
 
 ## Authentication product rules
