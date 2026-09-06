@@ -34,27 +34,27 @@ Maps to AC 3, 4, 5.
   - [x] Run `make test-docker` and confirm tests pass
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) 26699c3
 
-## Phase 3: Settings create, list, last-used, and revoke
+## Phase 3: Settings create, list, last-used, and revoke [checkpoint: 8f0b76b]
 
 Maps to AC 1, 2, 6.
 
-- [~] Task: Write failing tests for the Settings API-key UI
-  - [ ] Signed-in `GET /settings` includes `api-keys-section`, name field, create button
-  - [ ] `POST` create with a name shows non-empty `api-key-plaintext` and an `api-key-row` with name and `api-key-created` (`YYYY-MM-DD`)
-  - [ ] A subsequent `GET /settings` hides `api-key-plaintext` and still lists the row (prefix + masked tail, not the full secret)
-  - [ ] After a Bearer `GET /api/items`, Settings shows `api-key-last-used` as `YYYY-MM-DD`
-  - [ ] Revoke then the same secret returns 401 `{"error":"unauthorized"}`
-  - [ ] Run `make test-docker` and confirm the new tests fail
-- [ ] Task: Implement Settings section and routes
-  - [ ] Extend `src/views/settings.ejs` with the contract `data-testid`s and copy (“API keys”, shown once, revoke immediate)
-  - [ ] Extend `src/http/routes/settings.ts` for create and revoke (cookie session + CSRF)
-  - [ ] One-time plaintext via session flash; list newest first
-  - [ ] Run `make test-docker` and confirm tests pass
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Write failing tests for the Settings API-key UI 609885c
+  - [x] Signed-in `GET /settings` includes `api-keys-section`, name field, create button
+  - [x] `POST` create with a name shows non-empty `api-key-plaintext` and an `api-key-row` with name and `api-key-created` (`YYYY-MM-DD`)
+  - [x] A subsequent `GET /settings` hides `api-key-plaintext` and still lists the row (prefix + masked tail, not the full secret)
+  - [x] After a Bearer `GET /api/items`, Settings shows `api-key-last-used` as `YYYY-MM-DD`
+  - [x] Revoke then the same secret returns 401 `{"error":"unauthorized"}`
+  - [x] Run `make test-docker` and confirm the new tests fail
+- [x] Task: Implement Settings section and routes 8f0b76b
+  - [x] Extend `src/views/settings.ejs` with the contract `data-testid`s and copy (“API keys”, shown once, revoke immediate)
+  - [x] Extend `src/http/routes/settings.ts` for create and revoke (cookie session + CSRF)
+  - [x] One-time plaintext via session flash; list newest first
+  - [x] Run `make test-docker` and confirm tests pass
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) 8f0b76b
 
-## Phase 4: Smoke regression
+## Phase 4: Smoke regression [checkpoint: 8f0b76b]
 
-- [ ] Task: Run existing smoke and confirm it stays green
-  - [ ] Run `make smoke` without changing `docker-compose.yml` playwright service, Playwright version, or `test/smoke/`
-  - [ ] Confirm `4 passed`
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Run existing smoke and confirm it stays green 8f0b76b
+  - [x] Run `make smoke` without changing `docker-compose.yml` playwright service, Playwright version, or `test/smoke/`
+  - [x] Confirm `4 passed`
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) 8f0b76b

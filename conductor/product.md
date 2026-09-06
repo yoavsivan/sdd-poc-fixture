@@ -6,7 +6,7 @@ Shelfmark
 
 ## Summary
 
-Shelfmark is a small reading-list web app: a signed-in user pastes a URL, adds a note and a few tags, and later finds the link by tag or by a word in the title. It is a brownfield product with cookie-session sign-in, a server-rendered UI, and a JSON API at `/api/items` that currently authenticates only with the browser session cookie.
+Shelfmark is a small reading-list web app: a signed-in user pastes a URL, adds a note and a few tags, and later finds the link by tag or by a word in the title. It is a brownfield product with cookie-session sign-in, a server-rendered UI, and a JSON API at `/api/items` that authenticates with the browser session cookie or a named API key (`Authorization: Bearer`).
 
 ## Users
 
@@ -20,7 +20,7 @@ There is no registration, no multi-tenant admin, and no OAuth.
 - Sign in / sign out with a signed `shelfmark.sid` cookie (in-memory sessions).
 - Create, edit, delete, list, and filter saved items (URL, title, optional note, up to ten tags).
 - Settings: account details and password change.
-- JSON API: `GET/POST /api/items`, `GET/DELETE /api/items/:id`. Writes require `Content-Type: application/json`. Missing session returns exactly `{"error":"unauthorized"}`.
+- JSON API: `GET/POST /api/items`, `GET/DELETE /api/items/:id`. Writes require `Content-Type: application/json`. Missing session or invalid Bearer returns exactly `{"error":"unauthorized"}`. Named API keys are created in Settings; the secret is shown once; revoke is immediate.
 - Health check at `GET /healthz`.
 
 ## Product principles

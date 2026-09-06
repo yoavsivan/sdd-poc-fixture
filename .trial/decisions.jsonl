@@ -22,3 +22,10 @@
 {"turn": 2, "type": "choose-option", "question": "Start implementation of the API keys track now?", "source": "HUMAN.md#scope", "answer": "Yes."}
 {"turn": 3, "type": "approve-completion", "question": "Phase 1 persist API keys: tests passed. Confirm checkpoint?", "source": "HUMAN.md#approvals", "answer": "Yes. make test-docker 51 passed. Persistence matches the spec."}
 {"turn": 4, "type": "approve-completion", "question": "Phase 2 Bearer auth: tests passed. Confirm checkpoint?", "source": "HUMAN.md#approvals", "answer": "Yes. Valid Bearer returns 200 without cookie; invalid/missing still 401 exact body; cookies still work."}
+{"turn": 5, "type": "approve-completion", "question": "Phase 3 Settings API keys and phase 4 smoke 4 passed. Confirm?", "source": "HUMAN.md#approvals", "answer": "Yes. Unit tests 59 passed; smoke 4 passed. Feature matches F1 brief."}
+{"turn": 5, "type": "product", "question": "Update product.md to mention named API keys and Bearer auth?", "source": "HUMAN.md#product", "answer": "Yes. Document Settings API keys and Bearer on /api/*; cookies unchanged."}
+{"turn": 5, "type": "choose-option", "question": "Update tech-stack.md after API keys track?", "source": "HUMAN.md#project-context", "answer": "No. No new runtime dependency or stack change."}
+{"turn": 5, "type": "choose-option", "question": "Perform a formal code review of the completed track now?", "source": "HUMAN.md#approvals", "answer": "Yes. Run conductor-review against api-keys_20260906."}
+{"turn": 6, "type": "choose-option", "question": "Review 610 lines (>300). Proceed with iterative review of api-keys track?", "source": "HUMAN.md#approvals", "answer": "Yes. Review the track diff; tests already 59 passed and smoke 4 passed."}
+{"turn": 6, "type": "choose-option", "question": "Review found no issues. Archive, delete, or skip track cleanup?", "source": "HUMAN.md#scope", "answer": "Skip. Keep spec.md and plan.md in conductor/tracks for scoring."}
+{"turn": 6, "type": "choose-option", "question": "Revert any unit of work from the review?", "source": "default", "answer": "No."}
