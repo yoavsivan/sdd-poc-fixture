@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-06
 
-**Status**: Draft
+**Status**: Implemented
 
 **Input**: User description: "Settings gets Rotate per key so the user can mint a new secret for the same key without creating a second row."
 
