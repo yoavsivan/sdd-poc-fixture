@@ -16,23 +16,23 @@ TDD per `conductor/workflow.md`. Every task writes failing tests before implemen
   - [x] Run `make test-docker` and confirm tests pass
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) c78d733
 
-## Phase 2: Bearer authentication on `/api/*`
+## Phase 2: Bearer authentication on `/api/*` [checkpoint: 26699c3]
 
 Maps to AC 3, 4, 5.
 
-- [~] Task: Write failing tests for Bearer auth
-  - [ ] `GET /api/items` with `Authorization: Bearer <valid secret>` and no cookie → 200 `{ items, count }` including an item created via the API/UI as that user
-  - [ ] Missing header → 401 exact body `{"error":"unauthorized"}`
-  - [ ] `Authorization: Bearer not-a-key` → 401 exact body
-  - [ ] Signed-in cookie without Bearer still returns 200 on `GET /api/items`
-  - [ ] Existing cases (tampered cookie, `Bearer anything`) stay 401
-  - [ ] Run `make test-docker` and confirm the new tests fail
-- [ ] Task: Implement Bearer on the existing API guard
-  - [ ] Extend `src/http/middleware/authenticate.ts` so `loadUser` accepts a valid Bearer secret after the cookie session path
-  - [ ] On successful key auth, set `res.locals.user` to the owning user and stamp `last_used_at` (UTC)
-  - [ ] Do not modify `src/legacy/session.cjs`
-  - [ ] Run `make test-docker` and confirm tests pass
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Write failing tests for Bearer auth 83dee6e
+  - [x] `GET /api/items` with `Authorization: Bearer <valid secret>` and no cookie → 200 `{ items, count }` including an item created via the API/UI as that user
+  - [x] Missing header → 401 exact body `{"error":"unauthorized"}`
+  - [x] `Authorization: Bearer not-a-key` → 401 exact body
+  - [x] Signed-in cookie without Bearer still returns 200 on `GET /api/items`
+  - [x] Existing cases (tampered cookie, `Bearer anything`) stay 401
+  - [x] Run `make test-docker` and confirm the new tests fail
+- [x] Task: Implement Bearer on the existing API guard 26699c3
+  - [x] Extend `src/http/middleware/authenticate.ts` so `loadUser` accepts a valid Bearer secret after the cookie session path
+  - [x] On successful key auth, set `res.locals.user` to the owning user and stamp `last_used_at` (UTC)
+  - [x] Do not modify `src/legacy/session.cjs`
+  - [x] Run `make test-docker` and confirm tests pass
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) 26699c3
 
 ## Phase 3: Settings create, list, last-used, and revoke
 
