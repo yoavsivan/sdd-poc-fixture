@@ -1,0 +1,10 @@
+# Tasks — F1
+
+Status markup: `- [ ]` open · `- [x]` done. A done task ends with `Evidence: <path or command>`.
+`gatekit tasks --feature F1` exits 2 while any task is open or any done task lacks evidence;
+the default contract runs it as the `tasks-complete` check.
+
+- [ ] T1 — Add api_keys migration 0004 and repo (create, list newest first, lookup by hash, last used, revoke)
+- [ ] T2 — Authenticate GET /api/items and /api/* with Authorization Bearer; keep cookie sessions; 401 {"error":"unauthorized"}
+- [ ] T3 — Settings UI: api-keys-section, api-key-name, api-key-create, api-key-plaintext (once), api-key-row, api-key-created, api-key-last-used, api-key-revoke; POST /api-keys and POST /api-keys/:id/revoke
+- [ ] T4 — Unit tests in Docker (make test-docker) and keep make smoke green

@@ -1,0 +1,1 @@
+{"turn": 1, "type": "approve-plan", "question": "Approve F1 plan covering named API keys, Bearer on /api/*, cookie sessions, data-testids and 401 body?", "source": "HUMAN.md#approvals", "answer": "Approved: every F1 acceptance criterion maps to a task (T1-T4) and a contract check (brief-names-surface, unit-tests, smoke, migration)."}

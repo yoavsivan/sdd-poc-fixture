@@ -1,0 +1,25 @@
+{
+  "gatekit_verdict": 1,
+  "kind": "plan-review",
+  "feature": "F1",
+  "unit": "plan",
+  "cycle": 1,
+  "target": "features/F1/plan.md",
+  "reviewer": "trial-reviewer",
+  "verdict": "PASS",
+  "scores": {
+    "brief_coverage": 5,
+    "contract_runnable": 4,
+    "handoff_complete": 4,
+    "scope": 4
+  },
+  "blocking": [],
+  "advisory": [],
+  "evidence": [
+    "features/F1/brief.md ## Acceptance criteria — six observable criteria map to T1–T4",
+    "features/F1/contract.yaml checks unit-tests (make test-docker) and smoke (make smoke)",
+    "features/F1/plan.md ## Hand-off — planner, executor, reviewer, budget, stop condition",
+    "features/F1/tasks.md T1–T4 cover migration, Bearer auth, Settings UI, Docker tests"
+  ],
+  "reviewed_at": "2026-09-06T11:17:26Z"
+}

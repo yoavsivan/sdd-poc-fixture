@@ -6,13 +6,14 @@ import { openDb } from "../../src/db/open.ts";
 import { migrate } from "../../src/db/migrate.ts";
 
 describe("migrations", () => {
-  it("fresh db applies 0001..0003 in order and records them", () => {
+  it("fresh db applies 0001..0004 in order and records them", () => {
     const db = openDb(":memory:");
     const result = migrate(db);
     expect(result.applied).toEqual([
       "0001_users.sql",
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
+      "0004_api_keys.sql",
     ]);
     expect(result.skipped).toEqual([]);
     const names = db.prepare("SELECT name FROM schema_migrations ORDER BY name").all() as {
@@ -27,6 +28,7 @@ describe("migrations", () => {
     expect(tableNames).toContain("items");
     expect(tableNames).toContain("tags");
     expect(tableNames).toContain("item_tags");
+    expect(tableNames).toContain("api_keys");
     db.close();
   });
 
@@ -39,6 +41,7 @@ describe("migrations", () => {
       "0001_users.sql",
       "0002_items_tags.sql",
       "0003_items_updated_at.sql",
+      "0004_api_keys.sql",
     ]);
     db.close();
   });

@@ -1,0 +1,41 @@
+# gatekit verification contract — {{feature}} ({{date}})
+# Grammar: docs/contract-format.md. Every check must pass for `gatekit done --feature {{feature}}`.
+feature: {{feature}}
+base: {{base}}                       # git-only
+
+# Gate kinds (.gatekit/gate-kinds.json) that need a PASS verdict in .gatekit/verdicts/{{feature}}/
+# before done passes. Empty by default so a single-agent flow works; see docs/quickstart-orchestrator.md.
+required_gates:
+#  - code-review
+
+checks:
+  - id: plan-has-handoff
+    kind: spec-mentions
+    file: plan.md
+    terms:
+      - "## Hand-off"
+
+  - id: tasks-complete
+    kind: command
+    run: gatekit tasks --feature {{feature}}
+
+  - id: drift                        # git-only
+    kind: command                    # git-only
+    run: gatekit drift --feature {{feature}}   # git-only
+
+# Add your own. Examples (kinds: command, test, e2e, artifact-exists, spec-mentions):
+#  - id: unit-tests
+#    kind: test
+#    run: npm test
+#  - id: browser
+#    kind: e2e
+#    run: npx playwright test
+#    timeout: 900
+#  - id: migration-present
+#    kind: artifact-exists
+#    path: db/migrations/0004_*.sql
+#  - id: brief-names-surface
+#    kind: spec-mentions
+#    terms:
+#      - GET /api/notes
+#      - note-archive
