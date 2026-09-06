@@ -27,3 +27,8 @@
 {"turn": 4, "type": "choose-option", "question": "Review findings: apply masked tail fix?", "source": "HUMAN.md#approvals", "answer": "Apply Fixes. Store display_tail so the list shows prefix plus masked tail."}
 {"turn": 4, "type": "choose-option", "question": "Archive, delete, or skip the completed track?", "source": "HUMAN.md#defaults", "answer": "Skip. Leave the track in conductor/tracks so spec/plan remain scorable."}
 {"turn": 4, "type": "approve-completion", "question": "Approve F1 completion after review and tests?", "source": "HUMAN.md#approvals", "answer": "Approve. Feature matches F1 brief; test-docker and smoke passed."}
+{"turn": 5, "type": "choose-option", "question": "Is F1' rotate a Feature track?", "source": "HUMAN.md#scope", "answer": "Yes. Follow-up feature: rotate keeps id and name."}
+{"turn": 5, "type": "clarify", "question": "Rotate UX and storage?", "source": "HUMAN.md#product", "answer": "Same Settings row; new secret once; last rotated YYYY-MM-DD; SQLite rotated_at."}
+{"turn": 5, "type": "choose-option", "question": "Sufficient info to draft rotate spec?", "source": "HUMAN.md#defaults", "answer": "Yes."}
+{"turn": 5, "type": "approve-plan", "question": "Approve rotate spec and plan?", "source": "HUMAN.md#approvals", "answer": "Approve. All F1' ACs map to tasks."}
+{"turn": 5, "type": "choose-option", "question": "Start rotate implementation now?", "source": "HUMAN.md#scope", "answer": "Yes."}
