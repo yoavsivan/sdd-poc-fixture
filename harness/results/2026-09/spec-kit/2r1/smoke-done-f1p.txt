@@ -1,0 +1,162 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 642B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 401B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 149B done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 594.58kB done
+#6 DONE 0.0s
+
+#7 [4/7] COPY package.json package-lock.json ./
+#7 CACHED
+
+#8 [3/7] WORKDIR /app
+#8 CACHED
+
+#9 [2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [5/7] RUN npm ci
+#10 CACHED
+
+#11 [6/7] COPY . .
+#11 DONE 0.0s
+
+#12 [7/7] RUN npm run build
+#12 0.260 
+#12 0.260 > <email removed> build
+#12 0.260 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#12 0.260 
+#12 DONE 1.2s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 1.1s done
+#13 writing image sha256:6254dcfc81c139cee7e214bd90a06201ef4ce07c92366168d09be9cb47ce3b67 done
+#13 naming to docker.io/library/harness-spec-kit-2r1-done-f1p-app done
+#13 DONE 1.1s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql","0004_api_keys.sql","0005_api_keys_rotated.sql"],"skipped":[]}
+app-1  | [info] seed user {"username":"demo","created":true}
+app-1  | [info] seed items {"inserted":3}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 3ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+playwright-1  | 
+playwright-1  | added 202 packages, and audited 203 packages in 6s
+playwright-1  | 
+playwright-1  | 39 packages are looking for funding
+playwright-1  |   run `npm fund` for details
+playwright-1  | 
+playwright-1  | 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+playwright-1  | 
+playwright-1  | To address issues that do not require attention, run:
+playwright-1  |   npm audit fix
+playwright-1  | 
+playwright-1  | To address all issues (including breaking changes), run:
+playwright-1  |   npm audit fix --force
+playwright-1  | 
+playwright-1  | Run `npm audit` for details.
+playwright-1  | 
+playwright-1  | Running 4 tests using 1 worker
+playwright-1  | 
+app-1         | [info] GET / 302 2ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 3ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] POST /signin 302 44ms
+app-1         | [info] GET /items 200 3ms
+playwright-1  |   ✓  1 test/smoke/smoke.spec.ts:4:1 › sign-in (250ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 2ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+playwright-1  |   ✓  2 test/smoke/smoke.spec.ts:15:1 › add item (267ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 200 3ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 304 1ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items?tag=alpha-mtpgdxaz-7h5976 200 2ms
+app-1         | [info] GET /items 200 2ms
+playwright-1  |   ✓  3 test/smoke/smoke.spec.ts:31:1 › tag filter (444ms)
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 200 1ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /api/items?q=mtpgdxnd-0yx36u 200 1ms
+app-1         | [info] GET /api/items 401 0ms
+playwright-1  |   ✓  4 test/smoke/smoke.spec.ts:57:1 › /api/items with cookie (242ms)
+playwright-1  | 
+playwright-1  |   4 passed (1.9s)
+
+[Kplaywright-1 exited with code 0
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+
+[Kapp-1 exited with code 137
+ Image harness-spec-kit-2r1-done-f1p-app Building 
+ Image harness-spec-kit-2r1-done-f1p-app Built 
+ Volume harness-spec-kit-2r1-done-f1p_playwright-nm Creating 
+ Volume harness-spec-kit-2r1-done-f1p_playwright-nm Creating 
+ Network harness-spec-kit-2r1-done-f1p_default Creating 
+ Network harness-spec-kit-2r1-done-f1p_default Creating 
+ Volume harness-spec-kit-2r1-done-f1p_app-data Creating 
+ Volume harness-spec-kit-2r1-done-f1p_app-data Creating 
+ Volume harness-spec-kit-2r1-done-f1p_playwright-nm Created 
+ Volume harness-spec-kit-2r1-done-f1p_playwright-nm Created 
+ Volume harness-spec-kit-2r1-done-f1p_app-data Created 
+ Volume harness-spec-kit-2r1-done-f1p_app-data Created 
+ Network harness-spec-kit-2r1-done-f1p_default Created 
+ Network harness-spec-kit-2r1-done-f1p_default Created 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Creating 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Created 
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Creating 
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Created 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Starting 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Started 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Waiting 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Healthy 
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Starting 
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Started 
+playwright-1  | npm warn deprecated <email removed>: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+ Compose Stopping Aborting on container exit...
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Stopping 
+ Container harness-spec-kit-2r1-done-f1p-playwright-1 Stopped 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Stopping 
+ Container harness-spec-kit-2r1-done-f1p-app-1 Stopped 

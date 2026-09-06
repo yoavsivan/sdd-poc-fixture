@@ -6,8 +6,9 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from run.common import GATEKIT_SHA, PINNED_MODEL, harness_dir, repo_root
+from run.common import EXIT_OK, EXIT_PRECONDITION, GATEKIT_SHA, PINNED_MODEL, harness_dir, repo_root
 from run import register as register_mod
 
 
@@ -80,6 +81,29 @@ class TestRegister(unittest.TestCase):
         self.assertEqual(payload["fixture_tag"]["sha"], "7dc3d08df3e41807b1b575b738e8afb5f7990b93")
         self.assertEqual(payload["gatekit_tag"]["sha"], GATEKIT_SHA)
         self.assertEqual(payload["model"], PINNED_MODEL)
+
+    def test_verify_local_runs_when_h_tracked(self) -> None:
+        payload = register_mod.build_payload(self.held, self.root, registration=1, supersedes=None)
+        dest_dir = Path(tempfile.mkdtemp())
+        dest = dest_dir / "pre-registration.json"
+        dest.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        with patch.object(register_mod, "tracked_h_paths", return_value=["harness/acceptance/f1.spec.ts"]):
+            with patch.object(register_mod, "load_config", return_value={}):
+                with patch.object(register_mod, "held_out_dir", return_value=self.held):
+                    with patch.object(register_mod, "repo_root", return_value=self.root):
+                        with patch.object(register_mod, "run_dir", return_value=dest_dir):
+                            with patch.object(register_mod, "harness_dir", return_value=dest_dir):
+                                rc = register_mod.main(["--verify-local"])
+        self.assertEqual(rc, EXIT_OK)
+
+    def test_v1_refuses_tracked_h(self) -> None:
+        with patch.object(register_mod, "tracked_h_paths", return_value=["harness/acceptance/f1.spec.ts"]):
+            with patch.object(register_mod, "load_config", return_value={}):
+                with patch.object(register_mod, "held_out_dir", return_value=self.held):
+                    with patch.object(register_mod, "repo_root", return_value=self.root):
+                        with self.assertRaises(SystemExit) as ctx:
+                            register_mod.main(["--v1"])
+        self.assertEqual(ctx.exception.code, EXIT_PRECONDITION)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,56 @@
+arm,trial,cohort,role,type,source,seat_turn,question_excerpt,answer_excerpt
+conductor,2r1,v1,scored,choose-option,HUMAN.md#project-context,1,Brownfield detected. May I perform a read-only scan to analyze the architecture?,Yes. Scan the fixture; product is Shelfmark reading-list with cookie sessions.
+conductor,2r1,v1,scored,product,HUMAN.md#project-context,1,Does the proposed title Shelfmark and reading-list summary capture the vision?,"Yes. Paste URL, notes, tags; find by tag or title word."
+conductor,2r1,v1,scored,choose-option,HUMAN.md#project-context,1,Product definition mode: Interactive or Autogenerate?,Autogenerate from HUMAN.md project-context and codebase (brownfield).
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#product,1,Approve drafted product.md?,Approve.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#product,1,Product guidelines mode: Interactive or Autogenerate?,Autogenerate; API keys copy and timestamps from product section.
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#product,1,Approve drafted product-guidelines.md?,Approve.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#project-context,1,Confirm inferred tech stack (TS/Express/SQLite/Vitest/Playwright Docker)?,Yes. Wrap legacy session/query; no new runtime deps; make smoke/test-docker.
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#project-context,1,Approve drafted tech-stack.md?,Approve.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#clarify,1,"Copy TypeScript, JavaScript, HTML/CSS, general style guides? Additional needed?",Yes those four. No additional guides.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,1,Workflow mode: Default or Customize?,Default workflow; adapt commands to make test-docker and make smoke.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,1,Install extra catalog skills (Firebase/GCP)?,No. None match this stack; skip extra skills.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,1,Start defining the first actionable track now?,Yes. F1 named API keys and Bearer auth on /api/*.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,2,Is this track a Feature (named API keys / Bearer on /api/*)?,Yes. Feature track for F1 API-key authentication.
+conductor,2r1,v1,scored,clarify,HUMAN.md#clarify,2,Where should keys be created and stored?,"Settings UI + SQLite migration 0004; extend JSON API auth, not a new app."
+conductor,2r1,v1,scored,clarify,HUMAN.md#product,2,"Key format, list display, timestamps?",Prefix+secret (>=32 random bytes); mask tail in list; YYYY-MM-DD; UTC stored.
+conductor,2r1,v1,scored,clarify,HUMAN.md#scope,2,"401 body, Bearer header, cookie sessions?","401 {""error"":""unauthorized""}; Bearer on /api/*; cookies unchanged; no legacy rewrite."
+conductor,2r1,v1,scored,clarify,HUMAN.md#scope,2,"Rotate, scopes, OAuth in this track?",Out of scope. Rotate is F1' only.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,2,Sufficient information to draft the spec?,Yes. Draft spec from F1 brief and HUMAN.md.
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#approvals,2,Approve spec.md and proceed to planning?,Approve. Every F1 AC is in the spec.
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#approvals,2,"Approve plan.md (schema, Bearer, settings, smoke)?",Approve. Each AC maps to a TDD task.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,2,Install extra skills for this track?,No matching catalog skills. Skip.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,2,Start implementation now?,Yes.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,3,Proceed with implementation of Named API keys and Bearer auth?,Yes.
+conductor,2r1,v1,scored,approve-completion,HUMAN.md#approvals,3,Phase schema/Bearer/settings/smoke verification: does this meet expectations?,Yes. test-docker 52 passed; smoke 4 passed; F1 ACs covered.
+conductor,2r1,v1,scored,product,HUMAN.md#product,3,Update product.md and tech-stack.md for API keys?,Yes. Document Bearer keys; cookies still sign in the UI.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#approvals,3,Perform a formal code review of the completed track now?,Yes.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#approvals,4,Review findings: apply masked tail fix?,Apply Fixes. Store display_tail so the list shows prefix plus masked tail.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,4,"Archive, delete, or skip the completed track?",Skip. Leave the track in conductor/tracks so spec/plan remain scorable.
+conductor,2r1,v1,scored,approve-completion,HUMAN.md#approvals,4,Approve F1 completion after review and tests?,Approve. Feature matches F1 brief; test-docker and smoke passed.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,5,Is F1' rotate a Feature track?,Yes. Follow-up feature: rotate keeps id and name.
+conductor,2r1,v1,scored,clarify,HUMAN.md#product,5,Rotate UX and storage?,Same Settings row; new secret once; last rotated YYYY-MM-DD; SQLite rotated_at.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,5,Sufficient info to draft rotate spec?,Yes.
+conductor,2r1,v1,scored,approve-plan,HUMAN.md#approvals,5,Approve rotate spec and plan?,Approve. All F1' ACs map to tasks.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#scope,5,Start rotate implementation now?,Yes.
+conductor,2r1,v1,scored,approve-completion,HUMAN.md#approvals,6,Rotate phases and smoke meet expectations?,Yes. test-docker 54 passed; smoke 4 passed; F1' ACs covered.
+conductor,2r1,v1,scored,product,HUMAN.md#product,6,Update product.md for key rotation?,Yes. Settings can rotate a key in place.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#approvals,6,Review the rotate track now?,Yes. No high issues; skip archive.
+conductor,2r1,v1,scored,choose-option,HUMAN.md#defaults,6,"Archive, delete, or skip rotate track?",Skip. Keep spec/plan in conductor/tracks.
+gatekit,1,v1,scored,approval,derived-only,16,"Smoke is green. Next I’ll fill the F1 spec (brief, contract, plan, tasks), record plan approval, and implement.",
+gatekit,2,v1,scored,approve-plan,HUMAN.md#approvals,1,"Approve F1 plan covering named API keys, Bearer on /api/*, settings data-testids, 401 body?","Approved: every F1 acceptance criterion maps to T1–T4 and a contract check (spec-mentions, migration, test-docker, smoke)."
+gatekit,2,v1,scored,approve-completion,HUMAN.md#approvals,2,Approve F1 completion after gatekit done 8/8 and smoke/unit tests green?,Approved: gatekit done --feature F1 exited 0; checks include make test-docker and make smoke; UI and Bearer auth match the brief.
+gatekit,2,v1,scored,approve-completion,HUMAN.md#approvals,3,Approve F1 rotate follow-up after spec-review PASS and gatekit done?,Will approve once gatekit done --feature F1 exits 0 with rotation checks and tests green.
+gatekit,2,v1,scored,approve-completion,HUMAN.md#approvals,4,Approve F1 rotate follow-up after gatekit done 9/9?,Approved: gatekit done exited 0; spec-review PASS; rotate keeps id/name; old secret 401; last rotated shown.
+gatekit,3,v1,tie-break,approval,derived-only,6,"I'll fill the F1 brief, contract, plan, and tasks next, then record plan approval.",
+spec-kit,1,v1,scored,approval,derived-only,19,"Analyze found no blocking gaps, so I’m recording plan approval and implementing F1 in the existing app.",
+spec-kit,2r1,v1,scored,product,HUMAN.md#project-context,1,Constitution principles for Shelfmark brownfield fixture,Wrap legacy session/query; TS strict; Docker/Make tests; demo/demo-pass-1234; no new runtime deps
+spec-kit,2r1,v1,scored,clarify,HUMAN.md#clarify,2,Bearer vs cookie when both present on /api/*,Bearer exclusive on /api/*; cookie sessions unchanged for HTML; keep existing tests green
+spec-kit,2r1,v1,scored,clarify,HUMAN.md#product,2,Key list display and timestamp format,Prefix plus masked tail; ISO-8601 YYYY-MM-DD; store UTC; newest first
+spec-kit,2r1,v1,scored,scope,HUMAN.md#defaults,2,Empty API key name,Reject empty/whitespace name; smallest surface that still meets AC
+spec-kit,2r1,v1,scored,approve-plan,HUMAN.md#approvals,3,Approve F1 plan if every AC maps to a task,Approved: AC1-6 map to T006-T015; constitution gates pass
+spec-kit,2r1,v1,scored,approve-completion,HUMAN.md#approvals,4,Approve F1 completion after smoke and unit tests,Approved: make test-docker 51 passed; make smoke 4 passed; locators and 401 body match brief
+spec-kit,2r1,v1,scored,other,HUMAN.md#scope,5,Which Spec Kit change flow for F1 prime rotate keys,Flow-forward new numbered spec 002-rotate-api-keys then plan tasks implement
+spec-kit,2r1,v1,scored,clarify,HUMAN.md#product,5,Does rotate keep id and name; last rotated format,Same id and name; last rotated YYYY-MM-DD UTC; old secret dies immediately
+spec-kit,2r1,v1,scored,approve-plan,HUMAN.md#approvals,6,Approve F1 prime plan AC mapping,"Approved: rotate keep id/name, old 401, new bearer, last-rotated map to T003-T008"
+spec-kit,2r1,v1,scored,approve-completion,HUMAN.md#approvals,7,Approve F1 prime completion after tests and smoke,Approved: test-docker 52 passed; smoke 4 passed; rotate locators and 401 body match brief

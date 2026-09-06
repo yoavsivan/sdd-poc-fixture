@@ -72,6 +72,18 @@ class TestCard(unittest.TestCase):
         self.assertTrue((out / "card-decisions.svg").is_file())
         self.assertIn("highlighted", (out / "card-decisions.html").read_text(encoding="utf-8"))
 
+    def test_png_flag_screenshots_html(self) -> None:
+        from unittest.mock import patch
+
+        out = self.td / "out"
+        with patch("score.card.screenshot_html") as shot:
+            card_main(["--csv", str(self.csv), "--out", str(out), "--png"])
+        self.assertTrue((out / "card.html").is_file())
+        shot.assert_called_once()
+        html_arg, png_arg = shot.call_args[0]
+        self.assertEqual(Path(html_arg).name, "card.html")
+        self.assertEqual(Path(png_arg).name, "card.png")
+
 
 if __name__ == "__main__":
     unittest.main()

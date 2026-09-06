@@ -1,0 +1,127 @@
+{
+  "arm": "gatekit",
+  "items": [
+    {
+      "display": "POST /api-keys",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys",
+      "line": 0,
+      "matched": true,
+      "matched_by": "POST /api-keys",
+      "type": "route"
+    },
+    {
+      "display": "POST /api-keys/:id/revoke",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys/:id/revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "POST /api-keys/:id/revoke",
+      "type": "route"
+    },
+    {
+      "display": "api-keys-section",
+      "file": "src/views/settings.ejs",
+      "id": "api-keys-section",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-keys-section",
+      "type": "control"
+    },
+    {
+      "display": "api-key-plaintext",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-plaintext",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-plaintext",
+      "type": "control"
+    },
+    {
+      "display": "api-key-name",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-name",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-name",
+      "type": "control"
+    },
+    {
+      "display": "api-key-create",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-create",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-create",
+      "type": "control"
+    },
+    {
+      "display": "api-key-row",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-row",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-row",
+      "type": "control"
+    },
+    {
+      "display": "api-key-created",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-created",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-created",
+      "type": "control"
+    },
+    {
+      "display": "api-key-last-used",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-last-used",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-last-used",
+      "type": "control"
+    },
+    {
+      "display": "api-key-revoke",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-revoke",
+      "type": "control"
+    },
+    {
+      "display": "Create key",
+      "file": "src/views/settings.ejs",
+      "id": "Create key",
+      "line": 0,
+      "matched": false,
+      "matched_by": null,
+      "type": "control"
+    },
+    {
+      "display": "Revoke",
+      "file": "src/views/settings.ejs",
+      "id": "Revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Revoke",
+      "type": "control"
+    }
+  ],
+  "matched": 11,
+  "pct": 91.7,
+  "spec_files": [
+    "features/F1/brief.md",
+    "features/F1/contract.yaml"
+  ],
+  "spec_layout_review": true,
+  "tag": "dc13a1686d927daa5807b553ac4ac8f439d8544c",
+  "total": 12,
+  "unmatched_spec_candidates": [
+    "features/F1/DONE.json",
+    "features/F1/plan.md",
+    "features/F1/tasks.md"
+  ]
+}

@@ -1,0 +1,13 @@
+specs/001-api-key-auth/checklists/requirements.md
+specs/001-api-key-auth/contracts/api-keys-http.md
+specs/001-api-key-auth/contracts/settings-ui.md
+specs/001-api-key-auth/data-model.md
+specs/001-api-key-auth/plan.md
+specs/001-api-key-auth/quickstart.md
+specs/001-api-key-auth/research.md
+specs/002-rotate-api-keys/checklists/requirements.md
+specs/002-rotate-api-keys/contracts/rotate.md
+specs/002-rotate-api-keys/data-model.md
+specs/002-rotate-api-keys/plan.md
+specs/002-rotate-api-keys/quickstart.md
+specs/002-rotate-api-keys/research.md

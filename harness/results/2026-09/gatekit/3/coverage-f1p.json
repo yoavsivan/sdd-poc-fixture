@@ -1,0 +1,163 @@
+{
+  "arm": "gatekit",
+  "items": [
+    {
+      "display": "POST /api-keys",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys",
+      "line": 0,
+      "matched": true,
+      "matched_by": "POST /api-keys",
+      "type": "route"
+    },
+    {
+      "display": "POST /api-keys/:id/revoke",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys/:id/revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "POST /api-keys/:id/revoke",
+      "type": "route"
+    },
+    {
+      "display": "POST /api-keys/:id/rotate",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys/:id/rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "POST /api-keys/:id/rotate",
+      "type": "route"
+    },
+    {
+      "display": "api-keys-section",
+      "file": "src/views/settings.ejs",
+      "id": "api-keys-section",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-keys-section",
+      "type": "control"
+    },
+    {
+      "display": "api-key-plaintext",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-plaintext",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-plaintext",
+      "type": "control"
+    },
+    {
+      "display": "api-key-name",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-name",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-name",
+      "type": "control"
+    },
+    {
+      "display": "api-key-create",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-create",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-create",
+      "type": "control"
+    },
+    {
+      "display": "api-key-row",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-row",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-row",
+      "type": "control"
+    },
+    {
+      "display": "api-key-created",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-created",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-created",
+      "type": "control"
+    },
+    {
+      "display": "api-key-last-used",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-last-used",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-last-used",
+      "type": "control"
+    },
+    {
+      "display": "api-key-last-rotated",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-last-rotated",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-last-rotated",
+      "type": "control"
+    },
+    {
+      "display": "api-key-rotate",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-rotate",
+      "type": "control"
+    },
+    {
+      "display": "api-key-revoke",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-revoke",
+      "type": "control"
+    },
+    {
+      "display": "Create key",
+      "file": "src/views/settings.ejs",
+      "id": "Create key",
+      "line": 0,
+      "matched": false,
+      "matched_by": null,
+      "type": "control"
+    },
+    {
+      "display": "Rotate",
+      "file": "src/views/settings.ejs",
+      "id": "Rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Rotate",
+      "type": "control"
+    },
+    {
+      "display": "Revoke",
+      "file": "src/views/settings.ejs",
+      "id": "Revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Revoke",
+      "type": "control"
+    }
+  ],
+  "matched": 15,
+  "pct": 93.8,
+  "spec_files": [
+    "features/F1/brief.md",
+    "features/F1/contract.yaml"
+  ],
+  "spec_layout_review": true,
+  "tag": "6764cedd6d508176c2e3fb7dd1f1e6c161a67c23",
+  "total": 16,
+  "unmatched_spec_candidates": [
+    "features/F1/DONE.json",
+    "features/F1/plan.md",
+    "features/F1/tasks.md"
+  ]
+}

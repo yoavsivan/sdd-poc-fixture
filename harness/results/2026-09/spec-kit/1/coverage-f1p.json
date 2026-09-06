@@ -1,0 +1,175 @@
+{
+  "arm": "spec-kit",
+  "items": [
+    {
+      "display": "POST /api-keys",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys",
+      "line": 0,
+      "matched": true,
+      "matched_by": "/api-keys",
+      "type": "route"
+    },
+    {
+      "display": "POST /api-keys/:id/revoke",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys/:id/revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "/api-keys/:id/revoke",
+      "type": "route"
+    },
+    {
+      "display": "POST /api-keys/:id/rotate",
+      "file": "src/http/routes/settings.ts",
+      "id": "POST /api-keys/:id/rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "/api-keys/:id/rotate",
+      "type": "route"
+    },
+    {
+      "display": "api-keys-section",
+      "file": "src/views/settings.ejs",
+      "id": "api-keys-section",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-keys-section",
+      "type": "control"
+    },
+    {
+      "display": "api-key-plaintext",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-plaintext",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-plaintext",
+      "type": "control"
+    },
+    {
+      "display": "api-key-name",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-name",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-name",
+      "type": "control"
+    },
+    {
+      "display": "api-key-create",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-create",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-create",
+      "type": "control"
+    },
+    {
+      "display": "api-key-row",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-row",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-row",
+      "type": "control"
+    },
+    {
+      "display": "api-key-created",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-created",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-created",
+      "type": "control"
+    },
+    {
+      "display": "api-key-last-used",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-last-used",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-last-used",
+      "type": "control"
+    },
+    {
+      "display": "api-key-last-rotated",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-last-rotated",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-last-rotated",
+      "type": "control"
+    },
+    {
+      "display": "api-key-rotate",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-rotate",
+      "type": "control"
+    },
+    {
+      "display": "api-key-revoke",
+      "file": "src/views/settings.ejs",
+      "id": "api-key-revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "api-key-revoke",
+      "type": "control"
+    },
+    {
+      "display": "Create key",
+      "file": "src/views/settings.ejs",
+      "id": "Create key",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Create key",
+      "type": "control"
+    },
+    {
+      "display": "Rotate",
+      "file": "src/views/settings.ejs",
+      "id": "Rotate",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Rotate",
+      "type": "control"
+    },
+    {
+      "display": "Revoke",
+      "file": "src/views/settings.ejs",
+      "id": "Revoke",
+      "line": 0,
+      "matched": true,
+      "matched_by": "Revoke",
+      "type": "control"
+    }
+  ],
+  "matched": 16,
+  "pct": 100.0,
+  "spec_files": [
+    "specs/001-api-key-auth/spec.md",
+    "specs/001-api-key-auth/tasks.md",
+    "specs/002-rotate-api-keys/spec.md",
+    "specs/002-rotate-api-keys/tasks.md"
+  ],
+  "spec_layout_review": true,
+  "tag": "ac1815802c0f944b09f04589304ca379a53ebe03",
+  "total": 16,
+  "unmatched_spec_candidates": [
+    "specs/001-api-key-auth/checklists/requirements.md",
+    "specs/001-api-key-auth/contracts/api-keys-http.md",
+    "specs/001-api-key-auth/contracts/settings-ui.md",
+    "specs/001-api-key-auth/data-model.md",
+    "specs/001-api-key-auth/plan.md",
+    "specs/001-api-key-auth/quickstart.md",
+    "specs/001-api-key-auth/research.md",
+    "specs/002-rotate-api-keys/checklists/requirements.md",
+    "specs/002-rotate-api-keys/contracts/rotate.md",
+    "specs/002-rotate-api-keys/data-model.md",
+    "specs/002-rotate-api-keys/plan.md",
+    "specs/002-rotate-api-keys/quickstart.md",
+    "specs/002-rotate-api-keys/research.md"
+  ]
+}

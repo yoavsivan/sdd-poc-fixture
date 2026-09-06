@@ -1,0 +1,579 @@
+{
+  "counts_derived": 0,
+  "counts_self": 38,
+  "derived": [],
+  "merged": [
+    {
+      "answer": "Yes. Scan the fixture; product is Shelfmark reading-list with cookie sessions.",
+      "excerpt": "Brownfield detected. May I perform a read-only scan to analyze the architecture?",
+      "question": "Brownfield detected. May I perform a read-only scan to analyze the architecture?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. Paste URL, notes, tags; find by tag or title word.",
+      "excerpt": "Does the proposed title Shelfmark and reading-list summary capture the vision?",
+      "question": "Does the proposed title Shelfmark and reading-list summary capture the vision?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "product"
+    },
+    {
+      "answer": "Autogenerate from HUMAN.md project-context and codebase (brownfield).",
+      "excerpt": "Product definition mode: Interactive or Autogenerate?",
+      "question": "Product definition mode: Interactive or Autogenerate?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "excerpt": "Approve drafted product.md?",
+      "question": "Approve drafted product.md?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Autogenerate; API keys copy and timestamps from product section.",
+      "excerpt": "Product guidelines mode: Interactive or Autogenerate?",
+      "question": "Product guidelines mode: Interactive or Autogenerate?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "excerpt": "Approve drafted product-guidelines.md?",
+      "question": "Approve drafted product-guidelines.md?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes. Wrap legacy session/query; no new runtime deps; make smoke/test-docker.",
+      "excerpt": "Confirm inferred tech stack (TS/Express/SQLite/Vitest/Playwright Docker)?",
+      "question": "Confirm inferred tech stack (TS/Express/SQLite/Vitest/Playwright Docker)?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "excerpt": "Approve drafted tech-stack.md?",
+      "question": "Approve drafted tech-stack.md?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes those four. No additional guides.",
+      "excerpt": "Copy TypeScript, JavaScript, HTML/CSS, general style guides? Additional needed?",
+      "question": "Copy TypeScript, JavaScript, HTML/CSS, general style guides? Additional needed?",
+      "source": "HUMAN.md#clarify",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Default workflow; adapt commands to make test-docker and make smoke.",
+      "excerpt": "Workflow mode: Default or Customize?",
+      "question": "Workflow mode: Default or Customize?",
+      "source": "HUMAN.md#defaults",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "No. None match this stack; skip extra skills.",
+      "excerpt": "Install extra catalog skills (Firebase/GCP)?",
+      "question": "Install extra catalog skills (Firebase/GCP)?",
+      "source": "HUMAN.md#defaults",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. F1 named API keys and Bearer auth on /api/*.",
+      "excerpt": "Start defining the first actionable track now?",
+      "question": "Start defining the first actionable track now?",
+      "source": "HUMAN.md#scope",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. Feature track for F1 API-key authentication.",
+      "excerpt": "Is this track a Feature (named API keys / Bearer on /api/*)?",
+      "question": "Is this track a Feature (named API keys / Bearer on /api/*)?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Settings UI + SQLite migration 0004; extend JSON API auth, not a new app.",
+      "excerpt": "Where should keys be created and stored?",
+      "question": "Where should keys be created and stored?",
+      "source": "HUMAN.md#clarify",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Prefix+secret (>=32 random bytes); mask tail in list; YYYY-MM-DD; UTC stored.",
+      "excerpt": "Key format, list display, timestamps?",
+      "question": "Key format, list display, timestamps?",
+      "source": "HUMAN.md#product",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "401 {\"error\":\"unauthorized\"}; Bearer on /api/*; cookies unchanged; no legacy rewrite.",
+      "excerpt": "401 body, Bearer header, cookie sessions?",
+      "question": "401 body, Bearer header, cookie sessions?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Out of scope. Rotate is F1' only.",
+      "excerpt": "Rotate, scopes, OAuth in this track?",
+      "question": "Rotate, scopes, OAuth in this track?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Yes. Draft spec from F1 brief and HUMAN.md.",
+      "excerpt": "Sufficient information to draft the spec?",
+      "question": "Sufficient information to draft the spec?",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. Every F1 AC is in the spec.",
+      "excerpt": "Approve spec.md and proceed to planning?",
+      "question": "Approve spec.md and proceed to planning?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approve. Each AC maps to a TDD task.",
+      "excerpt": "Approve plan.md (schema, Bearer, settings, smoke)?",
+      "question": "Approve plan.md (schema, Bearer, settings, smoke)?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "No matching catalog skills. Skip.",
+      "excerpt": "Install extra skills for this track?",
+      "question": "Install extra skills for this track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes.",
+      "excerpt": "Start implementation now?",
+      "question": "Start implementation now?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes.",
+      "excerpt": "Proceed with implementation of Named API keys and Bearer auth?",
+      "question": "Proceed with implementation of Named API keys and Bearer auth?",
+      "source": "HUMAN.md#scope",
+      "turn": 3,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. test-docker 52 passed; smoke 4 passed; F1 ACs covered.",
+      "excerpt": "Phase schema/Bearer/settings/smoke verification: does this meet expectations?",
+      "question": "Phase schema/Bearer/settings/smoke verification: does this meet expectations?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Document Bearer keys; cookies still sign in the UI.",
+      "excerpt": "Update product.md and tech-stack.md for API keys?",
+      "question": "Update product.md and tech-stack.md for API keys?",
+      "source": "HUMAN.md#product",
+      "turn": 3,
+      "type": "product"
+    },
+    {
+      "answer": "Yes.",
+      "excerpt": "Perform a formal code review of the completed track now?",
+      "question": "Perform a formal code review of the completed track now?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Apply Fixes. Store display_tail so the list shows prefix plus masked tail.",
+      "excerpt": "Review findings: apply masked tail fix?",
+      "question": "Review findings: apply masked tail fix?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Skip. Leave the track in conductor/tracks so spec/plan remain scorable.",
+      "excerpt": "Archive, delete, or skip the completed track?",
+      "question": "Archive, delete, or skip the completed track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 4,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. Feature matches F1 brief; test-docker and smoke passed.",
+      "excerpt": "Approve F1 completion after review and tests?",
+      "question": "Approve F1 completion after review and tests?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Follow-up feature: rotate keeps id and name.",
+      "excerpt": "Is F1' rotate a Feature track?",
+      "question": "Is F1' rotate a Feature track?",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Same Settings row; new secret once; last rotated YYYY-MM-DD; SQLite rotated_at.",
+      "excerpt": "Rotate UX and storage?",
+      "question": "Rotate UX and storage?",
+      "source": "HUMAN.md#product",
+      "turn": 5,
+      "type": "clarify"
+    },
+    {
+      "answer": "Yes.",
+      "excerpt": "Sufficient info to draft rotate spec?",
+      "question": "Sufficient info to draft rotate spec?",
+      "source": "HUMAN.md#defaults",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. All F1' ACs map to tasks.",
+      "excerpt": "Approve rotate spec and plan?",
+      "question": "Approve rotate spec and plan?",
+      "source": "HUMAN.md#approvals",
+      "turn": 5,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes.",
+      "excerpt": "Start rotate implementation now?",
+      "question": "Start rotate implementation now?",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. test-docker 54 passed; smoke 4 passed; F1' ACs covered.",
+      "excerpt": "Rotate phases and smoke meet expectations?",
+      "question": "Rotate phases and smoke meet expectations?",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Settings can rotate a key in place.",
+      "excerpt": "Update product.md for key rotation?",
+      "question": "Update product.md for key rotation?",
+      "source": "HUMAN.md#product",
+      "turn": 6,
+      "type": "product"
+    },
+    {
+      "answer": "Yes. No high issues; skip archive.",
+      "excerpt": "Review the rotate track now?",
+      "question": "Review the rotate track now?",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Skip. Keep spec/plan in conductor/tracks.",
+      "excerpt": "Archive, delete, or skip rotate track?",
+      "question": "Archive, delete, or skip rotate track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 6,
+      "type": "choose-option"
+    }
+  ],
+  "self": [
+    {
+      "answer": "Yes. Scan the fixture; product is Shelfmark reading-list with cookie sessions.",
+      "question": "Brownfield detected. May I perform a read-only scan to analyze the architecture?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. Paste URL, notes, tags; find by tag or title word.",
+      "question": "Does the proposed title Shelfmark and reading-list summary capture the vision?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "product"
+    },
+    {
+      "answer": "Autogenerate from HUMAN.md project-context and codebase (brownfield).",
+      "question": "Product definition mode: Interactive or Autogenerate?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "question": "Approve drafted product.md?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Autogenerate; API keys copy and timestamps from product section.",
+      "question": "Product guidelines mode: Interactive or Autogenerate?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "question": "Approve drafted product-guidelines.md?",
+      "source": "HUMAN.md#product",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes. Wrap legacy session/query; no new runtime deps; make smoke/test-docker.",
+      "question": "Confirm inferred tech stack (TS/Express/SQLite/Vitest/Playwright Docker)?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve.",
+      "question": "Approve drafted tech-stack.md?",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes those four. No additional guides.",
+      "question": "Copy TypeScript, JavaScript, HTML/CSS, general style guides? Additional needed?",
+      "source": "HUMAN.md#clarify",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Default workflow; adapt commands to make test-docker and make smoke.",
+      "question": "Workflow mode: Default or Customize?",
+      "source": "HUMAN.md#defaults",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "No. None match this stack; skip extra skills.",
+      "question": "Install extra catalog skills (Firebase/GCP)?",
+      "source": "HUMAN.md#defaults",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. F1 named API keys and Bearer auth on /api/*.",
+      "question": "Start defining the first actionable track now?",
+      "source": "HUMAN.md#scope",
+      "turn": 1,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. Feature track for F1 API-key authentication.",
+      "question": "Is this track a Feature (named API keys / Bearer on /api/*)?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Settings UI + SQLite migration 0004; extend JSON API auth, not a new app.",
+      "question": "Where should keys be created and stored?",
+      "source": "HUMAN.md#clarify",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Prefix+secret (>=32 random bytes); mask tail in list; YYYY-MM-DD; UTC stored.",
+      "question": "Key format, list display, timestamps?",
+      "source": "HUMAN.md#product",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "401 {\"error\":\"unauthorized\"}; Bearer on /api/*; cookies unchanged; no legacy rewrite.",
+      "question": "401 body, Bearer header, cookie sessions?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Out of scope. Rotate is F1' only.",
+      "question": "Rotate, scopes, OAuth in this track?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Yes. Draft spec from F1 brief and HUMAN.md.",
+      "question": "Sufficient information to draft the spec?",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. Every F1 AC is in the spec.",
+      "question": "Approve spec.md and proceed to planning?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approve. Each AC maps to a TDD task.",
+      "question": "Approve plan.md (schema, Bearer, settings, smoke)?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "No matching catalog skills. Skip.",
+      "question": "Install extra skills for this track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes.",
+      "question": "Start implementation now?",
+      "source": "HUMAN.md#scope",
+      "turn": 2,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes.",
+      "question": "Proceed with implementation of Named API keys and Bearer auth?",
+      "source": "HUMAN.md#scope",
+      "turn": 3,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. test-docker 52 passed; smoke 4 passed; F1 ACs covered.",
+      "question": "Phase schema/Bearer/settings/smoke verification: does this meet expectations?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Document Bearer keys; cookies still sign in the UI.",
+      "question": "Update product.md and tech-stack.md for API keys?",
+      "source": "HUMAN.md#product",
+      "turn": 3,
+      "type": "product"
+    },
+    {
+      "answer": "Yes.",
+      "question": "Perform a formal code review of the completed track now?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Apply Fixes. Store display_tail so the list shows prefix plus masked tail.",
+      "question": "Review findings: apply masked tail fix?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Skip. Leave the track in conductor/tracks so spec/plan remain scorable.",
+      "question": "Archive, delete, or skip the completed track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 4,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. Feature matches F1 brief; test-docker and smoke passed.",
+      "question": "Approve F1 completion after review and tests?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Follow-up feature: rotate keeps id and name.",
+      "question": "Is F1' rotate a Feature track?",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Same Settings row; new secret once; last rotated YYYY-MM-DD; SQLite rotated_at.",
+      "question": "Rotate UX and storage?",
+      "source": "HUMAN.md#product",
+      "turn": 5,
+      "type": "clarify"
+    },
+    {
+      "answer": "Yes.",
+      "question": "Sufficient info to draft rotate spec?",
+      "source": "HUMAN.md#defaults",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Approve. All F1' ACs map to tasks.",
+      "question": "Approve rotate spec and plan?",
+      "source": "HUMAN.md#approvals",
+      "turn": 5,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Yes.",
+      "question": "Start rotate implementation now?",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Yes. test-docker 54 passed; smoke 4 passed; F1' ACs covered.",
+      "question": "Rotate phases and smoke meet expectations?",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Yes. Settings can rotate a key in place.",
+      "question": "Update product.md for key rotation?",
+      "source": "HUMAN.md#product",
+      "turn": 6,
+      "type": "product"
+    },
+    {
+      "answer": "Yes. No high issues; skip archive.",
+      "question": "Review the rotate track now?",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "choose-option"
+    },
+    {
+      "answer": "Skip. Keep spec/plan in conductor/tracks.",
+      "question": "Archive, delete, or skip rotate track?",
+      "source": "HUMAN.md#defaults",
+      "turn": 6,
+      "type": "choose-option"
+    }
+  ]
+}

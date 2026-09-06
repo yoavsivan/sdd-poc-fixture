@@ -1,0 +1,21 @@
+{
+  "counts_derived": 1,
+  "counts_self": 0,
+  "derived": [
+    {
+      "excerpt": "I'll fill the F1 brief, contract, plan, and tasks next, then record plan approval.",
+      "source": "derived-only",
+      "turn": 6,
+      "type": "approval"
+    }
+  ],
+  "merged": [
+    {
+      "excerpt": "I'll fill the F1 brief, contract, plan, and tasks next, then record plan approval.",
+      "source": "derived-only",
+      "turn": 6,
+      "type": "approval"
+    }
+  ],
+  "self": []
+}

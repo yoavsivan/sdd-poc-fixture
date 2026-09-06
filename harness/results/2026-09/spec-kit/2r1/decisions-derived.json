@@ -1,0 +1,159 @@
+{
+  "counts_derived": 0,
+  "counts_self": 10,
+  "derived": [],
+  "merged": [
+    {
+      "answer": "Wrap legacy session/query; TS strict; Docker/Make tests; demo/demo-pass-1234; no new runtime deps",
+      "excerpt": "Constitution principles for Shelfmark brownfield fixture",
+      "question": "Constitution principles for Shelfmark brownfield fixture",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "product"
+    },
+    {
+      "answer": "Bearer exclusive on /api/*; cookie sessions unchanged for HTML; keep existing tests green",
+      "excerpt": "Bearer vs cookie when both present on /api/*",
+      "question": "Bearer vs cookie when both present on /api/*",
+      "source": "HUMAN.md#clarify",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Prefix plus masked tail; ISO-8601 YYYY-MM-DD; store UTC; newest first",
+      "excerpt": "Key list display and timestamp format",
+      "question": "Key list display and timestamp format",
+      "source": "HUMAN.md#product",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Reject empty/whitespace name; smallest surface that still meets AC",
+      "excerpt": "Empty API key name",
+      "question": "Empty API key name",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "scope"
+    },
+    {
+      "answer": "Approved: AC1-6 map to T006-T015; constitution gates pass",
+      "excerpt": "Approve F1 plan if every AC maps to a task",
+      "question": "Approve F1 plan if every AC maps to a task",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: make test-docker 51 passed; make smoke 4 passed; locators and 401 body match brief",
+      "excerpt": "Approve F1 completion after smoke and unit tests",
+      "question": "Approve F1 completion after smoke and unit tests",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Flow-forward new numbered spec 002-rotate-api-keys then plan tasks implement",
+      "excerpt": "Which Spec Kit change flow for F1 prime rotate keys",
+      "question": "Which Spec Kit change flow for F1 prime rotate keys",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "other"
+    },
+    {
+      "answer": "Same id and name; last rotated YYYY-MM-DD UTC; old secret dies immediately",
+      "excerpt": "Does rotate keep id and name; last rotated format",
+      "question": "Does rotate keep id and name; last rotated format",
+      "source": "HUMAN.md#product",
+      "turn": 5,
+      "type": "clarify"
+    },
+    {
+      "answer": "Approved: rotate keep id/name, old 401, new bearer, last-rotated map to T003-T008",
+      "excerpt": "Approve F1 prime plan AC mapping",
+      "question": "Approve F1 prime plan AC mapping",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: test-docker 52 passed; smoke 4 passed; rotate locators and 401 body match brief",
+      "excerpt": "Approve F1 prime completion after tests and smoke",
+      "question": "Approve F1 prime completion after tests and smoke",
+      "source": "HUMAN.md#approvals",
+      "turn": 7,
+      "type": "approve-completion"
+    }
+  ],
+  "self": [
+    {
+      "answer": "Wrap legacy session/query; TS strict; Docker/Make tests; demo/demo-pass-1234; no new runtime deps",
+      "question": "Constitution principles for Shelfmark brownfield fixture",
+      "source": "HUMAN.md#project-context",
+      "turn": 1,
+      "type": "product"
+    },
+    {
+      "answer": "Bearer exclusive on /api/*; cookie sessions unchanged for HTML; keep existing tests green",
+      "question": "Bearer vs cookie when both present on /api/*",
+      "source": "HUMAN.md#clarify",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Prefix plus masked tail; ISO-8601 YYYY-MM-DD; store UTC; newest first",
+      "question": "Key list display and timestamp format",
+      "source": "HUMAN.md#product",
+      "turn": 2,
+      "type": "clarify"
+    },
+    {
+      "answer": "Reject empty/whitespace name; smallest surface that still meets AC",
+      "question": "Empty API key name",
+      "source": "HUMAN.md#defaults",
+      "turn": 2,
+      "type": "scope"
+    },
+    {
+      "answer": "Approved: AC1-6 map to T006-T015; constitution gates pass",
+      "question": "Approve F1 plan if every AC maps to a task",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: make test-docker 51 passed; make smoke 4 passed; locators and 401 body match brief",
+      "question": "Approve F1 completion after smoke and unit tests",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Flow-forward new numbered spec 002-rotate-api-keys then plan tasks implement",
+      "question": "Which Spec Kit change flow for F1 prime rotate keys",
+      "source": "HUMAN.md#scope",
+      "turn": 5,
+      "type": "other"
+    },
+    {
+      "answer": "Same id and name; last rotated YYYY-MM-DD UTC; old secret dies immediately",
+      "question": "Does rotate keep id and name; last rotated format",
+      "source": "HUMAN.md#product",
+      "turn": 5,
+      "type": "clarify"
+    },
+    {
+      "answer": "Approved: rotate keep id/name, old 401, new bearer, last-rotated map to T003-T008",
+      "question": "Approve F1 prime plan AC mapping",
+      "source": "HUMAN.md#approvals",
+      "turn": 6,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: test-docker 52 passed; smoke 4 passed; rotate locators and 401 body match brief",
+      "question": "Approve F1 prime completion after tests and smoke",
+      "source": "HUMAN.md#approvals",
+      "turn": 7,
+      "type": "approve-completion"
+    }
+  ]
+}

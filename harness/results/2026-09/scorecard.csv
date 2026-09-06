@@ -1,0 +1,9 @@
+arm,trial,cohort,role,model,spawned_at,finished_at,seat_minutes,messages,f1_acceptance,f1_passed_of_5,f1p_acceptance,f1p_passed_of_3,smoke_f1_of_4,smoke_f1p_of_4,coverage_f1,coverage_f1p,coverage_drop,spec_layout_review,decisions_self,decisions_derived,stale_statements,diff_lines_f1p,files_touched_f1p,review_burden_lines,legacy_session_modified,tie_break_trigger,invalid_reason
+conductor,2r1,v1,scored,grok-4.6:high,2026-09-06T05:54:17.396Z,2026-09-06T06:46:56.193Z,52.6,,fail,4/5,pass,3/3,4/4,4/4,91.7,87.5,4.2,true,38,0,,739,13,739,false,none,
+conductor,1,v1,scored,grok-4.6:high,2026-09-06T03:05:20.282Z,2026-09-06T03:48:26.881Z,43.1,,pass,5/5,pass,3/3,4/4,4/4,100.0,100.0,0.0,true,0,0,,823,15,823,false,none,
+conductor,3,v1,tie-break,grok-4.6:high,2026-09-06T11:08:09.608Z,2026-09-06T11:30:42.463Z,22.5,,pass,5/5,pass,3/3,4/4,4/4,83.3,93.8,-10.5,true,0,0,,774,14,774,false,passfail,
+gatekit,1,v1,scored,grok-4.6:high,2026-09-06T03:06:26.202Z,2026-09-06T04:18:08Z,71.7,,fail,4/5,pass,3/3,4/4,4/4,91.7,93.8,-2.1,true,0,1,,625,12,625,false,none,
+gatekit,2,v1,scored,grok-4.6:high,2026-09-06T04:31:18.902Z,2026-09-06T05:46:05.589Z,74.8,,pass,5/5,pass,3/3,4/4,4/4,91.7,93.8,-2.1,true,4,0,,637,12,637,false,none,
+gatekit,3,v1,tie-break,grok-4.6:high,2026-09-06T11:09:16.577Z,2026-09-06T11:29:47.554Z,20.5,,fail,4/5,pass,3/3,4/4,4/4,91.7,93.8,-2.1,true,0,1,,715,12,715,false,passfail,
+spec-kit,2r1,v1,scored,grok-4.6:high,2026-09-06T05:53:11.094Z,2026-09-06T06:41:42.570Z,48.5,,pass,5/5,pass,3/3,4/4,4/4,100.0,100.0,0.0,true,10,0,,716,11,716,false,none,
+spec-kit,1,v1,scored,grok-4.6:high,2026-09-06T03:07:32.114Z,2026-09-06T03:34:22.095Z,26.8,,pass,5/5,pass,3/3,4/4,4/4,100.0,100.0,0.0,true,0,1,,722,12,722,false,none,

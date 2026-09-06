@@ -1,0 +1,69 @@
+{
+  "counts_derived": 0,
+  "counts_self": 4,
+  "derived": [],
+  "merged": [
+    {
+      "answer": "Approved: every F1 acceptance criterion maps to T1\u2013T4 and a contract check (spec-mentions, migration, test-docker, smoke).",
+      "excerpt": "Approve F1 plan covering named API keys, Bearer on /api/*, settings data-testids, 401 body?",
+      "question": "Approve F1 plan covering named API keys, Bearer on /api/*, settings data-testids, 401 body?",
+      "source": "HUMAN.md#approvals",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: gatekit done --feature F1 exited 0; checks include make test-docker and make smoke; UI and Bearer auth match the brief.",
+      "excerpt": "Approve F1 completion after gatekit done 8/8 and smoke/unit tests green?",
+      "question": "Approve F1 completion after gatekit done 8/8 and smoke/unit tests green?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Will approve once gatekit done --feature F1 exits 0 with rotation checks and tests green.",
+      "excerpt": "Approve F1 rotate follow-up after spec-review PASS and gatekit done?",
+      "question": "Approve F1 rotate follow-up after spec-review PASS and gatekit done?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Approved: gatekit done exited 0; spec-review PASS; rotate keeps id/name; old secret 401; last rotated shown.",
+      "excerpt": "Approve F1 rotate follow-up after gatekit done 9/9?",
+      "question": "Approve F1 rotate follow-up after gatekit done 9/9?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    }
+  ],
+  "self": [
+    {
+      "answer": "Approved: every F1 acceptance criterion maps to T1\u2013T4 and a contract check (spec-mentions, migration, test-docker, smoke).",
+      "question": "Approve F1 plan covering named API keys, Bearer on /api/*, settings data-testids, 401 body?",
+      "source": "HUMAN.md#approvals",
+      "turn": 1,
+      "type": "approve-plan"
+    },
+    {
+      "answer": "Approved: gatekit done --feature F1 exited 0; checks include make test-docker and make smoke; UI and Bearer auth match the brief.",
+      "question": "Approve F1 completion after gatekit done 8/8 and smoke/unit tests green?",
+      "source": "HUMAN.md#approvals",
+      "turn": 2,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Will approve once gatekit done --feature F1 exits 0 with rotation checks and tests green.",
+      "question": "Approve F1 rotate follow-up after spec-review PASS and gatekit done?",
+      "source": "HUMAN.md#approvals",
+      "turn": 3,
+      "type": "approve-completion"
+    },
+    {
+      "answer": "Approved: gatekit done exited 0; spec-review PASS; rotate keeps id/name; old secret 401; last rotated shown.",
+      "question": "Approve F1 rotate follow-up after gatekit done 9/9?",
+      "source": "HUMAN.md#approvals",
+      "turn": 4,
+      "type": "approve-completion"
+    }
+  ]
+}

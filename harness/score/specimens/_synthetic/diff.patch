@@ -1,0 +1,55 @@
+diff --git a/src/http/routes/api.ts b/src/http/routes/api.ts
+index 1111111..2222222 100644
+--- a/src/http/routes/api.ts
++++ b/src/http/routes/api.ts
+@@ -40,0 +41,3 @@
++  router.get("/items", (req, res) => { res.json({ items: [] }); });
++  router.get("/items/:id", (req, res) => { res.json({}); });
++  router.post("/keys", (req, res) => { res.status(201).end(); });
+diff --git a/src/http/routes/keys.ts b/src/http/routes/keys.ts
+new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/src/http/routes/keys.ts
+@@ -0,0 +1,4 @@
++import { Router } from "express";
++export function keysRouter() {
++  const router = Router();
++  router.get("/api-keys", (_req, res) => { res.json([]); });
++  router.get("/items/{id}", (_req, res) => { res.json({}); });
++  router.get("/items/<id>", (_req, res) => { res.json({}); });
++  return router;
++}
+diff --git a/src/views/settings.ejs b/src/views/settings.ejs
+index 1111111..4444444 100644
+--- a/src/views/settings.ejs
++++ b/src/views/settings.ejs
+@@ -60,0 +61,6 @@
++  <section data-testid="api-keys-section" aria-label="API keys">
++    <button>Create key</button>
++    <label>Key name</label>
++    <div data-testid="api-key-plaintext"></div>
++  </section>
+diff --git a/.trial/notes.md b/.trial/notes.md
+new file mode 100644
+index 0000000..5555555
+--- /dev/null
++++ b/.trial/notes.md
+@@ -0,0 +1,2 @@
++router.get("/secret-trial-route", () => {});
++<button data-testid="trial-only">x</button>
+diff --git a/conductor/tracks/f1/spec.md b/conductor/tracks/f1/spec.md
+new file mode 100644
+index 0000000..6666666
+--- /dev/null
++++ b/conductor/tracks/f1/spec.md
+@@ -0,0 +1,2 @@
++router.post("/conductor-only", () => {});
++<div data-testid="conductor-only"></div>
+diff --git a/HANDOFF.md b/HANDOFF.md
+new file mode 100644
+index 0000000..7777777
+--- /dev/null
++++ b/HANDOFF.md
+@@ -0,0 +1,1 @@
++router.delete("/handoff", () => {});

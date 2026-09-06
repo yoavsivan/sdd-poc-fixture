@@ -1,0 +1,21 @@
+{
+  "counts_derived": 1,
+  "counts_self": 0,
+  "derived": [
+    {
+      "excerpt": "Smoke is green. Next I\u2019ll fill the F1 spec (brief, contract, plan, tasks), record plan approval, and implement.",
+      "source": "derived-only",
+      "turn": 16,
+      "type": "approval"
+    }
+  ],
+  "merged": [
+    {
+      "excerpt": "Smoke is green. Next I\u2019ll fill the F1 spec (brief, contract, plan, tasks), record plan approval, and implement.",
+      "source": "derived-only",
+      "turn": 16,
+      "type": "approval"
+    }
+  ],
+  "self": []
+}

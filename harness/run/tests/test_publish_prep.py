@@ -97,6 +97,60 @@ class TestPublishPrep(unittest.TestCase):
             publish_prep.publish(self.cfg, verify=True)
         self.assertEqual(ctx.exception.code, EXIT_PRECONDITION)
 
+    def test_trial_md_from_whitelist_omits_seat_id(self) -> None:
+        body = (self.held / "acceptance" / "f1.spec.ts").read_bytes()
+        self._reg("pre-registration.json", body, 1)
+        trial_dir = self.evidence / "trials" / "conductor" / "1"
+        trial_dir.mkdir(parents=True)
+        trial = {
+            "adapter": "private",
+            "arm": "conductor",
+            "branch": "trial/conductor/1",
+            "cohort": "v1",
+            "credits_reported": 12.5,
+            "finished_at": "2026-09-06T03:48:26Z",
+            "finished_at_source": "adapter",
+            "flags": ["spec-layout-review", "spec-layout-review", "leak-check-false-positive"],
+            "invalid_reason": None,
+            "messages": None,
+            "model": "grok-4.6:high",
+            "n": "1",
+            "role": "scored",
+            "seat_id": "bc-deadbeef-0000-0000-0000-000000000000",
+            "spawned_at": "2026-09-06T03:05:20Z",
+            "trial": 1,
+            "wall_exceeded": False,
+            "wall_minutes": 60,
+            "wall_minutes_source": "config",
+        }
+        (trial_dir / "trial.json").write_text(json.dumps(trial) + "\n", encoding="utf-8")
+        (trial_dir / "tags.json").write_text(
+            json.dumps({"done-f1": "abc", "done-f1p": "def"}) + "\n", encoding="utf-8"
+        )
+        publish_prep.publish(self.cfg, verify=False)
+        results = self.harness / self.cfg.get("results_dir", "results/2026-09")
+        md = results / "conductor" / "1" / "trial.md"
+        self.assertTrue(md.is_file())
+        self.assertFalse((results / "conductor" / "1" / "trial.json").exists())
+        text = md.read_text(encoding="utf-8")
+        self.assertNotIn("seat_id", text)
+        self.assertNotIn("bc-deadbeef", text)
+        self.assertIn("| arm | conductor |", text)
+        self.assertIn("| credits_reported | reported by dashboard |", text)
+        self.assertIn("leak-check-false-positive", text)
+        self.assertIn("| sha_done_f1 | abc |", text)
+        self.assertNotIn("spec-layout-review, spec-layout-review", text)
+
+    def test_branch_json_copied_to_results_root(self) -> None:
+        body = (self.held / "acceptance" / "f1.spec.ts").read_bytes()
+        self._reg("pre-registration.json", body, 1)
+        (self.evidence / "branch.json").write_text('{"branch":"B","separation":6.2}\n', encoding="utf-8")
+        publish_prep.publish(self.cfg, verify=False)
+        results = self.harness / self.cfg.get("results_dir", "results/2026-09")
+        dest = results / "branch.json"
+        self.assertTrue(dest.is_file())
+        self.assertEqual(dest.read_text(encoding="utf-8"), '{"branch":"B","separation":6.2}\n')
+
 
 if __name__ == "__main__":
     unittest.main()

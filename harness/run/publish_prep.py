@@ -12,6 +12,7 @@ import hashlib
 import json
 import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -64,6 +65,95 @@ def copy_h_to_harness(held: Path, dest_root: Path) -> None:
             copy_tree(src, dest_root / rel)
 
 
+TRIAL_MD_FIELDS = (
+    "arm",
+    "trial",
+    "cohort",
+    "role",
+    "model",
+    "spawned_at",
+    "finished_at",
+    "seat_minutes",
+    "messages",
+    "credits_reported",
+    "wall_minutes",
+    "wall_exceeded",
+    "branch",
+    "sha_done_f1",
+    "sha_done_f1p",
+    "flags",
+    "invalid_reason",
+    "adapter",
+)
+
+
+def _seat_minutes(spawned: Any, finished: Any) -> str:
+    if not spawned or not finished:
+        return ""
+    try:
+        a = datetime.fromisoformat(str(spawned).replace("Z", "+00:00"))
+        b = datetime.fromisoformat(str(finished).replace("Z", "+00:00"))
+        return str(round((b - a).total_seconds() / 60.0, 1))
+    except Exception:
+        return ""
+
+
+def _fmt_with_source(value: Any, source: Any) -> str:
+    if value in (None, ""):
+        return ""
+    if source in (None, ""):
+        return str(value)
+    return f"{value} ({source})"
+
+
+def render_trial_md(trial_path: Path, tags_path: Path | None = None) -> str:
+    """Render the evidence-layout §2 whitelist table. Never includes seat_id or URLs."""
+    data = read_json(trial_path)
+    tags: dict[str, Any] = {}
+    if tags_path is not None and tags_path.is_file():
+        tags = read_json(tags_path)
+    credits = data.get("credits_reported")
+    credits_cell = "reported by dashboard" if credits not in (None, "", False) else "not exposed"
+    adapter = data.get("adapter") or ""
+    if adapter not in {"cursor_rest.py", "private"}:
+        adapter = "private" if adapter else ""
+    flags = data.get("flags") or []
+    if isinstance(flags, list):
+        seen: list[str] = []
+        for item in flags:
+            text = str(item)
+            if text and text not in seen:
+                seen.append(text)
+        flags_cell = ", ".join(seen)
+    else:
+        flags_cell = str(flags) if flags else ""
+    values = {
+        "arm": data.get("arm") or "",
+        "trial": data.get("trial") if data.get("trial") not in (None, "") else data.get("n") or "",
+        "cohort": data.get("cohort") or "",
+        "role": data.get("role") or "",
+        "model": data.get("model") or "",
+        "spawned_at": data.get("spawned_at") or "",
+        "finished_at": _fmt_with_source(data.get("finished_at"), data.get("finished_at_source")),
+        "seat_minutes": _seat_minutes(data.get("spawned_at"), data.get("finished_at")),
+        "messages": "" if data.get("messages") in (None, "") else str(data.get("messages")),
+        "credits_reported": credits_cell,
+        "wall_minutes": _fmt_with_source(data.get("wall_minutes"), data.get("wall_minutes_source")),
+        "wall_exceeded": "" if data.get("wall_exceeded") is None else str(data.get("wall_exceeded")).lower(),
+        "branch": data.get("branch") or "",
+        "sha_done_f1": tags.get("done-f1") or "",
+        "sha_done_f1p": tags.get("done-f1p") or "",
+        "flags": flags_cell,
+        "invalid_reason": "" if data.get("invalid_reason") in (None, "") else str(data.get("invalid_reason")),
+        "adapter": adapter,
+    }
+    lines = ["| field | value |", "|---|---|"]
+    for key in TRIAL_MD_FIELDS:
+        cell = str(values.get(key, "")).replace("|", "\\|")
+        lines.append(f"| {key} | {cell} |")
+    return "\n".join(lines) + "\n"
+
+
 def copy_registered_layout(held: Path, dest: Path, root: Path, *, cohort: str) -> None:
     dest.mkdir(parents=True, exist_ok=True)
     copy_h_to_harness(held, dest)
@@ -100,14 +190,23 @@ def publish(cfg: dict[str, Any], *, verify: bool = False) -> Path:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, target)
     copy_h_to_harness(held, root)
+    branch_src = evidence / "branch.json"
+    if branch_src.is_file():
+        shutil.copy2(branch_src, results / "branch.json")
     trials = evidence / "trials"
     if trials.is_dir():
         for path in trials.rglob("*"):
-            if path.is_file() and path.name not in {"transcript.json", "trial.json"}:
-                rel = path.relative_to(trials)
-                dest = results / rel
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(path, dest)
+            if not path.is_file():
+                continue
+            if path.name == "transcript.json":
+                continue
+            rel = path.relative_to(trials)
+            dest = results / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if path.name == "trial.json":
+                write_text(dest.parent / "trial.md", render_trial_md(path, path.parent / "tags.json"))
+                continue
+            shutil.copy2(path, dest)
     write_text(
         results / "README.md",
         "\n".join(

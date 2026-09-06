@@ -1,0 +1,15 @@
+{
+  "items": [
+    {"id": "api-keys-section", "type": "control"},
+    {"id": "api-key-name", "type": "control"},
+    {"id": "api-key-create", "type": "control"},
+    {"id": "api-key-plaintext", "type": "control"},
+    {"id": "api-key-row", "type": "control"},
+    {"id": "api-key-created", "type": "control"},
+    {"id": "api-key-last-used", "type": "control"},
+    {"id": "api-key-revoke", "type": "control"},
+    {"id": "api-key-rotate", "type": "control"},
+    {"id": "api-key-last-rotated", "type": "control"},
+    {"id": "header:authorization-bearer", "type": "control"}
+  ]
+}

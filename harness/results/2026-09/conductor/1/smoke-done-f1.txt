@@ -1,0 +1,917 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 634B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 401B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#3 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 149B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 466.77kB done
+#5 DONE 0.0s
+
+#6 [1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#6 resolve docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 done
+#6 sha256:4d676821dff059fd00d277ee4261ef34ea712317fed0737c03941481b5760c96 1.93kB / 1.93kB done
+#6 sha256:6e6261159fd399ebe5a3d556b7d89da9c85c873f3f270918aad6c8107da8b411 6.87kB / 6.87kB done
+#6 sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 19.92MB / 28.23MB 0.1s
+#6 sha256:cea7eb9bbe80eabf8356efb28b3796ab904f36a32049aeb6b435920ca93f9285 3.31kB / 3.31kB 0.1s done
+#6 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 4.19MB / 49.94MB 0.1s
+#6 sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 0B / 1.71MB 0.1s
+#6 sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 5.22kB / 5.22kB done
+#6 sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 28.23MB / 28.23MB 0.2s done
+#6 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 45.09MB / 49.94MB 0.2s
+#6 sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 1.71MB / 1.71MB 0.1s done
+#6 sha256:0282d618b52cd2eb8fcf041e780cd66b15e7ebae519a4054c5d293eae6b6d34f 0B / 447B 0.2s
+#6 extracting sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71
+#6 sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 49.94MB / 49.94MB 0.3s done
+#6 sha256:0282d618b52cd2eb8fcf041e780cd66b15e7ebae519a4054c5d293eae6b6d34f 447B / 447B 0.2s done
+#6 extracting sha256:a8ac7f6c67abc236e4c745052c404112b8fab6fe8ac3a329d1ef3b867ad67c71 0.6s done
+#6 extracting sha256:cea7eb9bbe80eabf8356efb28b3796ab904f36a32049aeb6b435920ca93f9285 done
+#6 extracting sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 0.1s
+#6 extracting sha256:51c53f95c2cae3d00dfc0350297c92dea913fe129ec38b8deb8313e5f3e0297d 0.8s done
+#6 extracting sha256:3cddab114edadc7cf5a7b0b591e59f6312aade3dc4fb68e88aacca5eb1cc1c03 0.0s done
+#6 extracting sha256:0282d618b52cd2eb8fcf041e780cd66b15e7ebae519a4054c5d293eae6b6d34f done
+#6 DONE 1.8s
+
+#7 [2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#7 0.217 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#7 0.252 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#7 0.264 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#7 0.347 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#7 0.492 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#7 0.502 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [337 kB]
+#7 1.402 Fetched 9375 kB in 1s (7757 kB/s)
+#7 1.402 Reading package lists...
+#7 1.736 Reading package lists...
+#7 2.054 Building dependency tree...
+#7 2.113 Reading state information...
+#7 2.202 The following additional packages will be installed:
+#7 2.202   binutils binutils-common binutils-x86-64-linux-gnu cpp cpp-12 g++-12 gcc
+#7 2.202   gcc-12 libasan8 libatomic1 libbinutils libbrotli1 libc-dev-bin libc6-dev
+#7 2.202   libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl4 libexpat1 libgcc-12-dev
+#7 2.202   libgomp1 libgprofng0 libgssapi-krb5-2 libisl23 libitm1 libjansson4
+#7 2.202   libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.5-0 liblsan0
+#7 2.202   libmpc3 libmpfr6 libncursesw6 libnghttp2-14 libnsl-dev libnsl2 libpsl5
+#7 2.202   libpython3-stdlib libpython3.11-minimal libpython3.11-stdlib libquadmath0
+#7 2.202   libreadline8 librtmp1 libsasl2-2 libsasl2-modules-db libsqlite3-0 libssh2-1
+#7 2.202   libssl3 libstdc++-12-dev libtirpc-common libtirpc-dev libtirpc3 libtsan2
+#7 2.202   libubsan1 linux-libc-dev media-types openssl python3-minimal python3.11
+#7 2.202   python3.11-minimal readline-common rpcsvc-proto
+#7 2.203 Suggested packages:
+#7 2.203   binutils-doc cpp-doc gcc-12-locales cpp-12-doc g++-multilib g++-12-multilib
+#7 2.203   gcc-12-doc gcc-multilib manpages-dev autoconf automake libtool flex bison
+#7 2.203   gdb gcc-doc gcc-12-multilib glibc-doc krb5-doc krb5-user libstdc++-12-doc
+#7 2.203   make-doc python3-doc python3-tk python3-venv python3.11-venv python3.11-doc
+#7 2.203   binfmt-support readline-doc
+#7 2.203 Recommended packages:
+#7 2.203   manpages manpages-dev libc-devtools krb5-locales libldap-common libgpm2
+#7 2.203   publicsuffix libsasl2-modules
+#7 2.447 The following NEW packages will be installed:
+#7 2.447   binutils binutils-common binutils-x86-64-linux-gnu ca-certificates cpp
+#7 2.447   cpp-12 curl g++ g++-12 gcc gcc-12 libasan8 libatomic1 libbinutils libbrotli1
+#7 2.447   libc-dev-bin libc6-dev libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl4
+#7 2.447   libexpat1 libgcc-12-dev libgomp1 libgprofng0 libgssapi-krb5-2 libisl23
+#7 2.447   libitm1 libjansson4 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+#7 2.447   libldap-2.5-0 liblsan0 libmpc3 libmpfr6 libncursesw6 libnghttp2-14
+#7 2.447   libnsl-dev libnsl2 libpsl5 libpython3-stdlib libpython3.11-minimal
+#7 2.447   libpython3.11-stdlib libquadmath0 libreadline8 librtmp1 libsasl2-2
+#7 2.447   libsasl2-modules-db libsqlite3-0 libssh2-1 libssl3 libstdc++-12-dev
+#7 2.447   libtirpc-common libtirpc-dev libtirpc3 libtsan2 libubsan1 linux-libc-dev
+#7 2.447   make media-types openssl python3 python3-minimal python3.11
+#7 2.447   python3.11-minimal readline-common rpcsvc-proto
+#7 2.479 0 upgraded, 70 newly installed, 0 to remove and 1 not upgraded.
+#7 2.479 Need to get 76.5 MB of archives.
+#7 2.479 After this operation, 300 MB of additional disk space will be used.
+#7 2.479 Get:1 http://deb.debian.org/debian bookworm/main amd64 libssl3 amd64 3.0.20-1~deb12u2 [2036 kB]
+#7 2.499 Get:2 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-minimal amd64 3.11.2-6+deb12u8 [818 kB]
+#7 2.510 Get:3 http://deb.debian.org/debian-security bookworm-security/main amd64 libexpat1 amd64 2.5.0-1+deb12u3 [104 kB]
+#7 2.519 Get:4 http://deb.debian.org/debian bookworm/main amd64 python3.11-minimal amd64 3.11.2-6+deb12u8 [2065 kB]
+#7 2.531 Get:5 http://deb.debian.org/debian bookworm/main amd64 python3-minimal amd64 3.11.2-1+b1 [26.3 kB]
+#7 2.540 Get:6 http://deb.debian.org/debian bookworm/main amd64 media-types all 10.0.0 [26.1 kB]
+#7 2.549 Get:7 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+#7 2.559 Get:8 http://deb.debian.org/debian bookworm/main amd64 libkrb5support0 amd64 1.20.1-2+deb12u5 [33.2 kB]
+#7 2.568 Get:9 http://deb.debian.org/debian bookworm/main amd64 libk5crypto3 amd64 1.20.1-2+deb12u5 [79.7 kB]
+#7 2.578 Get:10 http://deb.debian.org/debian bookworm/main amd64 libkeyutils1 amd64 1.6.3-2 [8808 B]
+#7 2.588 Get:11 http://deb.debian.org/debian bookworm/main amd64 libkrb5-3 amd64 1.20.1-2+deb12u5 [332 kB]
+#7 2.596 Get:12 http://deb.debian.org/debian bookworm/main amd64 libgssapi-krb5-2 amd64 1.20.1-2+deb12u5 [135 kB]
+#7 2.606 Get:13 http://deb.debian.org/debian bookworm/main amd64 libtirpc-common all 1.3.3+ds-1 [14.0 kB]
+#7 2.615 Get:14 http://deb.debian.org/debian bookworm/main amd64 libtirpc3 amd64 1.3.3+ds-1 [85.2 kB]
+#7 2.624 Get:15 http://deb.debian.org/debian bookworm/main amd64 libnsl2 amd64 1.3.0-2 [39.5 kB]
+#7 2.633 Get:16 http://deb.debian.org/debian bookworm/main amd64 readline-common all 8.2-1.3 [69.0 kB]
+#7 2.643 Get:17 http://deb.debian.org/debian bookworm/main amd64 libreadline8 amd64 8.2-1.3 [166 kB]
+#7 2.652 Get:18 http://deb.debian.org/debian bookworm/main amd64 libsqlite3-0 amd64 3.40.1-2+deb12u2 [839 kB]
+#7 2.663 Get:19 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-stdlib amd64 3.11.2-6+deb12u8 [1799 kB]
+#7 2.675 Get:20 http://deb.debian.org/debian bookworm/main amd64 python3.11 amd64 3.11.2-6+deb12u8 [574 kB]
+#7 2.685 Get:21 http://deb.debian.org/debian bookworm/main amd64 libpython3-stdlib amd64 3.11.2-1+b1 [9312 B]
+#7 2.695 Get:22 http://deb.debian.org/debian bookworm/main amd64 python3 amd64 3.11.2-1+b1 [26.3 kB]
+#7 2.703 Get:23 http://deb.debian.org/debian bookworm/main amd64 openssl amd64 3.0.20-1~deb12u2 [1439 kB]
+#7 2.715 Get:24 http://deb.debian.org/debian-security bookworm-security/main amd64 ca-certificates all 20250419~deb12u1 [162 kB]
+#7 2.724 Get:25 http://deb.debian.org/debian bookworm/main amd64 binutils-common amd64 2.40-2 [2487 kB]
+#7 2.740 Get:26 http://deb.debian.org/debian bookworm/main amd64 libbinutils amd64 2.40-2 [572 kB]
+#7 2.749 Get:27 http://deb.debian.org/debian bookworm/main amd64 libctf-nobfd0 amd64 2.40-2 [153 kB]
+#7 2.759 Get:28 http://deb.debian.org/debian bookworm/main amd64 libctf0 amd64 2.40-2 [89.8 kB]
+#7 2.768 Get:29 http://deb.debian.org/debian bookworm/main amd64 libgprofng0 amd64 2.40-2 [812 kB]
+#7 2.779 Get:30 http://deb.debian.org/debian bookworm/main amd64 libjansson4 amd64 2.14-2 [40.8 kB]
+#7 2.788 Get:31 http://deb.debian.org/debian bookworm/main amd64 binutils-x86-64-linux-gnu amd64 2.40-2 [2246 kB]
+#7 2.800 Get:32 http://deb.debian.org/debian bookworm/main amd64 binutils amd64 2.40-2 [65.0 kB]
+#7 2.811 Get:33 http://deb.debian.org/debian bookworm/main amd64 libisl23 amd64 0.25-1.1 [683 kB]
+#7 2.820 Get:34 http://deb.debian.org/debian bookworm/main amd64 libmpfr6 amd64 4.2.0-1 [701 kB]
+#7 2.831 Get:35 http://deb.debian.org/debian bookworm/main amd64 libmpc3 amd64 1.3.1-1 [51.5 kB]
+#7 2.840 Get:36 http://deb.debian.org/debian bookworm/main amd64 cpp-12 amd64 12.2.0-14+deb12u1 [9768 kB]
+#7 2.880 Get:37 http://deb.debian.org/debian bookworm/main amd64 cpp amd64 4:12.2.0-3 [6836 B]
+#7 2.890 Get:38 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#7 2.900 Get:39 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#7 2.908 Get:40 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#7 2.919 Get:41 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#7 2.928 Get:42 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u3 [72.4 kB]
+#7 2.937 Get:43 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#7 2.947 Get:44 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#7 2.955 Get:45 http://deb.debian.org/debian-security bookworm-security/main amd64 libssh2-1 amd64 1.10.0-3+deb12u1 [176 kB]
+#7 2.964 Get:46 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u15 [392 kB]
+#7 2.975 Get:47 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u15 [316 kB]
+#7 2.984 Get:48 http://deb.debian.org/debian bookworm/main amd64 libcc1-0 amd64 12.2.0-14+deb12u1 [41.7 kB]
+#7 2.994 Get:49 http://deb.debian.org/debian bookworm/main amd64 libgomp1 amd64 12.2.0-14+deb12u1 [116 kB]
+#7 3.003 Get:50 http://deb.debian.org/debian bookworm/main amd64 libitm1 amd64 12.2.0-14+deb12u1 [26.1 kB]
+#7 3.012 Get:51 http://deb.debian.org/debian bookworm/main amd64 libatomic1 amd64 12.2.0-14+deb12u1 [9376 B]
+#7 3.021 Get:52 http://deb.debian.org/debian bookworm/main amd64 libasan8 amd64 12.2.0-14+deb12u1 [2193 kB]
+#7 3.033 Get:53 http://deb.debian.org/debian bookworm/main amd64 liblsan0 amd64 12.2.0-14+deb12u1 [969 kB]
+#7 3.043 Get:54 http://deb.debian.org/debian bookworm/main amd64 libtsan2 amd64 12.2.0-14+deb12u1 [2197 kB]
+#7 3.055 Get:55 http://deb.debian.org/debian bookworm/main amd64 libubsan1 amd64 12.2.0-14+deb12u1 [883 kB]
+#7 3.066 Get:56 http://deb.debian.org/debian bookworm/main amd64 libquadmath0 amd64 12.2.0-14+deb12u1 [145 kB]
+#7 3.075 Get:57 http://deb.debian.org/debian bookworm/main amd64 libgcc-12-dev amd64 12.2.0-14+deb12u1 [2437 kB]
+#7 3.088 Get:58 http://deb.debian.org/debian bookworm/main amd64 gcc-12 amd64 12.2.0-14+deb12u1 [19.3 MB]
+#7 3.144 Get:59 http://deb.debian.org/debian bookworm/main amd64 gcc amd64 4:12.2.0-3 [5216 B]
+#7 3.151 Get:60 http://deb.debian.org/debian bookworm/main amd64 libc-dev-bin amd64 2.36-9+deb12u14 [48.1 kB]
+#7 3.159 Get:61 http://deb.debian.org/debian-security bookworm-security/main amd64 linux-libc-dev amd64 6.1.180-1 [2332 kB]
+#7 3.171 Get:62 http://deb.debian.org/debian bookworm/main amd64 libcrypt-dev amd64 1:4.4.33-2 [118 kB]
+#7 3.180 Get:63 http://deb.debian.org/debian bookworm/main amd64 libtirpc-dev amd64 1.3.3+ds-1 [191 kB]
+#7 3.189 Get:64 http://deb.debian.org/debian bookworm/main amd64 libnsl-dev amd64 1.3.0-2 [66.4 kB]
+#7 3.200 Get:65 http://deb.debian.org/debian bookworm/main amd64 rpcsvc-proto amd64 1.4.3-1 [63.3 kB]
+#7 3.208 Get:66 http://deb.debian.org/debian bookworm/main amd64 libc6-dev amd64 2.36-9+deb12u14 [1904 kB]
+#7 3.220 Get:67 http://deb.debian.org/debian bookworm/main amd64 libstdc++-12-dev amd64 12.2.0-14+deb12u1 [2047 kB]
+#7 3.232 Get:68 http://deb.debian.org/debian bookworm/main amd64 g++-12 amd64 12.2.0-14+deb12u1 [10.7 MB]
+#7 3.268 Get:69 http://deb.debian.org/debian bookworm/main amd64 g++ amd64 4:12.2.0-3 [1356 B]
+#7 3.274 Get:70 http://deb.debian.org/debian bookworm/main amd64 make amd64 4.3-4.1 [396 kB]
+#7 3.354 debconf: delaying package configuration, since apt-utils is not installed
+#7 3.374 Fetched 76.5 MB in 1s (93.5 MB/s)
+#7 4.237 Selecting previously unselected package libssl3:amd64.
+#7 4.237 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6096 files and directories currently installed.)
+#7 4.248 Preparing to unpack .../libssl3_3.0.20-1~deb12u2_amd64.deb ...
+#7 4.256 Unpacking libssl3:amd64 (3.0.20-1~deb12u2) ...
+#7 4.392 Selecting previously unselected package libpython3.11-minimal:amd64.
+#7 4.392 Preparing to unpack .../libpython3.11-minimal_3.11.2-6+deb12u8_amd64.deb ...
+#7 4.396 Unpacking libpython3.11-minimal:amd64 (3.11.2-6+deb12u8) ...
+#7 4.533 Selecting previously unselected package libexpat1:amd64.
+#7 4.534 Preparing to unpack .../libexpat1_2.5.0-1+deb12u3_amd64.deb ...
+#7 4.540 Unpacking libexpat1:amd64 (2.5.0-1+deb12u3) ...
+#7 4.593 Selecting previously unselected package python3.11-minimal.
+#7 4.593 Preparing to unpack .../python3.11-minimal_3.11.2-6+deb12u8_amd64.deb ...
+#7 4.607 Unpacking python3.11-minimal (3.11.2-6+deb12u8) ...
+#7 4.763 Setting up libssl3:amd64 (3.0.20-1~deb12u2) ...
+#7 4.778 Setting up libpython3.11-minimal:amd64 (3.11.2-6+deb12u8) ...
+#7 4.799 Setting up libexpat1:amd64 (2.5.0-1+deb12u3) ...
+#7 4.819 Setting up python3.11-minimal (3.11.2-6+deb12u8) ...
+#7 5.353 Selecting previously unselected package python3-minimal.
+#7 5.353 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6424 files and directories currently installed.)
+#7 5.359 Preparing to unpack .../00-python3-minimal_3.11.2-1+b1_amd64.deb ...
+#7 5.370 Unpacking python3-minimal (3.11.2-1+b1) ...
+#7 5.429 Selecting previously unselected package media-types.
+#7 5.430 Preparing to unpack .../01-media-types_10.0.0_all.deb ...
+#7 5.434 Unpacking media-types (10.0.0) ...
+#7 5.491 Selecting previously unselected package libncursesw6:amd64.
+#7 5.492 Preparing to unpack .../02-libncursesw6_6.4-4_amd64.deb ...
+#7 5.496 Unpacking libncursesw6:amd64 (6.4-4) ...
+#7 5.559 Selecting previously unselected package libkrb5support0:amd64.
+#7 5.559 Preparing to unpack .../03-libkrb5support0_1.20.1-2+deb12u5_amd64.deb ...
+#7 5.566 Unpacking libkrb5support0:amd64 (1.20.1-2+deb12u5) ...
+#7 5.628 Selecting previously unselected package libk5crypto3:amd64.
+#7 5.628 Preparing to unpack .../04-libk5crypto3_1.20.1-2+deb12u5_amd64.deb ...
+#7 5.634 Unpacking libk5crypto3:amd64 (1.20.1-2+deb12u5) ...
+#7 5.681 Selecting previously unselected package libkeyutils1:amd64.
+#7 5.681 Preparing to unpack .../05-libkeyutils1_1.6.3-2_amd64.deb ...
+#7 5.688 Unpacking libkeyutils1:amd64 (1.6.3-2) ...
+#7 5.743 Selecting previously unselected package libkrb5-3:amd64.
+#7 5.743 Preparing to unpack .../06-libkrb5-3_1.20.1-2+deb12u5_amd64.deb ...
+#7 5.751 Unpacking libkrb5-3:amd64 (1.20.1-2+deb12u5) ...
+#7 5.833 Selecting previously unselected package libgssapi-krb5-2:amd64.
+#7 5.834 Preparing to unpack .../07-libgssapi-krb5-2_1.20.1-2+deb12u5_amd64.deb ...
+#7 5.843 Unpacking libgssapi-krb5-2:amd64 (1.20.1-2+deb12u5) ...
+#7 5.890 Selecting previously unselected package libtirpc-common.
+#7 5.890 Preparing to unpack .../08-libtirpc-common_1.3.3+ds-1_all.deb ...
+#7 5.896 Unpacking libtirpc-common (1.3.3+ds-1) ...
+#7 5.948 Selecting previously unselected package libtirpc3:amd64.
+#7 5.948 Preparing to unpack .../09-libtirpc3_1.3.3+ds-1_amd64.deb ...
+#7 5.953 Unpacking libtirpc3:amd64 (1.3.3+ds-1) ...
+#7 6.006 Selecting previously unselected package libnsl2:amd64.
+#7 6.007 Preparing to unpack .../10-libnsl2_1.3.0-2_amd64.deb ...
+#7 6.011 Unpacking libnsl2:amd64 (1.3.0-2) ...
+#7 6.063 Selecting previously unselected package readline-common.
+#7 6.063 Preparing to unpack .../11-readline-common_8.2-1.3_all.deb ...
+#7 6.071 Unpacking readline-common (8.2-1.3) ...
+#7 6.122 Selecting previously unselected package libreadline8:amd64.
+#7 6.122 Preparing to unpack .../12-libreadline8_8.2-1.3_amd64.deb ...
+#7 6.129 Unpacking libreadline8:amd64 (8.2-1.3) ...
+#7 6.184 Selecting previously unselected package libsqlite3-0:amd64.
+#7 6.185 Preparing to unpack .../13-libsqlite3-0_3.40.1-2+deb12u2_amd64.deb ...
+#7 6.188 Unpacking libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+#7 6.267 Selecting previously unselected package libpython3.11-stdlib:amd64.
+#7 6.267 Preparing to unpack .../14-libpython3.11-stdlib_3.11.2-6+deb12u8_amd64.deb ...
+#7 6.274 Unpacking libpython3.11-stdlib:amd64 (3.11.2-6+deb12u8) ...
+#7 6.450 Selecting previously unselected package python3.11.
+#7 6.451 Preparing to unpack .../15-python3.11_3.11.2-6+deb12u8_amd64.deb ...
+#7 6.457 Unpacking python3.11 (3.11.2-6+deb12u8) ...
+#7 6.497 Selecting previously unselected package libpython3-stdlib:amd64.
+#7 6.498 Preparing to unpack .../16-libpython3-stdlib_3.11.2-1+b1_amd64.deb ...
+#7 6.501 Unpacking libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+#7 6.548 Setting up python3-minimal (3.11.2-1+b1) ...
+#7 6.688 Selecting previously unselected package python3.
+#7 6.688 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6932 files and directories currently installed.)
+#7 6.696 Preparing to unpack .../00-python3_3.11.2-1+b1_amd64.deb ...
+#7 6.704 Unpacking python3 (3.11.2-1+b1) ...
+#7 6.753 Selecting previously unselected package openssl.
+#7 6.754 Preparing to unpack .../01-openssl_3.0.20-1~deb12u2_amd64.deb ...
+#7 6.761 Unpacking openssl (3.0.20-1~deb12u2) ...
+#7 6.883 Selecting previously unselected package ca-certificates.
+#7 6.883 Preparing to unpack .../02-ca-certificates_20250419~deb12u1_all.deb ...
+#7 6.890 Unpacking ca-certificates (20250419~deb12u1) ...
+#7 6.987 Selecting previously unselected package binutils-common:amd64.
+#7 6.988 Preparing to unpack .../03-binutils-common_2.40-2_amd64.deb ...
+#7 6.991 Unpacking binutils-common:amd64 (2.40-2) ...
+#7 7.169 Selecting previously unselected package libbinutils:amd64.
+#7 7.169 Preparing to unpack .../04-libbinutils_2.40-2_amd64.deb ...
+#7 7.176 Unpacking libbinutils:amd64 (2.40-2) ...
+#7 7.253 Selecting previously unselected package libctf-nobfd0:amd64.
+#7 7.253 Preparing to unpack .../05-libctf-nobfd0_2.40-2_amd64.deb ...
+#7 7.260 Unpacking libctf-nobfd0:amd64 (2.40-2) ...
+#7 7.316 Selecting previously unselected package libctf0:amd64.
+#7 7.317 Preparing to unpack .../06-libctf0_2.40-2_amd64.deb ...
+#7 7.323 Unpacking libctf0:amd64 (2.40-2) ...
+#7 7.384 Selecting previously unselected package libgprofng0:amd64.
+#7 7.384 Preparing to unpack .../07-libgprofng0_2.40-2_amd64.deb ...
+#7 7.389 Unpacking libgprofng0:amd64 (2.40-2) ...
+#7 7.480 Selecting previously unselected package libjansson4:amd64.
+#7 7.480 Preparing to unpack .../08-libjansson4_2.14-2_amd64.deb ...
+#7 7.485 Unpacking libjansson4:amd64 (2.14-2) ...
+#7 7.521 Selecting previously unselected package binutils-x86-64-linux-gnu.
+#7 7.522 Preparing to unpack .../09-binutils-x86-64-linux-gnu_2.40-2_amd64.deb ...
+#7 7.527 Unpacking binutils-x86-64-linux-gnu (2.40-2) ...
+#7 7.709 Selecting previously unselected package binutils.
+#7 7.710 Preparing to unpack .../10-binutils_2.40-2_amd64.deb ...
+#7 7.716 Unpacking binutils (2.40-2) ...
+#7 7.776 Selecting previously unselected package libisl23:amd64.
+#7 7.776 Preparing to unpack .../11-libisl23_0.25-1.1_amd64.deb ...
+#7 7.781 Unpacking libisl23:amd64 (0.25-1.1) ...
+#7 7.867 Selecting previously unselected package libmpfr6:amd64.
+#7 7.867 Preparing to unpack .../12-libmpfr6_4.2.0-1_amd64.deb ...
+#7 7.872 Unpacking libmpfr6:amd64 (4.2.0-1) ...
+#7 7.937 Selecting previously unselected package libmpc3:amd64.
+#7 7.938 Preparing to unpack .../13-libmpc3_1.3.1-1_amd64.deb ...
+#7 7.944 Unpacking libmpc3:amd64 (1.3.1-1) ...
+#7 7.983 Selecting previously unselected package cpp-12.
+#7 7.983 Preparing to unpack .../14-cpp-12_12.2.0-14+deb12u1_amd64.deb ...
+#7 7.992 Unpacking cpp-12 (12.2.0-14+deb12u1) ...
+#7 8.480 Selecting previously unselected package cpp.
+#7 8.480 Preparing to unpack .../15-cpp_4%3a12.2.0-3_amd64.deb ...
+#7 8.484 Unpacking cpp (4:12.2.0-3) ...
+#7 8.523 Selecting previously unselected package libbrotli1:amd64.
+#7 8.523 Preparing to unpack .../16-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#7 8.528 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#7 8.583 Selecting previously unselected package libsasl2-modules-db:amd64.
+#7 8.583 Preparing to unpack .../17-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#7 8.590 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#7 8.635 Selecting previously unselected package libsasl2-2:amd64.
+#7 8.635 Preparing to unpack .../18-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#7 8.641 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#7 8.704 Selecting previously unselected package libldap-2.5-0:amd64.
+#7 8.704 Preparing to unpack .../19-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#7 8.709 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#7 8.761 Selecting previously unselected package libnghttp2-14:amd64.
+#7 8.762 Preparing to unpack .../20-libnghttp2-14_1.52.0-1+deb12u3_amd64.deb ...
+#7 8.769 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#7 8.811 Selecting previously unselected package libpsl5:amd64.
+#7 8.811 Preparing to unpack .../21-libpsl5_0.21.2-1_amd64.deb ...
+#7 8.816 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#7 8.863 Selecting previously unselected package librtmp1:amd64.
+#7 8.864 Preparing to unpack .../22-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#7 8.869 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#7 8.924 Selecting previously unselected package libssh2-1:amd64.
+#7 8.925 Preparing to unpack .../23-libssh2-1_1.10.0-3+deb12u1_amd64.deb ...
+#7 8.932 Unpacking libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#7 8.992 Selecting previously unselected package libcurl4:amd64.
+#7 8.993 Preparing to unpack .../24-libcurl4_7.88.1-10+deb12u15_amd64.deb ...
+#7 9.000 Unpacking libcurl4:amd64 (7.88.1-10+deb12u15) ...
+#7 9.053 Selecting previously unselected package curl.
+#7 9.053 Preparing to unpack .../25-curl_7.88.1-10+deb12u15_amd64.deb ...
+#7 9.060 Unpacking curl (7.88.1-10+deb12u15) ...
+#7 9.119 Selecting previously unselected package libcc1-0:amd64.
+#7 9.120 Preparing to unpack .../26-libcc1-0_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.124 Unpacking libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+#7 9.173 Selecting previously unselected package libgomp1:amd64.
+#7 9.174 Preparing to unpack .../27-libgomp1_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.180 Unpacking libgomp1:amd64 (12.2.0-14+deb12u1) ...
+#7 9.229 Selecting previously unselected package libitm1:amd64.
+#7 9.229 Preparing to unpack .../28-libitm1_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.234 Unpacking libitm1:amd64 (12.2.0-14+deb12u1) ...
+#7 9.280 Selecting previously unselected package libatomic1:amd64.
+#7 9.280 Preparing to unpack .../29-libatomic1_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.286 Unpacking libatomic1:amd64 (12.2.0-14+deb12u1) ...
+#7 9.327 Selecting previously unselected package libasan8:amd64.
+#7 9.327 Preparing to unpack .../30-libasan8_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.331 Unpacking libasan8:amd64 (12.2.0-14+deb12u1) ...
+#7 9.491 Selecting previously unselected package liblsan0:amd64.
+#7 9.492 Preparing to unpack .../31-liblsan0_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.495 Unpacking liblsan0:amd64 (12.2.0-14+deb12u1) ...
+#7 9.591 Selecting previously unselected package libtsan2:amd64.
+#7 9.591 Preparing to unpack .../32-libtsan2_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.595 Unpacking libtsan2:amd64 (12.2.0-14+deb12u1) ...
+#7 9.759 Selecting previously unselected package libubsan1:amd64.
+#7 9.760 Preparing to unpack .../33-libubsan1_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.762 Unpacking libubsan1:amd64 (12.2.0-14+deb12u1) ...
+#7 9.853 Selecting previously unselected package libquadmath0:amd64.
+#7 9.853 Preparing to unpack .../34-libquadmath0_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.860 Unpacking libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+#7 9.907 Selecting previously unselected package libgcc-12-dev:amd64.
+#7 9.907 Preparing to unpack .../35-libgcc-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+#7 9.911 Unpacking libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#7 10.07 Selecting previously unselected package gcc-12.
+#7 10.08 Preparing to unpack .../36-gcc-12_12.2.0-14+deb12u1_amd64.deb ...
+#7 10.08 Unpacking gcc-12 (12.2.0-14+deb12u1) ...
+#7 10.66 Selecting previously unselected package gcc.
+#7 10.66 Preparing to unpack .../37-gcc_4%3a12.2.0-3_amd64.deb ...
+#7 10.67 Unpacking gcc (4:12.2.0-3) ...
+#7 10.71 Selecting previously unselected package libc-dev-bin.
+#7 10.71 Preparing to unpack .../38-libc-dev-bin_2.36-9+deb12u14_amd64.deb ...
+#7 10.72 Unpacking libc-dev-bin (2.36-9+deb12u14) ...
+#7 10.76 Selecting previously unselected package linux-libc-dev:amd64.
+#7 10.76 Preparing to unpack .../39-linux-libc-dev_6.1.180-1_amd64.deb ...
+#7 10.76 Unpacking linux-libc-dev:amd64 (6.1.180-1) ...
+#7 11.08 Selecting previously unselected package libcrypt-dev:amd64.
+#7 11.08 Preparing to unpack .../40-libcrypt-dev_1%3a4.4.33-2_amd64.deb ...
+#7 11.10 Unpacking libcrypt-dev:amd64 (1:4.4.33-2) ...
+#7 11.14 Selecting previously unselected package libtirpc-dev:amd64.
+#7 11.14 Preparing to unpack .../41-libtirpc-dev_1.3.3+ds-1_amd64.deb ...
+#7 11.15 Unpacking libtirpc-dev:amd64 (1.3.3+ds-1) ...
+#7 11.19 Selecting previously unselected package libnsl-dev:amd64.
+#7 11.19 Preparing to unpack .../42-libnsl-dev_1.3.0-2_amd64.deb ...
+#7 11.20 Unpacking libnsl-dev:amd64 (1.3.0-2) ...
+#7 11.24 Selecting previously unselected package rpcsvc-proto.
+#7 11.24 Preparing to unpack .../43-rpcsvc-proto_1.4.3-1_amd64.deb ...
+#7 11.24 Unpacking rpcsvc-proto (1.4.3-1) ...
+#7 11.29 Selecting previously unselected package libc6-dev:amd64.
+#7 11.29 Preparing to unpack .../44-libc6-dev_2.36-9+deb12u14_amd64.deb ...
+#7 11.29 Unpacking libc6-dev:amd64 (2.36-9+deb12u14) ...
+#7 11.51 Selecting previously unselected package libstdc++-12-dev:amd64.
+#7 11.51 Preparing to unpack .../45-libstdc++-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+#7 11.51 Unpacking libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#7 11.83 Selecting previously unselected package g++-12.
+#7 11.83 Preparing to unpack .../46-g++-12_12.2.0-14+deb12u1_amd64.deb ...
+#7 11.83 Unpacking g++-12 (12.2.0-14+deb12u1) ...
+#7 12.35 Selecting previously unselected package g++.
+#7 12.35 Preparing to unpack .../47-g++_4%3a12.2.0-3_amd64.deb ...
+#7 12.35 Unpacking g++ (4:12.2.0-3) ...
+#7 12.37 Selecting previously unselected package make.
+#7 12.37 Preparing to unpack .../48-make_4.3-4.1_amd64.deb ...
+#7 12.37 Unpacking make (4.3-4.1) ...
+#7 12.44 Setting up media-types (10.0.0) ...
+#7 12.46 Setting up libkeyutils1:amd64 (1.6.3-2) ...
+#7 12.47 Setting up libpsl5:amd64 (0.21.2-1) ...
+#7 12.47 Setting up libtirpc-common (1.3.3+ds-1) ...
+#7 12.48 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#7 12.49 Setting up libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+#7 12.50 Setting up binutils-common:amd64 (2.40-2) ...
+#7 12.52 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#7 12.53 Setting up linux-libc-dev:amd64 (6.1.180-1) ...
+#7 12.54 Setting up libctf-nobfd0:amd64 (2.40-2) ...
+#7 12.55 Setting up libgomp1:amd64 (12.2.0-14+deb12u1) ...
+#7 12.57 Setting up libjansson4:amd64 (2.14-2) ...
+#7 12.59 Setting up libkrb5support0:amd64 (1.20.1-2+deb12u5) ...
+#7 12.61 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#7 12.62 Setting up rpcsvc-proto (1.4.3-1) ...
+#7 12.64 Setting up make (4.3-4.1) ...
+#7 12.65 Setting up libmpfr6:amd64 (4.2.0-1) ...
+#7 12.66 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#7 12.67 Setting up libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+#7 12.69 Setting up libmpc3:amd64 (1.3.1-1) ...
+#7 12.71 Setting up libatomic1:amd64 (12.2.0-14+deb12u1) ...
+#7 12.73 Setting up libncursesw6:amd64 (6.4-4) ...
+#7 12.73 Setting up libk5crypto3:amd64 (1.20.1-2+deb12u5) ...
+#7 12.74 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#7 12.75 Setting up libubsan1:amd64 (12.2.0-14+deb12u1) ...
+#7 12.75 Setting up libcrypt-dev:amd64 (1:4.4.33-2) ...
+#7 12.76 Setting up libasan8:amd64 (12.2.0-14+deb12u1) ...
+#7 12.77 Setting up libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#7 12.78 Setting up libkrb5-3:amd64 (1.20.1-2+deb12u5) ...
+#7 12.80 Setting up libtsan2:amd64 (12.2.0-14+deb12u1) ...
+#7 12.81 Setting up libbinutils:amd64 (2.40-2) ...
+#7 12.83 Setting up libisl23:amd64 (0.25-1.1) ...
+#7 12.85 Setting up libc-dev-bin (2.36-9+deb12u14) ...
+#7 12.86 Setting up openssl (3.0.20-1~deb12u2) ...
+#7 12.88 Setting up readline-common (8.2-1.3) ...
+#7 12.90 Setting up libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+#7 12.91 Setting up liblsan0:amd64 (12.2.0-14+deb12u1) ...
+#7 12.93 Setting up libitm1:amd64 (12.2.0-14+deb12u1) ...
+#7 12.95 Setting up libctf0:amd64 (2.40-2) ...
+#7 12.95 Setting up cpp-12 (12.2.0-14+deb12u1) ...
+#7 12.96 Setting up libreadline8:amd64 (8.2-1.3) ...
+#7 12.98 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#7 12.99 Setting up ca-certificates (20250419~deb12u1) ...
+#7 13.06 debconf: unable to initialize frontend: Dialog
+#7 13.06 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#7 13.06 debconf: falling back to frontend: Readline
+#7 13.06 debconf: unable to initialize frontend: Readline
+#7 13.06 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+#7 13.06 debconf: falling back to frontend: Teletype
+#7 13.44 Updating certificates in /etc/ssl/certs...
+#7 14.06 150 added, 0 removed; done.
+#7 14.09 Setting up libgprofng0:amd64 (2.40-2) ...
+#7 14.10 Setting up libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#7 14.11 Setting up libgssapi-krb5-2:amd64 (1.20.1-2+deb12u5) ...
+#7 14.12 Setting up cpp (4:12.2.0-3) ...
+#7 14.14 Setting up libcurl4:amd64 (7.88.1-10+deb12u15) ...
+#7 14.15 Setting up curl (7.88.1-10+deb12u15) ...
+#7 14.16 Setting up binutils-x86-64-linux-gnu (2.40-2) ...
+#7 14.17 Setting up libtirpc3:amd64 (1.3.3+ds-1) ...
+#7 14.18 Setting up binutils (2.40-2) ...
+#7 14.18 Setting up libtirpc-dev:amd64 (1.3.3+ds-1) ...
+#7 14.19 Setting up gcc-12 (12.2.0-14+deb12u1) ...
+#7 14.19 Setting up libnsl2:amd64 (1.3.0-2) ...
+#7 14.20 Setting up libpython3.11-stdlib:amd64 (3.11.2-6+deb12u8) ...
+#7 14.21 Setting up gcc (4:12.2.0-3) ...
+#7 14.23 Setting up libnsl-dev:amd64 (1.3.0-2) ...
+#7 14.24 Setting up libc6-dev:amd64 (2.36-9+deb12u14) ...
+#7 14.25 Setting up libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+#7 14.26 Setting up python3.11 (3.11.2-6+deb12u8) ...
+#7 14.78 Setting up libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#7 14.79 Setting up python3 (3.11.2-1+b1) ...
+#7 14.80 running python rtupdate hooks for python3.11...
+#7 14.80 running python post-rtupdate hooks for python3.11...
+#7 14.87 Setting up g++-12 (12.2.0-14+deb12u1) ...
+#7 14.88 Setting up g++ (4:12.2.0-3) ...
+#7 14.90 update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+#7 14.91 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#7 14.94 Processing triggers for ca-certificates (20250419~deb12u1) ...
+#7 14.95 Updating certificates in /etc/ssl/certs...
+#7 15.41 0 added, 0 removed; done.
+#7 15.41 Running hooks in /etc/ca-certificates/update.d...
+#7 15.41 done.
+#7 DONE 15.5s
+
+#8 [3/7] WORKDIR /app
+#8 DONE 0.0s
+
+#9 [4/7] COPY package.json package-lock.json ./
+#9 DONE 0.0s
+
+#10 [5/7] RUN npm ci
+#10 1.291 npm warn deprecated <email removed>: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+#10 6.275 
+#10 6.275 added 203 packages, and audited 204 packages in 6s
+#10 6.275 
+#10 6.275 39 packages are looking for funding
+#10 6.275   run `npm fund` for details
+#10 6.326 
+#10 6.326 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+#10 6.326 
+#10 6.326 To address issues that do not require attention, run:
+#10 6.326   npm audit fix
+#10 6.326 
+#10 6.326 To address all issues (including breaking changes), run:
+#10 6.326   npm audit fix --force
+#10 6.326 
+#10 6.326 Run `npm audit` for details.
+#10 6.327 npm notice
+#10 6.327 npm notice New major version of npm available! 10.9.8 -> 12.0.2
+#10 6.327 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#10 6.327 npm notice To update run: npm install -g <email removed>
+#10 6.327 npm notice
+#10 DONE 6.4s
+
+#11 [6/7] COPY . .
+#11 DONE 0.1s
+
+#12 [7/7] RUN npm run build
+#12 0.261 
+#12 0.261 > <email removed> build
+#12 0.261 > tsc -p tsconfig.json && mkdir -p dist/legacy && cp src/legacy/*.cjs dist/legacy/
+#12 0.261 
+#12 DONE 1.1s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 1.9s done
+#13 writing image sha256:5654606797062accbd959826944fddff2d2b9ca2ba45f3dd25405e9658d814c4 done
+#13 naming to docker.io/library/harness-conductor-1-done-f1-app done
+#13 DONE 1.9s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql","0004_api_keys.sql"],"skipped":[]}
+app-1  | [info] seed user {"username":"demo","created":true}
+app-1  | [info] seed items {"inserted":3}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 4ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+playwright-1  | 
+playwright-1  | added 202 packages, and audited 203 packages in 6s
+playwright-1  | 
+playwright-1  | 39 packages are looking for funding
+playwright-1  |   run `npm fund` for details
+playwright-1  | 
+playwright-1  | 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+playwright-1  | 
+playwright-1  | To address issues that do not require attention, run:
+playwright-1  |   npm audit fix
+playwright-1  | 
+playwright-1  | To address all issues (including breaking changes), run:
+playwright-1  |   npm audit fix --force
+playwright-1  | 
+playwright-1  | Run `npm audit` for details.
+playwright-1  | 
+playwright-1  | Running 4 tests using 1 worker
+playwright-1  | 
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 2ms
+app-1         | [info] GET /signin?next=%2Fitems 200 4ms
+app-1         | [info] POST /signin 302 44ms
+app-1         | [info] GET /items 200 3ms
+playwright-1  |   ✓  1 test/smoke/smoke.spec.ts:4:1 › sign-in (270ms)
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+playwright-1  |   ✓  2 test/smoke/smoke.spec.ts:15:1 › add item (266ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 0ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /items/new 304 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items?tag=alpha-mtpaydhb-l51hbh 200 2ms
+app-1         | [info] GET /items 200 2ms
+playwright-1  |   ✓  3 test/smoke/smoke.spec.ts:31:1 › tag filter (445ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 0ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /api/items?q=mtpaydtu-ldr4lm 200 1ms
+app-1         | [info] GET /api/items 401 0ms
+playwright-1  |   ✓  4 test/smoke/smoke.spec.ts:57:1 › /api/items with cookie (241ms)
+playwright-1  | 
+playwright-1  |   4 passed (2.0s)
+
+[Kplaywright-1 exited with code 0
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+
+[Kapp-1 exited with code 137
+ Image mcr.microsoft.com/playwright:v1.52.0-noble Pulling 
+ ac0c285abb48 Pulling fs layer 0B
+ 8718a27c6ba2 Pulling fs layer 0B
+ 5fe2be525f44 Pulling fs layer 0B
+ 5e1ef7970f6f Pulling fs layer 0B
+ 5e1ef7970f6f Waiting 0B
+ 5fe2be525f44 Downloading 31.98kB
+ ac0c285abb48 Downloading 309.4kB
+ 8718a27c6ba2 Downloading 538.7kB
+ 5fe2be525f44 Downloading 817.3kB
+ 5fe2be525f44 Verifying Checksum 0B
+ 5fe2be525f44 Download complete 0B
+ ac0c285abb48 Downloading 3.111MB
+ 8718a27c6ba2 Downloading 3.783MB
+ 5e1ef7970f6f Downloading 538.7kB
+ ac0c285abb48 Downloading 21.48MB
+ 8718a27c6ba2 Downloading 16.74MB
+ ac0c285abb48 Verifying Checksum 0B
+ ac0c285abb48 Download complete 0B
+ 5e1ef7970f6f Downloading 6.486MB
+ ac0c285abb48 Extracting 327.7kB
+ 8718a27c6ba2 Downloading 43.24MB
+ 5e1ef7970f6f Downloading 13.5MB
+ ac0c285abb48 Extracting 7.864MB
+ 8718a27c6ba2 Downloading 68.11MB
+ 5e1ef7970f6f Downloading 21.07MB
+ ac0c285abb48 Extracting 13.43MB
+ 8718a27c6ba2 Downloading 92.98MB
+ 8718a27c6ba2 Verifying Checksum 0B
+ 8718a27c6ba2 Download complete 0B
+ 5e1ef7970f6f Downloading 28.64MB
+ ac0c285abb48 Extracting 24.9MB
+ 5e1ef7970f6f Downloading 36.75MB
+ ac0c285abb48 Extracting 26.21MB
+ 5e1ef7970f6f Downloading 44.32MB
+ ac0c285abb48 Extracting 29.49MB
+ 5e1ef7970f6f Downloading 52.43MB
+ ac0c285abb48 Extracting 30.59MB
+ ac0c285abb48 Pull complete 0B
+ 8718a27c6ba2 Extracting 557.1kB
+ 5e1ef7970f6f Downloading 61.08MB
+ 8718a27c6ba2 Extracting 4.456MB
+ 5e1ef7970f6f Downloading 69.19MB
+ 8718a27c6ba2 Extracting 15.04MB
+ 5e1ef7970f6f Downloading 77.3MB
+ 8718a27c6ba2 Extracting 25.62MB
+ 5e1ef7970f6f Downloading 85.95MB
+ 8718a27c6ba2 Extracting 37.32MB
+ 5e1ef7970f6f Downloading 94.06MB
+ 8718a27c6ba2 Extracting 48.46MB
+ 5e1ef7970f6f Downloading 102.2MB
+ 8718a27c6ba2 Extracting 56.82MB
+ 5e1ef7970f6f Downloading 110.8MB
+ 5e1ef7970f6f Downloading 118.9MB
+ 8718a27c6ba2 Extracting 58.49MB
+ 8718a27c6ba2 Extracting 60.16MB
+ 5e1ef7970f6f Downloading 127MB
+ 8718a27c6ba2 Extracting 61.83MB
+ 5e1ef7970f6f Downloading 135.7MB
+ 8718a27c6ba2 Extracting 63.5MB
+ 5e1ef7970f6f Downloading 144.3MB
+ 8718a27c6ba2 Extracting 65.18MB
+ 5e1ef7970f6f Downloading 153MB
+ 5e1ef7970f6f Downloading 161.6MB
+ 8718a27c6ba2 Extracting 71.3MB
+ 5e1ef7970f6f Downloading 170.3MB
+ 8718a27c6ba2 Extracting 72.42MB
+ 5e1ef7970f6f Downloading 179.5MB
+ 5e1ef7970f6f Downloading 188.1MB
+ 8718a27c6ba2 Extracting 73.53MB
+ 5e1ef7970f6f Downloading 194.1MB
+ 8718a27c6ba2 Extracting 78.54MB
+ 5e1ef7970f6f Downloading 199MB
+ 8718a27c6ba2 Extracting 79.1MB
+ 5e1ef7970f6f Downloading 212.5MB
+ 8718a27c6ba2 Extracting 83.56MB
+ 5e1ef7970f6f Downloading 221.7MB
+ 8718a27c6ba2 Extracting 89.13MB
+ 5e1ef7970f6f Downloading 230.9MB
+ 8718a27c6ba2 Extracting 91.91MB
+ 5e1ef7970f6f Downloading 240MB
+ 8718a27c6ba2 Extracting 95.81MB
+ 5e1ef7970f6f Downloading 249.8MB
+ 8718a27c6ba2 Extracting 98.6MB
+ 5e1ef7970f6f Downloading 259MB
+ 8718a27c6ba2 Extracting 100.3MB
+ 5e1ef7970f6f Downloading 268.7MB
+ 8718a27c6ba2 Extracting 101.4MB
+ 8718a27c6ba2 Extracting 101.4MB
+ 5e1ef7970f6f Downloading 277.9MB
+ 8718a27c6ba2 Pull complete 0B
+ 5fe2be525f44 Extracting 32.77kB
+ 5fe2be525f44 Extracting 1.901MB
+ 5fe2be525f44 Pull complete 0B
+ 5e1ef7970f6f Downloading 287.1MB
+ 5e1ef7970f6f Downloading 296.8MB
+ 5e1ef7970f6f Downloading 306.5MB
+ 5e1ef7970f6f Downloading 316.3MB
+ 5e1ef7970f6f Downloading 326MB
+ 5e1ef7970f6f Downloading 335.7MB
+ 5e1ef7970f6f Downloading 344.9MB
+ 5e1ef7970f6f Downloading 354.7MB
+ 5e1ef7970f6f Downloading 364.4MB
+ 5e1ef7970f6f Downloading 374.1MB
+ 5e1ef7970f6f Downloading 384.4MB
+ 5e1ef7970f6f Downloading 394.1MB
+ 5e1ef7970f6f Downloading 404.4MB
+ 5e1ef7970f6f Downloading 414.1MB
+ 5e1ef7970f6f Downloading 422.2MB
+ 5e1ef7970f6f Downloading 432MB
+ 5e1ef7970f6f Downloading 441.7MB
+ 5e1ef7970f6f Downloading 451.4MB
+ 5e1ef7970f6f Downloading 453.1MB
+ 5e1ef7970f6f Downloading 463.3MB
+ 5e1ef7970f6f Downloading 473.6MB
+ 5e1ef7970f6f Downloading 483.3MB
+ 5e1ef7970f6f Downloading 493.6MB
+ 5e1ef7970f6f Downloading 503.9MB
+ 5e1ef7970f6f Downloading 514.2MB
+ 5e1ef7970f6f Downloading 523.9MB
+ 5e1ef7970f6f Downloading 534.2MB
+ 5e1ef7970f6f Downloading 543.9MB
+ 5e1ef7970f6f Downloading 554.2MB
+ 5e1ef7970f6f Downloading 564.4MB
+ 5e1ef7970f6f Downloading 574.7MB
+ 5e1ef7970f6f Downloading 585.5MB
+ 5e1ef7970f6f Downloading 595.3MB
+ 5e1ef7970f6f Downloading 605MB
+ 5e1ef7970f6f Downloading 615.3MB
+ 5e1ef7970f6f Downloading 625MB
+ 5e1ef7970f6f Downloading 635.8MB
+ 5e1ef7970f6f Downloading 646.1MB
+ 5e1ef7970f6f Downloading 656.9MB
+ 5e1ef7970f6f Downloading 667.2MB
+ 5e1ef7970f6f Downloading 677.4MB
+ 5e1ef7970f6f Downloading 687.7MB
+ 5e1ef7970f6f Downloading 697.5MB
+ 5e1ef7970f6f Downloading 707.2MB
+ 5e1ef7970f6f Downloading 718MB
+ 5e1ef7970f6f Downloading 728.8MB
+ 5e1ef7970f6f Downloading 738.5MB
+ 5e1ef7970f6f Downloading 748.8MB
+ 5e1ef7970f6f Downloading 759.1MB
+ 5e1ef7970f6f Verifying Checksum 0B
+ 5e1ef7970f6f Download complete 0B
+ 5e1ef7970f6f Extracting 557.1kB
+ 5e1ef7970f6f Extracting 10.58MB
+ 5e1ef7970f6f Extracting 22.84MB
+ 5e1ef7970f6f Extracting 35.09MB
+ 5e1ef7970f6f Extracting 47.35MB
+ 5e1ef7970f6f Extracting 59.05MB
+ 5e1ef7970f6f Extracting 70.75MB
+ 5e1ef7970f6f Extracting 83MB
+ 5e1ef7970f6f Extracting 94.7MB
+ 5e1ef7970f6f Extracting 107MB
+ 5e1ef7970f6f Extracting 115.9MB
+ 5e1ef7970f6f Extracting 122MB
+ 5e1ef7970f6f Extracting 127MB
+ 5e1ef7970f6f Extracting 132.6MB
+ 5e1ef7970f6f Extracting 140.4MB
+ 5e1ef7970f6f Extracting 151MB
+ 5e1ef7970f6f Extracting 158.8MB
+ 5e1ef7970f6f Extracting 166MB
+ 5e1ef7970f6f Extracting 184.9MB
+ 5e1ef7970f6f Extracting 197.2MB
+ 5e1ef7970f6f Extracting 209.5MB
+ 5e1ef7970f6f Extracting 221.7MB
+ 5e1ef7970f6f Extracting 233.4MB
+ 5e1ef7970f6f Extracting 245.7MB
+ 5e1ef7970f6f Extracting 257.9MB
+ 5e1ef7970f6f Extracting 266.8MB
+ 5e1ef7970f6f Extracting 271.8MB
+ 5e1ef7970f6f Extracting 276.9MB
+ 5e1ef7970f6f Extracting 287.4MB
+ 5e1ef7970f6f Extracting 298.6MB
+ 5e1ef7970f6f Extracting 310.3MB
+ 5e1ef7970f6f Extracting 322.5MB
+ 5e1ef7970f6f Extracting 334.2MB
+ 5e1ef7970f6f Extracting 345.9MB
+ 5e1ef7970f6f Extracting 357.6MB
+ 5e1ef7970f6f Extracting 369.3MB
+ 5e1ef7970f6f Extracting 380.5MB
+ 5e1ef7970f6f Extracting 391.1MB
+ 5e1ef7970f6f Extracting 401.6MB
+ 5e1ef7970f6f Extracting 412.8MB
+ 5e1ef7970f6f Extracting 424.5MB
+ 5e1ef7970f6f Extracting 436.2MB
+ 5e1ef7970f6f Extracting 446.8MB
+ 5e1ef7970f6f Extracting 457.9MB
+ 5e1ef7970f6f Extracting 469.6MB
+ 5e1ef7970f6f Extracting 480.7MB
+ 5e1ef7970f6f Extracting 491.3MB
+ 5e1ef7970f6f Extracting 494.7MB
+ 5e1ef7970f6f Extracting 503.6MB
+ 5e1ef7970f6f Extracting 513.6MB
+ 5e1ef7970f6f Extracting 525.3MB
+ 5e1ef7970f6f Extracting 537MB
+ 5e1ef7970f6f Extracting 545.4MB
+ 5e1ef7970f6f Extracting 555.9MB
+ 5e1ef7970f6f Extracting 566.5MB
+ 5e1ef7970f6f Extracting 578.2MB
+ 5e1ef7970f6f Extracting 593.3MB
+ 5e1ef7970f6f Extracting 609.4MB
+ 5e1ef7970f6f Extracting 620MB
+ 5e1ef7970f6f Extracting 630.6MB
+ 5e1ef7970f6f Extracting 642.8MB
+ 5e1ef7970f6f Extracting 655.1MB
+ 5e1ef7970f6f Extracting 666.2MB
+ 5e1ef7970f6f Extracting 677.9MB
+ 5e1ef7970f6f Extracting 688MB
+ 5e1ef7970f6f Extracting 697.4MB
+ 5e1ef7970f6f Extracting 698.5MB
+ 5e1ef7970f6f Extracting 700.2MB
+ 5e1ef7970f6f Extracting 710.8MB
+ 5e1ef7970f6f Extracting 719.2MB
+ 5e1ef7970f6f Extracting 736.4MB
+ 5e1ef7970f6f Extracting 749.2MB
+ 5e1ef7970f6f Extracting 752.6MB
+ 5e1ef7970f6f Extracting 753.1MB
+ 5e1ef7970f6f Extracting 753.7MB
+ 5e1ef7970f6f Extracting 754.3MB
+ 5e1ef7970f6f Extracting 754.8MB
+ 5e1ef7970f6f Extracting 755.4MB
+ 5e1ef7970f6f Extracting 755.9MB
+ 5e1ef7970f6f Extracting 757.6MB
+ 5e1ef7970f6f Extracting 764.8MB
+ 5e1ef7970f6f Extracting 765.4MB
+ 5e1ef7970f6f Extracting 765.5MB
+ 5e1ef7970f6f Pull complete 0B
+ Image mcr.microsoft.com/playwright:v1.52.0-noble Pulled 
+ Image harness-conductor-1-done-f1-app Building 
+ Image harness-conductor-1-done-f1-app Built 
+ Network harness-conductor-1-done-f1_default Creating 
+ Volume harness-conductor-1-done-f1_playwright-nm Creating 
+ Volume harness-conductor-1-done-f1_app-data Creating 
+ Volume harness-conductor-1-done-f1_playwright-nm Creating 
+ Network harness-conductor-1-done-f1_default Creating 
+ Volume harness-conductor-1-done-f1_app-data Creating 
+ Volume harness-conductor-1-done-f1_app-data Created 
+ Volume harness-conductor-1-done-f1_app-data Created 
+ Volume harness-conductor-1-done-f1_playwright-nm Created 
+ Volume harness-conductor-1-done-f1_playwright-nm Created 
+ Network harness-conductor-1-done-f1_default Created 
+ Network harness-conductor-1-done-f1_default Created 
+ Container harness-conductor-1-done-f1-app-1 Creating 
+ Container harness-conductor-1-done-f1-app-1 Created 
+ Container harness-conductor-1-done-f1-playwright-1 Creating 
+ Container harness-conductor-1-done-f1-playwright-1 Created 
+ Container harness-conductor-1-done-f1-app-1 Starting 
+ Container harness-conductor-1-done-f1-app-1 Started 
+ Container harness-conductor-1-done-f1-app-1 Waiting 
+ Container harness-conductor-1-done-f1-app-1 Healthy 
+ Container harness-conductor-1-done-f1-playwright-1 Starting 
+ Container harness-conductor-1-done-f1-playwright-1 Started 
+playwright-1  | npm warn deprecated <email removed>: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+ Compose Stopping Aborting on container exit...
+ Container harness-conductor-1-done-f1-playwright-1 Stopping 
+ Container harness-conductor-1-done-f1-playwright-1 Stopped 
+ Container harness-conductor-1-done-f1-app-1 Stopping 
+ Container harness-conductor-1-done-f1-app-1 Stopped 

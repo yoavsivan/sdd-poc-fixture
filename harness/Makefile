@@ -8,6 +8,8 @@ RUN_DIR ?= ../evidence
 PY := python3
 export HARNESS_RUN_DIR := $(RUN_DIR)
 export HARNESS_HELD_OUT := $(HELD_OUT)
+# Scripts are invoked as `python3 run/foo.py`; modules import `from run.common`.
+export PYTHONPATH := $(CURDIR)
 
 .PHONY: test test-preflight register register-v2 verify-registration freeze-check \
 	preflight-docker dry-run trial trial2 tiebreak indistinguishable reshape \

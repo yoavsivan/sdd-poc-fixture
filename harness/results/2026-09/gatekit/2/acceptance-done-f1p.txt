@@ -1,0 +1,192 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 630B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 401B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 149B done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 4.83kB done
+#6 DONE 0.0s
+
+#7 [3/7] WORKDIR /app
+#7 CACHED
+
+#8 [4/7] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [6/7] COPY . .
+#9 CACHED
+
+#10 [2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [5/7] RUN npm ci
+#11 CACHED
+
+#12 [7/7] RUN npm run build
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:b6f78a17ae93e2596e2e2d3b73c4d7757d4c4402834630b20a7e22b507618e47 done
+#13 naming to docker.io/library/harness-gatekit-2-done-f1p-app done
+#13 DONE 0.0s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":[],"skipped":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql","0004_api_keys.sql","0005_api_keys_last_rotated.sql"]}
+app-1  | [info] seed user {"username":"demo","created":false}
+app-1  | [info] seed items {"inserted":0}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 5ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+playwright-1  | 
+playwright-1  | added 202 packages, and audited 203 packages in 6s
+playwright-1  | 
+playwright-1  | 39 packages are looking for funding
+playwright-1  |   run `npm fund` for details
+playwright-1  | 
+playwright-1  | 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+playwright-1  | 
+playwright-1  | To address issues that do not require attention, run:
+playwright-1  |   npm audit fix
+playwright-1  | 
+playwright-1  | To address all issues (including breaking changes), run:
+playwright-1  |   npm audit fix --force
+playwright-1  | 
+playwright-1  | Run `npm audit` for details.
+playwright-1  | 
+playwright-1  | Running 8 tests using 1 worker
+playwright-1  | 
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET / 302 2ms
+app-1         | [info] GET /items 302 2ms
+app-1         | [info] GET /signin?next=%2Fitems 200 3ms
+app-1         | [info] POST /signin 302 35ms
+app-1         | [info] GET /items 200 3ms
+app-1         | [info] GET /settings 200 3ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys/1/rotate 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /settings 200 2ms
+playwright-1  |   ✓  1 .heldout/acceptance/f1-prime.spec.ts:4:1 › rotate keeps id and name and shows the new secret once (362ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 33ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys/2/rotate 302 0ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /api/items 401 1ms
+app-1         | [info] GET /api/items 200 1ms
+playwright-1  |   ✓  2 .heldout/acceptance/f1-prime.spec.ts:23:1 › old secret fails immediately, new secret works (270ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] POST /settings/api-keys 302 0ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys/3/rotate 302 0ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /settings 200 2ms
+playwright-1  |   ✓  3 .heldout/acceptance/f1-prime.spec.ts:40:1 › last rotated is shown after rotation (280ms)
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /settings 200 1ms
+playwright-1  |   ✓  4 .heldout/acceptance/f1.spec.ts:4:1 › create key shows plaintext once and lists name + created (222ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /api/items 200 1ms
+playwright-1  |   ✓  5 .heldout/acceptance/f1.spec.ts:21:1 › bearer authenticates /api/items without a cookie (305ms)
+app-1         | [info] GET /api/items 401 0ms
+app-1         | [info] GET /api/items 401 0ms
+playwright-1  |   ✓  6 .heldout/acceptance/f1.spec.ts:37:1 › missing or invalid bearer is 401 with the exact body (7ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 1ms
+app-1         | [info] POST /items 302 1ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /api/items 200 0ms
+app-1         | [info] GET /items 200 1ms
+playwright-1  |   ✓  7 .heldout/acceptance/f1.spec.ts:49:1 › cookie sessions still work (249ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /api/items 200 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] POST /settings/api-keys/6/revoke 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /api/items 401 0ms
+playwright-1  |   ✓  8 .heldout/acceptance/f1.spec.ts:59:1 › revoke is immediate and last used updates (262ms)
+playwright-1  | 
+playwright-1  |   8 passed (2.7s)
+
+[Kplaywright-1 exited with code 0
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+
+[Kapp-1 exited with code 137
+ Image harness-gatekit-2-done-f1p-app Building 
+ Image harness-gatekit-2-done-f1p-app Built 
+ Container harness-gatekit-2-done-f1p-playwright-1 Recreate 
+ Container harness-gatekit-2-done-f1p-playwright-1 Recreated 
+ Container harness-gatekit-2-done-f1p-app-1 Starting 
+ Container harness-gatekit-2-done-f1p-app-1 Started 
+ Container harness-gatekit-2-done-f1p-app-1 Waiting 
+ Container harness-gatekit-2-done-f1p-app-1 Healthy 
+ Container harness-gatekit-2-done-f1p-playwright-1 Starting 
+ Container harness-gatekit-2-done-f1p-playwright-1 Started 
+playwright-1  | npm warn deprecated <email removed>: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+ Compose Stopping Aborting on container exit...
+ Container harness-gatekit-2-done-f1p-playwright-1 Stopping 
+ Container harness-gatekit-2-done-f1p-playwright-1 Stopped 
+ Container harness-gatekit-2-done-f1p-app-1 Stopping 
+ Container harness-gatekit-2-done-f1p-app-1 Stopped 

@@ -1,0 +1,21 @@
+{
+  "counts_derived": 1,
+  "counts_self": 0,
+  "derived": [
+    {
+      "excerpt": "Analyze found no blocking gaps, so I\u2019m recording plan approval and implementing F1 in the existing app.",
+      "source": "derived-only",
+      "turn": 19,
+      "type": "approval"
+    }
+  ],
+  "merged": [
+    {
+      "excerpt": "Analyze found no blocking gaps, so I\u2019m recording plan approval and implementing F1 in the existing app.",
+      "source": "derived-only",
+      "turn": 19,
+      "type": "approval"
+    }
+  ],
+  "self": []
+}

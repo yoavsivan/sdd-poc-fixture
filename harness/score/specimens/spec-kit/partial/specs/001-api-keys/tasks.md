@@ -1,0 +1,17 @@
+# Surface
+
+api-keys-section
+api-key-name
+api-key-create
+api-key-plaintext
+api-key-row
+api-key-created
+header:authorization-bearer
+
+create a named API key
+plaintext shown once
+Authorization: Bearer
+named API key
+shown once
+Bearer token
+API key authenticates

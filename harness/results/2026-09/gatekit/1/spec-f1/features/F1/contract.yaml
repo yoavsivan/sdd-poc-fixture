@@ -1,0 +1,57 @@
+# gatekit verification contract — F1 (2026-09-06)
+# Grammar: docs/contract-format.md. Every check must pass for `gatekit done --feature F1`.
+feature: F1
+base: 7dc3d08df3e41807b1b575b738e8afb5f7990b93
+
+# Empty so a single-agent flow works; verdicts are still written and gate-checked.
+required_gates:
+
+checks:
+  - id: plan-has-handoff
+    kind: spec-mentions
+    file: plan.md
+    terms:
+      - "## Hand-off"
+
+  - id: tasks-complete
+    kind: command
+    run: gatekit tasks --feature F1
+
+  - id: drift
+    kind: command
+    run: gatekit drift --feature F1
+
+  - id: brief-names-surface
+    kind: spec-mentions
+    file: brief.md
+    terms:
+      - api-keys-section
+      - api-key-name
+      - api-key-create
+      - api-key-plaintext
+      - api-key-row
+      - api-key-created
+      - api-key-last-used
+      - api-key-revoke
+      - 'Authorization: Bearer'
+      - '{"error":"unauthorized"}'
+      - POST /api-keys
+      - GET /api/items
+
+  - id: migration-present
+    kind: artifact-exists
+    path: src/db/migrations/0004_*.sql
+
+  - id: unit-tests
+    kind: test
+    run: 'make test-docker </dev/null'
+    timeout: 600
+
+  - id: smoke
+    kind: e2e
+    run: 'make smoke </dev/null'
+    timeout: 600
+
+  - id: plan-file
+    kind: artifact-exists
+    path: features/F1/plan.md

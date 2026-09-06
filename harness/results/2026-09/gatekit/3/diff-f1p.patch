@@ -1,0 +1,771 @@
+diff --git a/src/api-keys/repo.ts b/src/api-keys/repo.ts
+new file mode 100644
+index 0000000..68bc354
+--- /dev/null
++++ b/src/api-keys/repo.ts
+@@ -0,0 +1,179 @@
++import type Database from "better-sqlite3";
++import legacyQuery from "../legacy/query.cjs";
++import { all, get, run } from "../db/exec.js";
++import { generateApiKeySecret, hashSecret, isoDateUtc, maskApiKey } from "./secret.js";
++
++const { compile, insert, update } = legacyQuery;
++
++export interface ApiKeyRecord {
++  id: number;
++  user_id: number;
++  name: string;
++  prefix: string;
++  tail: string;
++  secret_hash: string;
++  created_at: string;
++  last_used_at: string | null;
++  last_rotated_at: string | null;
++  revoked_at: string | null;
++}
++
++export interface ApiKeyView {
++  id: number;
++  name: string;
++  masked: string;
++  created: string;
++  lastUsed: string;
++  lastRotated: string;
++}
++
++export interface CreatedApiKey {
++  id: number;
++  name: string;
++  plaintext: string;
++  view: ApiKeyView;
++}
++
++function toView(row: ApiKeyRecord): ApiKeyView {
++  return {
++    id: row.id,
++    name: row.name,
++    masked: maskApiKey(row.prefix, row.tail),
++    created: isoDateUtc(row.created_at),
++    lastUsed: isoDateUtc(row.last_used_at),
++    lastRotated: isoDateUtc(row.last_rotated_at),
++  };
++}
++
++function nowUtc(): string {
++  return new Date().toISOString();
++}
++
++export function normalizeKeyName(raw: unknown): { name: string; error?: string } {
++  const name = typeof raw === "string" ? raw.trim() : "";
++  if (!name) return { name: "", error: "Name is required" };
++  if (name.length > 80) return { name: "", error: "Name must be 80 characters or fewer" };
++  return { name };
++}
++
++export function createApiKey(
++  db: Database.Database,
++  userId: number,
++  name: string,
++): CreatedApiKey {
++  const secret = generateApiKeySecret();
++  const created_at = nowUtc();
++  const result = run(
++    db,
++    insert("api_keys", {
++      user_id: userId,
++      name,
++      prefix: secret.prefix,
++      tail: secret.tail,
++      secret_hash: secret.secretHash,
++      created_at,
++    }),
++  );
++  const id = Number(result.lastInsertRowid);
++  const row = get<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
++       FROM api_keys WHERE id = :id`,
++      { id },
++    ),
++  );
++  if (!row) throw new Error("createApiKey: row missing after insert");
++  return { id, name: row.name, plaintext: secret.plaintext, view: toView(row) };
++}
++
++export function listApiKeys(db: Database.Database, userId: number): ApiKeyView[] {
++  const rows = all<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
++       FROM api_keys
++       WHERE user_id = :userId AND revoked_at IS NULL
++       ORDER BY created_at DESC, id DESC`,
++      { userId },
++    ),
++  );
++  return rows.map(toView);
++}
++
++export function findActiveBySecret(
++  db: Database.Database,
++  plaintext: string,
++): ApiKeyRecord | undefined {
++  if (!plaintext) return undefined;
++  return get<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
++       FROM api_keys
++       WHERE secret_hash = :secretHash AND revoked_at IS NULL`,
++      { secretHash: hashSecret(plaintext) },
++    ),
++  );
++}
++
++export function touchLastUsed(db: Database.Database, id: number): void {
++  run(db, update("api_keys", { last_used_at: nowUtc() }, "id = :id", { id }));
++}
++
++export function revokeApiKey(db: Database.Database, userId: number, id: number): boolean {
++  const result = run(
++    db,
++    update(
++      "api_keys",
++      { revoked_at: nowUtc() },
++      "id = :id AND user_id = :userId AND revoked_at IS NULL",
++      { id, userId },
++    ),
++  );
++  return result.changes > 0;
++}
++
++/** Replace the secret in place. Same id and name; old secret stops working immediately. */
++export function rotateApiKey(
++  db: Database.Database,
++  userId: number,
++  id: number,
++): CreatedApiKey | undefined {
++  const existing = get<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
++       FROM api_keys
++       WHERE id = :id AND user_id = :userId AND revoked_at IS NULL`,
++      { id, userId },
++    ),
++  );
++  if (!existing) return undefined;
++  const secret = generateApiKeySecret();
++  const last_rotated_at = nowUtc();
++  run(
++    db,
++    update(
++      "api_keys",
++      {
++        prefix: secret.prefix,
++        tail: secret.tail,
++        secret_hash: secret.secretHash,
++        last_rotated_at,
++      },
++      "id = :id AND user_id = :userId",
++      { id, userId },
++    ),
++  );
++  const row = get<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT id, user_id, name, prefix, tail, secret_hash, created_at, last_used_at, last_rotated_at, revoked_at
++       FROM api_keys WHERE id = :id`,
++      { id },
++    ),
++  );
++  if (!row) throw new Error("rotateApiKey: row missing after update");
++  return { id: row.id, name: row.name, plaintext: secret.plaintext, view: toView(row) };
++}
+diff --git a/src/api-keys/secret.ts b/src/api-keys/secret.ts
+new file mode 100644
+index 0000000..5deec63
+--- /dev/null
++++ b/src/api-keys/secret.ts
+@@ -0,0 +1,37 @@
++import crypto from "node:crypto";
++
++const PREFIX_TAG = "smk_";
++const PREFIX_RANDOM_BYTES = 4;
++const SECRET_BYTES = 32;
++const TAIL_LEN = 4;
++
++export function hashSecret(plaintext: string): string {
++  return crypto.createHash("sha256").update(plaintext, "utf8").digest("hex");
++}
++
++export function generateApiKeySecret(): {
++  plaintext: string;
++  prefix: string;
++  tail: string;
++  secretHash: string;
++} {
++  const prefix = PREFIX_TAG + crypto.randomBytes(PREFIX_RANDOM_BYTES).toString("hex");
++  const body = crypto.randomBytes(SECRET_BYTES).toString("base64url");
++  const plaintext = prefix + body;
++  return {
++    plaintext,
++    prefix,
++    tail: plaintext.slice(-TAIL_LEN),
++    secretHash: hashSecret(plaintext),
++  };
++}
++
++export function maskApiKey(prefix: string, tail: string): string {
++  return `${prefix}••••${tail}`;
++}
++
++/** UTC instant stored as ISO-8601; UI shows the date part only. */
++export function isoDateUtc(iso: string | null | undefined): string {
++  if (!iso) return "";
++  return iso.slice(0, 10);
++}
+diff --git a/src/db/migrations/0004_api_keys.sql b/src/db/migrations/0004_api_keys.sql
+new file mode 100644
+index 0000000..8d20957
+--- /dev/null
++++ b/src/db/migrations/0004_api_keys.sql
+@@ -0,0 +1,13 @@
++CREATE TABLE api_keys (
++  id INTEGER PRIMARY KEY AUTOINCREMENT,
++  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++  name TEXT NOT NULL,
++  prefix TEXT NOT NULL,
++  tail TEXT NOT NULL,
++  secret_hash TEXT NOT NULL UNIQUE,
++  created_at TEXT NOT NULL,
++  last_used_at TEXT,
++  revoked_at TEXT
++);
++
++CREATE INDEX idx_api_keys_user_id ON api_keys(user_id);
+diff --git a/src/db/migrations/0005_api_keys_last_rotated.sql b/src/db/migrations/0005_api_keys_last_rotated.sql
+new file mode 100644
+index 0000000..3ee61fa
+--- /dev/null
++++ b/src/db/migrations/0005_api_keys_last_rotated.sql
+@@ -0,0 +1 @@
++ALTER TABLE api_keys ADD COLUMN last_rotated_at TEXT;
+diff --git a/src/http/middleware/authenticate.ts b/src/http/middleware/authenticate.ts
+index ae32194..668f854 100644
+--- a/src/http/middleware/authenticate.ts
++++ b/src/http/middleware/authenticate.ts
+@@ -2,0 +3 @@ import type Database from "better-sqlite3";
++import { findActiveBySecret, touchLastUsed } from "../../api-keys/repo.js";
+@@ -18,0 +20,32 @@ function nextTarget(req: { originalUrl?: string; url: string }): string {
++function isApiPath(req: { path: string; originalUrl?: string }): boolean {
++  const path = req.path || "";
++  const original = req.originalUrl || "";
++  return (
++    path === "/api" ||
++    path.startsWith("/api/") ||
++    original === "/api" ||
++    original.startsWith("/api/")
++  );
++}
++
++/** Return the Bearer secret when the Authorization scheme is Bearer; otherwise null. */
++export function readBearerSecret(header: string | undefined): string | null {
++  if (typeof header !== "string") return null;
++  const match = /^Bearer[ \t]+(.*)$/i.exec(header);
++  if (!match) return null;
++  return match[1].trim();
++}
++
++function userFromBearer(
++  db: Database.Database,
++  secret: string,
++): { id: number; username: string } | undefined {
++  if (!secret) return undefined;
++  const key = findActiveBySecret(db, secret);
++  if (!key) return undefined;
++  const row = findById(db, key.user_id);
++  if (!row) return undefined;
++  touchLastUsed(db, key.id);
++  return toPublicUser(row);
++}
++
+@@ -20,0 +54,2 @@ function nextTarget(req: { originalUrl?: string; url: string }): string {
++ * On /api/*, an Authorization: Bearer header authenticates as the key's owner
++ * and does not fall back to the cookie.
+@@ -22,0 +58,9 @@ export const loadUser: RequestHandler = (req, res, next) => {
++  if (isApiPath(req)) {
++    const secret = readBearerSecret(req.headers.authorization);
++    if (secret !== null) {
++      res.locals.user = userFromBearer(dbOf(req), secret);
++      next();
++      return;
++    }
++  }
++
+diff --git a/src/http/routes/settings.ts b/src/http/routes/settings.ts
+index ceb52c8..be0f21b 100644
+--- a/src/http/routes/settings.ts
++++ b/src/http/routes/settings.ts
+@@ -2,0 +3,7 @@ import type Database from "better-sqlite3";
++import {
++  createApiKey,
++  listApiKeys,
++  normalizeKeyName,
++  revokeApiKey,
++  rotateApiKey,
++} from "../../api-keys/repo.js";
+@@ -27,0 +35,36 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
++function takePlaintext(req: Parameters<typeof getSession>[0]): string | null {
++  const session = getSession(req);
++  const value = session.data.apiKeyPlaintext;
++  delete session.data.apiKeyPlaintext;
++  return typeof value === "string" && value.length > 0 ? value : null;
++}
++
++function parseId(raw: string): number | null {
++  if (!/^[0-9]+$/.test(raw)) return null;
++  const n = Number.parseInt(raw, 10);
++  if (!Number.isInteger(n) || n < 1) return null;
++  return n;
++}
++
++function settingsLocals(
++  req: Parameters<typeof getSession>[0],
++  res: { locals: { user?: { id: number } } },
++  extra: {
++    flash?: string[];
++    errors?: Record<string, string>;
++    passwordError?: string | null;
++    apiKeyError?: string | null;
++  },
++) {
++  const user = res.locals.user!;
++  return {
++    title: "Settings",
++    flash: extra.flash ?? takeFlash(req),
++    errors: extra.errors ?? {},
++    passwordError: extra.passwordError ?? null,
++    apiKeyError: extra.apiKeyError ?? null,
++    apiKeyPlaintext: takePlaintext(req),
++    apiKeys: listApiKeys(dbOf(req), user.id),
++  };
++}
++
+@@ -29,2 +72 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
+- * Account page and password change. The "using the API" section is a seam
+- * a later change can extend with another section in the same template.
++ * Account page, password change, and named API keys.
+@@ -37,6 +79 @@ export function settingsRouter(): Router {
+-    res.render("settings", {
+-      title: "Settings",
+-      flash: takeFlash(req),
+-      errors: {},
+-      passwordError: null,
+-    });
++    res.render("settings", settingsLocals(req, res, {}));
+@@ -65,6 +102,4 @@ export function settingsRouter(): Router {
+-      res.status(400).render("settings", {
+-        title: "Settings",
+-        flash: [],
+-        errors,
+-        passwordError,
+-      });
++      res.status(400).render(
++        "settings",
++        settingsLocals(req, res, { flash: [], errors, passwordError }),
++      );
+@@ -77,0 +113,39 @@ export function settingsRouter(): Router {
++  router.post("/api-keys", (req, res) => {
++    const parsed = normalizeKeyName(req.body?.api_key_name);
++    if (parsed.error) {
++      res.status(400).render(
++        "settings",
++        settingsLocals(req, res, {
++          flash: [],
++          apiKeyError: parsed.error,
++          errors: { api_key_name: parsed.error },
++        }),
++      );
++      return;
++    }
++    const created = createApiKey(dbOf(req), res.locals.user!.id, parsed.name);
++    getSession(req).data.apiKeyPlaintext = created.plaintext;
++    pushFlash(req, "API key created. Copy the secret now; it is shown only once.");
++    res.redirect(302, "/settings");
++  });
++
++  router.post("/api-keys/:id/revoke", (req, res) => {
++    const id = parseId(String(req.params.id));
++    if (id != null) {
++      revokeApiKey(dbOf(req), res.locals.user!.id, id);
++    }
++    pushFlash(req, "API key revoked. That secret no longer works.");
++    res.redirect(302, "/settings");
++  });
++
++  router.post("/api-keys/:id/rotate", (req, res) => {
++    const id = parseId(String(req.params.id));
++    const rotated =
++      id == null ? undefined : rotateApiKey(dbOf(req), res.locals.user!.id, id);
++    if (rotated) {
++      getSession(req).data.apiKeyPlaintext = rotated.plaintext;
++      pushFlash(req, "API key rotated. Copy the new secret now; it is shown only once.");
++    }
++    res.redirect(302, "/settings");
++  });
++
+diff --git a/src/legacy/session.d.cts b/src/legacy/session.d.cts
+index 65c8753..7e60006 100644
+--- a/src/legacy/session.d.cts
++++ b/src/legacy/session.d.cts
+@@ -12,0 +13 @@ export interface SessionData {
++  apiKeyPlaintext?: string;
+diff --git a/src/public/styles.css b/src/public/styles.css
+index e1269ce..d3770f2 100644
+--- a/src/public/styles.css
++++ b/src/public/styles.css
+@@ -296,0 +297,30 @@ h2 {
++.api-key-list {
++  list-style: none;
++  margin: 16px 0 0;
++  padding: 0;
++  display: flex;
++  flex-direction: column;
++  gap: 8px;
++}
++
++.api-key-row {
++  display: flex;
++  justify-content: space-between;
++  gap: 16px;
++  align-items: flex-start;
++  padding: 12px 0;
++  border-top: 1px solid var(--line);
++}
++
++.api-key-name {
++  margin: 0 0 4px;
++  font-weight: 600;
++}
++
++.api-key-actions {
++  display: flex;
++  flex-direction: column;
++  gap: 8px;
++  align-items: stretch;
++}
++
+diff --git a/src/views/settings.ejs b/src/views/settings.ejs
+index 4b8e2e6..c38000e 100644
+--- a/src/views/settings.ejs
++++ b/src/views/settings.ejs
+@@ -5 +5 @@
+-      <p class="lede">Account details, password, and how to call the JSON API with a session cookie.</p>
++      <p class="lede">Account details, password, API keys, and how to call the JSON API.</p>
+@@ -48,0 +49,65 @@
++  <section class="panel" data-testid="api-keys-section">
++    <h2>API keys</h2>
++    <p>
++      Create a named key to call <code>/api/*</code> with
++      <code>Authorization: Bearer</code>. The secret is shown once at create.
++      Revoke is immediate.
++    </p>
++    <% if (typeof apiKeyError === "string" && apiKeyError) { %>
++      <p class="form-error" role="alert"><%= apiKeyError %></p>
++    <% } %>
++    <% if (typeof apiKeyPlaintext === "string" && apiKeyPlaintext) { %>
++      <p class="flash" role="status">Copy this secret now. Reloading this page hides it.</p>
++      <pre class="code-block"><code data-testid="api-key-plaintext"><%= apiKeyPlaintext %></code></pre>
++    <% } %>
++    <form method="post" action="/settings/api-keys" class="stack">
++      <input type="hidden"
++        name="_csrf" value="<%= locals.csrf %>" />
++      <label class="field">
++        <span>Name</span>
++        <input
++          type="text"
++          data-testid="api-key-name"
++          name="api_key_name"
++          maxlength="80"
++          required
++        />
++        <%- include("partials/field-error", { field: "api_key_name", errors: errors }) %>
++      </label>
++      <button type="submit" class="btn btn-primary" data-testid="api-key-create">Create key</button>
++    </form>
++    <% const keys = typeof apiKeys === "object" && Array.isArray(apiKeys) ? apiKeys : []; %>
++    <% if (keys.length) { %>
++      <ul class="api-key-list">
++        <% keys.forEach(function (key) { %>
++          <li class="api-key-row" data-testid="api-key-row">
++            <div>
++              <p class="api-key-name"><%= key.name %></p>
++              <p class="muted"><code><%= key.masked %></code></p>
++              <p class="muted">
++                Created
++                <time data-testid="api-key-created"><%= key.created %></time>
++                · Last used
++                <time data-testid="api-key-last-used"><%= key.lastUsed %></time>
++                · Last rotated
++                <time data-testid="api-key-last-rotated"><%= key.lastRotated %></time>
++              </p>
++            </div>
++            <div class="api-key-actions">
++            <form method="post" action="/settings/api-keys/<%= key.id %>/rotate">
++              <input type="hidden"
++                name="_csrf" value="<%= locals.csrf %>" />
++              <button type="submit" class="btn" data-testid="api-key-rotate">Rotate</button>
++            </form>
++            <form method="post" action="/settings/api-keys/<%= key.id %>/revoke" data-confirm="Revoke this API key immediately?">
++              <input type="hidden"
++                name="_csrf" value="<%= locals.csrf %>" />
++              <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">Revoke</button>
++            </form>
++            </div>
++          </li>
++        <% }) %>
++      </ul>
++    <% } %>
++  </section>
++
+@@ -52,3 +117,2 @@
+-      The JSON API lives at <code>/api/items</code>. At the moment it authenticates
+-      with the same session cookie the browser already has. Fish a cookie out of
+-      the sign-in form, then call the API:
++      The JSON API lives at <code>/api/items</code>. Authenticate with a session
++      cookie or with <code>Authorization: Bearer</code> and an API key:
+@@ -58 +122 @@ curl -s -b "$C" http://localhost:3000/api/items
+-SHELFMARK_COOKIE="$C" scripts/import.sh scripts/sample-import.jsonl</code></pre>
++curl -s -H "Authorization: Bearer YOUR_KEY" http://localhost:3000/api/items</code></pre>
+@@ -61 +125 @@ SHELFMARK_COOKIE="$C" scripts/import.sh scripts/sample-import.jsonl</code></pre>
+-      session answers <code>{"error":"unauthorized"}</code>.
++      session or a bad key answers <code>{"error":"unauthorized"}</code>.
+diff --git a/test/unit/api-keys.test.ts b/test/unit/api-keys.test.ts
+new file mode 100644
+index 0000000..82d0442
+--- /dev/null
++++ b/test/unit/api-keys.test.ts
+@@ -0,0 +1,199 @@
++import { describe, expect, it } from "vitest";
++import request from "supertest";
++import { generateApiKeySecret, hashSecret } from "../../src/api-keys/secret.ts";
++import { makeTestApp } from "../helpers/app.ts";
++import { extractCsrf, signInCookie } from "../helpers/cookie.ts";
++
++function firstSid(header: string | string[] | undefined): string {
++  const list = !header ? [] : Array.isArray(header) ? header : [header];
++  const hit = list.find((c) => c.includes("shelfmark.sid="));
++  if (!hit) throw new Error("missing session cookie");
++  return hit.split(";")[0];
++}
++
++function testid(html: string, id: string): string[] {
++  const out: string[] = [];
++  const re = new RegExp(`data-testid="${id}"[^>]*>([^<]*)`, "g");
++  let m: RegExpExecArray | null;
++  while ((m = re.exec(html))) out.push(m[1]);
++  return out;
++}
++
++async function createNamedKey(
++  app: ReturnType<typeof makeTestApp>,
++  cookie: string,
++  name: string,
++) {
++  const page = await request(app).get("/settings").set("Cookie", cookie);
++  const csrf = extractCsrf(page.text);
++  const posted = await request(app)
++    .post("/settings/api-keys")
++    .redirects(0)
++    .set("Cookie", cookie)
++    .type("form")
++    .send({ _csrf: csrf, api_key_name: name });
++  expect(posted.status).toBe(302);
++  const nextCookie = firstSid(posted.headers["set-cookie"]) || cookie;
++  const shown = await request(app).get("/settings").set("Cookie", nextCookie);
++  const plaintext = testid(shown.text, "api-key-plaintext")[0] || "";
++  return { cookie: nextCookie, html: shown.text, plaintext };
++}
++
++describe("api-keys", () => {
++  it("generated secret has a prefix and at least 32 random bytes of entropy", () => {
++    const a = generateApiKeySecret();
++    const b = generateApiKeySecret();
++    expect(a.plaintext.startsWith("smk_")).toBe(true);
++    expect(a.plaintext).not.toBe(b.plaintext);
++    expect(a.plaintext.length).toBeGreaterThan(40);
++    expect(a.secretHash).toBe(hashSecret(a.plaintext));
++    expect(a.secretHash).toMatch(/^[0-9a-f]{64}$/);
++  });
++
++  it("Settings create shows plaintext once; reload hides it; row lists name and created date", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const created = await createNamedKey(app, cookie, "scripts");
++    expect(created.plaintext.length).toBeGreaterThan(0);
++    expect(created.html).toContain('data-testid="api-key-row"');
++    expect(created.html).toContain("scripts");
++    const createdAt = testid(created.html, "api-key-created")[0];
++    expect(createdAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
++    const reload = await request(app).get("/settings").set("Cookie", created.cookie);
++    expect(reload.text).not.toContain('data-testid="api-key-plaintext"');
++    expect(reload.text).toContain('data-testid="api-key-row"');
++  });
++
++  it("GET /api/items with Bearer secret returns 200 items+count including a UI-created item", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const formPage = await request(app).get("/items/new").set("Cookie", cookie);
++    const csrf = extractCsrf(formPage.text);
++    const saved = await request(app)
++      .post("/items")
++      .redirects(0)
++      .set("Cookie", cookie)
++      .type("form")
++      .send({
++        _csrf: csrf,
++        url: "https://example.com/bearer-item",
++        title: "Bearer listed",
++        note: "",
++        tags: "",
++      });
++    expect(saved.status).toBe(302);
++    const created = await createNamedKey(app, cookie, "ci");
++    const res = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${created.plaintext}`);
++    expect(res.status).toBe(200);
++    expect(Array.isArray(res.body.items)).toBe(true);
++    expect(res.body.count).toBe(res.body.items.length);
++    expect(res.body.items.some((it: { title: string }) => it.title === "Bearer listed")).toBe(
++      true,
++    );
++  });
++
++  it('missing header or Bearer not-a-key returns 401 {"error":"unauthorized"}', async () => {
++    const app = makeTestApp();
++    const missing = await request(app).get("/api/items");
++    expect(missing.status).toBe(401);
++    expect(missing.text).toBe('{"error":"unauthorized"}');
++    const bogus = await request(app)
++      .get("/api/items")
++      .set("Authorization", "Bearer not-a-key");
++    expect(bogus.status).toBe(401);
++    expect(bogus.text).toBe('{"error":"unauthorized"}');
++  });
++
++  it("bogus Bearer does not fall back to a valid cookie", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const res = await request(app)
++      .get("/api/items")
++      .set("Cookie", cookie)
++      .set("Authorization", "Bearer not-a-key");
++    expect(res.status).toBe(401);
++    expect(res.text).toBe('{"error":"unauthorized"}');
++  });
++
++  it("cookie sessions still work on GET /api/items and /items", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const api = await request(app).get("/api/items").set("Cookie", cookie);
++    expect(api.status).toBe(200);
++    expect(api.body).toHaveProperty("items");
++    expect(api.body).toHaveProperty("count");
++    const page = await request(app).get("/items").set("Cookie", cookie);
++    expect(page.status).toBe(200);
++    expect(page.text).toMatch(/item-row|items-empty/);
++  });
++
++  it("after use, last used is shown; revoke makes the secret 401 immediately", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const created = await createNamedKey(app, cookie, "rotate-me");
++    const used = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${created.plaintext}`);
++    expect(used.status).toBe(200);
++    const afterUse = await request(app).get("/settings").set("Cookie", created.cookie);
++    const lastUsed = testid(afterUse.text, "api-key-last-used")[0];
++    expect(lastUsed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
++    const csrf = extractCsrf(afterUse.text);
++    const revokeMatch = afterUse.text.match(
++      /action="\/settings\/api-keys\/(\d+)\/revoke"/,
++    );
++    expect(revokeMatch).toBeTruthy();
++    const revoked = await request(app)
++      .post(`/settings/api-keys/${revokeMatch![1]}/revoke`)
++      .redirects(0)
++      .set("Cookie", created.cookie)
++      .type("form")
++      .send({ _csrf: csrf });
++    expect(revoked.status).toBe(302);
++    const again = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${created.plaintext}`);
++    expect(again.status).toBe(401);
++    expect(again.text).toBe('{"error":"unauthorized"}');
++  });
++
++  it("rotate keeps id and name, shows new secret once, retires the old secret, and shows last rotated", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const created = await createNamedKey(app, cookie, "keep-name");
++    const oldSecret = created.plaintext;
++    const rowCount = (created.html.match(/data-testid="api-key-row"/g) || []).length;
++    const csrf = extractCsrf(created.html);
++    const rotateMatch = created.html.match(/action="\/settings\/api-keys\/(\d+)\/rotate"/);
++    expect(rotateMatch).toBeTruthy();
++    const keyId = rotateMatch![1];
++    const rotated = await request(app)
++      .post(`/settings/api-keys/${keyId}/rotate`)
++      .redirects(0)
++      .set("Cookie", created.cookie)
++      .type("form")
++      .send({ _csrf: csrf });
++    expect(rotated.status).toBe(302);
++    const nextCookie = firstSid(rotated.headers["set-cookie"]) || created.cookie;
++    const shown = await request(app).get("/settings").set("Cookie", nextCookie);
++    const newSecret = testid(shown.text, "api-key-plaintext")[0] || "";
++    expect(newSecret.length).toBeGreaterThan(0);
++    expect(newSecret).not.toBe(oldSecret);
++    expect((shown.text.match(/data-testid="api-key-row"/g) || []).length).toBe(rowCount);
++    expect(shown.text).toContain("keep-name");
++    const lastRotated = testid(shown.text, "api-key-last-rotated")[0];
++    expect(lastRotated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
++    const oldCall = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${oldSecret}`);
++    expect(oldCall.status).toBe(401);
++    expect(oldCall.text).toBe('{"error":"unauthorized"}');
++    const newCall = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${newSecret}`);
++    expect(newCall.status).toBe(200);
++    expect(newCall.body).toHaveProperty("items");
++  });
++});
+diff --git a/test/unit/migrations.test.ts b/test/unit/migrations.test.ts
+index 5077b65..2554e89 100644
+--- a/test/unit/migrations.test.ts
++++ b/test/unit/migrations.test.ts
+@@ -9 +9 @@ describe("migrations", () => {
+-  it("fresh db applies 0001..0003 in order and records them", () => {
++  it("fresh db applies 0001..0005 in order and records them", () => {
+@@ -15,0 +16,2 @@ describe("migrations", () => {
++      "0004_api_keys.sql",
++      "0005_api_keys_last_rotated.sql",
+@@ -29,0 +32 @@ describe("migrations", () => {
++    expect(tableNames).toContain("api_keys");
+@@ -41,0 +45,2 @@ describe("migrations", () => {
++      "0004_api_keys.sql",
++      "0005_api_keys_last_rotated.sql",
+diff --git a/test/unit/views.test.ts b/test/unit/views.test.ts
+index c7d2c5b..5ca9171 100644
+--- a/test/unit/views.test.ts
++++ b/test/unit/views.test.ts
+@@ -15,0 +16,2 @@ describe("views", () => {
++    expect(res.text).toContain('data-testid="api-keys-section"');
++    expect(res.text).toContain(">API keys<");

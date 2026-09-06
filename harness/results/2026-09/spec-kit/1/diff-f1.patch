@@ -1,0 +1,668 @@
+diff --git a/src/api-keys/repo.ts b/src/api-keys/repo.ts
+new file mode 100644
+index 0000000..c6146a6
+--- /dev/null
++++ b/src/api-keys/repo.ts
+@@ -0,0 +1,117 @@
++import type Database from "better-sqlite3";
++import legacyQuery from "../legacy/query.cjs";
++import { all, get, run } from "../db/exec.js";
++import { mintSecret } from "./secret.js";
++
++const { compile, insert, update } = legacyQuery;
++
++export interface ApiKeyRecord {
++  id: number;
++  user_id: number;
++  name: string;
++  prefix: string;
++  suffix: string;
++  token_hash: string;
++  created_at: string;
++  last_used_at: string | null;
++  revoked_at: string | null;
++}
++
++export interface CreatedApiKey {
++  record: ApiKeyRecord;
++  plaintext: string;
++}
++
++function parseNullable(v: unknown): string | null {
++  return typeof v === "string" && v.length > 0 ? v : null;
++}
++
++function mapRow(row: ApiKeyRecord): ApiKeyRecord {
++  return {
++    ...row,
++    last_used_at: parseNullable(row.last_used_at),
++    revoked_at: parseNullable(row.revoked_at),
++  };
++}
++
++const COLS =
++  "id, user_id, name, prefix, suffix, token_hash, created_at, last_used_at, revoked_at";
++
++export function createApiKey(
++  db: Database.Database,
++  userId: number,
++  name: string,
++): CreatedApiKey {
++  const minted = mintSecret();
++  const created_at = new Date().toISOString();
++  const result = run(
++    db,
++    insert("api_keys", {
++      user_id: userId,
++      name,
++      prefix: minted.prefix,
++      suffix: minted.suffix,
++      token_hash: minted.tokenHash,
++      created_at,
++    }),
++  );
++  const id = Number(result.lastInsertRowid);
++  const record = getById(db, id);
++  if (!record) throw new Error("createApiKey: row missing after insert");
++  return { record, plaintext: minted.plaintext };
++}
++
++export function getById(db: Database.Database, id: number): ApiKeyRecord | undefined {
++  const row = get<ApiKeyRecord>(
++    db,
++    compile(`SELECT ${COLS} FROM api_keys WHERE id = :id`, { id }),
++  );
++  return row ? mapRow(row) : undefined;
++}
++
++export function listActiveKeys(db: Database.Database, userId: number): ApiKeyRecord[] {
++  const rows = all<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT ${COLS}
++       FROM api_keys
++       WHERE user_id = :userId AND revoked_at IS NULL
++       ORDER BY created_at DESC, id DESC`,
++      { userId },
++    ),
++  );
++  return rows.map(mapRow);
++}
++
++export function findActiveByTokenHash(
++  db: Database.Database,
++  tokenHash: string,
++): ApiKeyRecord | undefined {
++  const row = get<ApiKeyRecord>(
++    db,
++    compile(
++      `SELECT ${COLS}
++       FROM api_keys
++       WHERE token_hash = :tokenHash AND revoked_at IS NULL`,
++      { tokenHash },
++    ),
++  );
++  return row ? mapRow(row) : undefined;
++}
++
++export function touchLastUsed(db: Database.Database, id: number): void {
++  run(
++    db,
++    update("api_keys", { last_used_at: new Date().toISOString() }, "id = :id", { id }),
++  );
++}
++
++export function revokeApiKey(db: Database.Database, userId: number, id: number): boolean {
++  const row = getById(db, id);
++  if (!row || row.user_id !== userId || row.revoked_at) return false;
++  run(
++    db,
++    update("api_keys", { revoked_at: new Date().toISOString() }, "id = :id", { id }),
++  );
++  return true;
++}
+diff --git a/src/api-keys/secret.ts b/src/api-keys/secret.ts
+new file mode 100644
+index 0000000..f2a2c9c
+--- /dev/null
++++ b/src/api-keys/secret.ts
+@@ -0,0 +1,43 @@
++import crypto from "node:crypto";
++
++const PREFIX_BYTES = 4;
++const SECRET_BYTES = 32;
++
++export interface MintedSecret {
++  plaintext: string;
++  prefix: string;
++  suffix: string;
++  tokenHash: string;
++}
++
++/**
++ * SHA-256 hex of the full plaintext secret. Used as the lookup key.
++ */
++export function hashSecret(plaintext: string): string {
++  return crypto.createHash("sha256").update(plaintext, "utf8").digest("hex");
++}
++
++/**
++ * Mint a bearer secret: 32 random bytes (base64url body) plus an 8-hex prefix.
++ */
++export function mintSecret(): MintedSecret {
++  const prefix = crypto.randomBytes(PREFIX_BYTES).toString("hex");
++  const body = crypto.randomBytes(SECRET_BYTES).toString("base64url");
++  const plaintext = `smk_${prefix}_${body}`;
++  const suffix = plaintext.slice(-4);
++  return {
++    plaintext,
++    prefix,
++    suffix,
++    tokenHash: hashSecret(plaintext),
++  };
++}
++
++export function maskSecret(prefix: string, suffix: string): string {
++  return `smk_${prefix}_••••${suffix}`;
++}
++
++/** UTC calendar date `YYYY-MM-DD` from an ISO-8601 timestamp. */
++export function utcDateOnly(iso: string): string {
++  return iso.slice(0, 10);
++}
+diff --git a/src/db/migrations/0004_api_keys.sql b/src/db/migrations/0004_api_keys.sql
+new file mode 100644
+index 0000000..1f88cfc
+--- /dev/null
++++ b/src/db/migrations/0004_api_keys.sql
+@@ -0,0 +1,14 @@
++CREATE TABLE api_keys (
++  id INTEGER PRIMARY KEY AUTOINCREMENT,
++  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++  name TEXT NOT NULL,
++  prefix TEXT NOT NULL,
++  suffix TEXT NOT NULL,
++  token_hash TEXT NOT NULL UNIQUE,
++  created_at TEXT NOT NULL,
++  last_used_at TEXT,
++  revoked_at TEXT
++);
++
++CREATE INDEX idx_api_keys_user_id ON api_keys(user_id);
++CREATE UNIQUE INDEX idx_api_keys_token_hash ON api_keys(token_hash);
+diff --git a/src/http/middleware/authenticate.ts b/src/http/middleware/authenticate.ts
+index ae32194..94548be 100644
+--- a/src/http/middleware/authenticate.ts
++++ b/src/http/middleware/authenticate.ts
+@@ -2,0 +3,2 @@ import type Database from "better-sqlite3";
++import { findActiveByTokenHash, touchLastUsed } from "../../api-keys/repo.js";
++import { hashSecret } from "../../api-keys/secret.js";
+@@ -18,0 +21,24 @@ function nextTarget(req: { originalUrl?: string; url: string }): string {
++function isApiPath(path: string): boolean {
++  return path === "/api" || path.startsWith("/api/");
++}
++
++function headerValue(raw: string | string[] | undefined): string {
++  if (!raw) return "";
++  return Array.isArray(raw) ? (raw[0] ?? "") : raw;
++}
++
++/**
++ * If the header is a Bearer scheme, return { present: true, token }.
++ * Other schemes (or no header) return { present: false }.
++ */
++export function parseBearerAuthorization(header: string | string[] | undefined): {
++  present: boolean;
++  token: string;
++} {
++  const value = headerValue(header).trim();
++  if (!value) return { present: false, token: "" };
++  const match = /^Bearer(?:\s+(.*))?$/i.exec(value);
++  if (!match) return { present: false, token: "" };
++  return { present: true, token: (match[1] ?? "").trim() };
++}
++
+@@ -20,0 +47 @@ function nextTarget(req: { originalUrl?: string; url: string }): string {
++ * On `/api/*`, a Bearer header is decisive and ignores the cookie.
+@@ -22,0 +50,28 @@ export const loadUser: RequestHandler = (req, res, next) => {
++  const db = dbOf(req);
++  if (isApiPath(req.path)) {
++    const bearer = parseBearerAuthorization(req.headers.authorization);
++    if (bearer.present) {
++      if (!bearer.token) {
++        res.locals.user = undefined;
++        next();
++        return;
++      }
++      const key = findActiveByTokenHash(db, hashSecret(bearer.token));
++      if (!key) {
++        res.locals.user = undefined;
++        next();
++        return;
++      }
++      const row = findById(db, key.user_id);
++      if (!row) {
++        res.locals.user = undefined;
++        next();
++        return;
++      }
++      touchLastUsed(db, key.id);
++      res.locals.user = toPublicUser(row);
++      next();
++      return;
++    }
++  }
++
+@@ -30 +85 @@ export const loadUser: RequestHandler = (req, res, next) => {
+-  const row = findById(dbOf(req), userId);
++  const row = findById(db, userId);
+diff --git a/src/http/routes/settings.ts b/src/http/routes/settings.ts
+index ceb52c8..37de6ba 100644
+--- a/src/http/routes/settings.ts
++++ b/src/http/routes/settings.ts
+@@ -2,0 +3,3 @@ import type Database from "better-sqlite3";
++import { createApiKey, listActiveKeys, revokeApiKey } from "../../api-keys/repo.js";
++import { maskSecret, utcDateOnly } from "../../api-keys/secret.js";
++import type { ApiKeyRecord } from "../../api-keys/repo.js";
+@@ -27,0 +31,49 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
++function takePlaintext(req: Parameters<typeof getSession>[0]): string | null {
++  const session = getSession(req);
++  const value = session.data.apiKeyPlaintext;
++  delete session.data.apiKeyPlaintext;
++  return typeof value === "string" && value.length > 0 ? value : null;
++}
++
++function parseId(raw: string): number | null {
++  if (!/^[0-9]+$/.test(raw)) return null;
++  const n = Number.parseInt(raw, 10);
++  if (!Number.isInteger(n) || n < 1) return null;
++  return n;
++}
++
++export interface ApiKeyView {
++  id: number;
++  name: string;
++  masked: string;
++  created: string;
++  lastUsed: string | null;
++}
++
++function toView(row: ApiKeyRecord): ApiKeyView {
++  return {
++    id: row.id,
++    name: row.name,
++    masked: maskSecret(row.prefix, row.suffix),
++    created: utcDateOnly(row.created_at),
++    lastUsed: row.last_used_at ? utcDateOnly(row.last_used_at) : null,
++  };
++}
++
++function settingsPage(
++  req: Parameters<typeof getSession>[0],
++  res: { locals: { user?: { id: number } } },
++  extra: { errors?: Record<string, string>; passwordError?: string | null },
++) {
++  const user = res.locals.user!;
++  const apiKeys = listActiveKeys(dbOf(req), user.id).map(toView);
++  return {
++    title: "Settings",
++    flash: extra.errors && Object.keys(extra.errors).length > 0 ? [] : takeFlash(req),
++    errors: extra.errors ?? {},
++    passwordError: extra.passwordError ?? null,
++    apiKeys,
++    apiKeyPlaintext: takePlaintext(req),
++  };
++}
++
+@@ -29,2 +81 @@ function pushFlash(req: Parameters<typeof getSession>[0], msg: string): void {
+- * Account page and password change. The "using the API" section is a seam
+- * a later change can extend with another section in the same template.
++ * Account page, password change, and named API keys.
+@@ -37,6 +88,26 @@ export function settingsRouter(): Router {
+-    res.render("settings", {
+-      title: "Settings",
+-      flash: takeFlash(req),
+-      errors: {},
+-      passwordError: null,
+-    });
++    res.render("settings", settingsPage(req, res, {}));
++  });
++
++  router.post("/api-keys", (req, res) => {
++    const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
++    if (!name) {
++      res.status(400).render(
++        "settings",
++        settingsPage(req, res, { errors: { name: "Name is required" } }),
++      );
++      return;
++    }
++    const created = createApiKey(dbOf(req), res.locals.user!.id, name);
++    const session = getSession(req);
++    session.data.apiKeyPlaintext = created.plaintext;
++    pushFlash(req, "API key created. Copy the secret now — it will not be shown again.");
++    res.redirect(302, "/settings");
++  });
++
++  router.post("/api-keys/:id/revoke", (req, res) => {
++    const id = parseId(String(req.params.id));
++    if (id != null) {
++      const ok = revokeApiKey(dbOf(req), res.locals.user!.id, id);
++      if (ok) pushFlash(req, "API key revoked. That secret no longer works.");
++    }
++    res.redirect(302, "/settings");
+@@ -65,6 +136,4 @@ export function settingsRouter(): Router {
+-      res.status(400).render("settings", {
+-        title: "Settings",
+-        flash: [],
+-        errors,
+-        passwordError,
+-      });
++      res.status(400).render(
++        "settings",
++        settingsPage(req, res, { errors, passwordError }),
++      );
+diff --git a/src/legacy/session.d.cts b/src/legacy/session.d.cts
+index 65c8753..c906a4b 100644
+--- a/src/legacy/session.d.cts
++++ b/src/legacy/session.d.cts
+@@ -12,0 +13,2 @@ export interface SessionData {
++  /** One-time API key plaintext, shown once after create then cleared. */
++  apiKeyPlaintext?: string;
+diff --git a/src/public/styles.css b/src/public/styles.css
+index e1269ce..ad4d85b 100644
+--- a/src/public/styles.css
++++ b/src/public/styles.css
+@@ -370,0 +371,29 @@ h2 {
++.api-key-create {
++  margin: 16px 0;
++}
++
++.api-key-list {
++  list-style: none;
++  margin: 16px 0 0;
++  padding: 0;
++  display: flex;
++  flex-direction: column;
++  gap: 8px;
++}
++
++.api-key-row {
++  display: flex;
++  justify-content: space-between;
++  gap: 16px;
++  align-items: center;
++  padding: 12px 14px;
++  border: 1px solid var(--line);
++  border-radius: 8px;
++  background: #fff;
++}
++
++.api-key-name {
++  margin: 0;
++  font-weight: 600;
++}
++
+diff --git a/src/views/settings.ejs b/src/views/settings.ejs
+index 4b8e2e6..204ef20 100644
+--- a/src/views/settings.ejs
++++ b/src/views/settings.ejs
+@@ -5 +5 @@
+-      <p class="lede">Account details, password, and how to call the JSON API with a session cookie.</p>
++      <p class="lede">Account details, password, API keys, and how to call the JSON API.</p>
+@@ -48,0 +49,63 @@
++  <section class="panel" data-testid="api-keys-section">
++    <h2>API keys</h2>
++    <p>
++      Create a named key to call <code>/api/*</code> with
++      <code>Authorization: Bearer</code> and no cookie. The secret is shown once
++      when you create the key. Revoke is immediate: that secret stops working
++      on the next request.
++    </p>
++    <% if (apiKeyPlaintext) { %>
++      <p class="flash" role="status">
++        Copy this secret now. It will not be shown again.
++      </p>
++      <p>
++        <code data-testid="api-key-plaintext"><%= apiKeyPlaintext %></code>
++      </p>
++    <% } %>
++    <form method="post" action="/settings/api-keys" class="stack api-key-create">
++      <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
++      <label class="field">
++        <span>Name</span>
++        <input
++          type="text"
++          name="name"
++          data-testid="api-key-name"
++          autocomplete="off"
++          required
++        />
++        <%- include("partials/field-error", { field: "name", errors: errors }) %>
++      </label>
++      <button type="submit" class="btn btn-primary" data-testid="api-key-create">
++        Create key
++      </button>
++    </form>
++    <% if (apiKeys && apiKeys.length > 0) { %>
++      <ul class="api-key-list">
++        <% apiKeys.forEach(function (key) { %>
++          <li class="api-key-row" data-testid="api-key-row">
++            <div>
++              <p class="api-key-name"><%= key.name %></p>
++              <p class="muted"><code><%= key.masked %></code></p>
++              <p class="muted">
++                Created
++                <time data-testid="api-key-created"><%= key.created %></time>
++                <% if (key.lastUsed) { %>
++                  · Last used
++                  <time data-testid="api-key-last-used"><%= key.lastUsed %></time>
++                <% } %>
++              </p>
++            </div>
++            <form method="post" action="/settings/api-keys/<%= key.id %>/revoke">
++              <input type="hidden" name="_csrf" value="<%= locals.csrf %>" />
++              <button type="submit" class="btn btn-danger" data-testid="api-key-revoke">
++                Revoke
++              </button>
++            </form>
++          </li>
++        <% }); %>
++      </ul>
++    <% } else { %>
++      <p class="muted">No API keys yet.</p>
++    <% } %>
++  </section>
++
+@@ -52,3 +115,3 @@
+-      The JSON API lives at <code>/api/items</code>. At the moment it authenticates
+-      with the same session cookie the browser already has. Fish a cookie out of
+-      the sign-in form, then call the API:
++      The JSON API lives at <code>/api/items</code>. A named API key authenticates
++      with <code>Authorization: Bearer</code>. The browser session cookie still
++      works for the same routes:
+@@ -56 +119,2 @@
+-    <pre class="code-block"><code>C=$(scripts/login.sh demo demo-pass-1234)
++    <pre class="code-block"><code>curl -s -H "Authorization: Bearer &lt;secret&gt;" http://localhost:3000/api/items
++C=$(scripts/login.sh demo demo-pass-1234)
+@@ -61 +125 @@ SHELFMARK_COOKIE="$C" scripts/import.sh scripts/sample-import.jsonl</code></pre>
+-      session answers <code>{"error":"unauthorized"}</code>.
++      session or key answers <code>{"error":"unauthorized"}</code>.
+diff --git a/test/unit/api-keys.test.ts b/test/unit/api-keys.test.ts
+new file mode 100644
+index 0000000..8f04b4c
+--- /dev/null
++++ b/test/unit/api-keys.test.ts
+@@ -0,0 +1,155 @@
++import { describe, expect, it } from "vitest";
++import request from "supertest";
++import { createApiKey, findActiveByTokenHash, listActiveKeys } from "../../src/api-keys/repo.ts";
++import { hashSecret, mintSecret } from "../../src/api-keys/secret.ts";
++import { openDb } from "../../src/db/open.ts";
++import { migrate } from "../../src/db/migrate.ts";
++import { createUser } from "../../src/users/repo.ts";
++import { makeTestApp } from "../helpers/app.ts";
++import { extractCsrf, signInCookie } from "../helpers/cookie.ts";
++
++function extractPlaintext(html: string): string {
++  const m = html.match(/data-testid="api-key-plaintext"[^>]*>([^<]+)/);
++  if (!m) throw new Error("extractPlaintext: api-key-plaintext not found");
++  return m[1];
++}
++
++async function createNamedKey(
++  app: ReturnType<typeof makeTestApp>,
++  cookie: string,
++  name: string,
++): Promise<{ html: string; secret: string }> {
++  const page = await request(app).get("/settings").set("Cookie", cookie);
++  const csrf = extractCsrf(page.text);
++  const posted = await request(app)
++    .post("/settings/api-keys")
++    .set("Cookie", cookie)
++    .type("form")
++    .redirects(0)
++    .send({ _csrf: csrf, name });
++  expect(posted.status).toBe(302);
++  expect(posted.headers.location).toBe("/settings");
++  const html = await request(app).get("/settings").set("Cookie", cookie);
++  expect(html.status).toBe(200);
++  return { html: html.text, secret: extractPlaintext(html.text) };
++}
++
++describe("api-keys secret", () => {
++  it("mints a non-empty secret with 32-byte body and stable hash", () => {
++    const minted = mintSecret();
++    expect(minted.plaintext.startsWith(`smk_${minted.prefix}_`)).toBe(true);
++    expect(minted.plaintext.length).toBeGreaterThan(40);
++    const body = minted.plaintext.slice(`smk_${minted.prefix}_`.length);
++    const decoded = Buffer.from(body, "base64url");
++    expect(decoded.length).toBe(32);
++    expect(hashSecret(minted.plaintext)).toBe(minted.tokenHash);
++    expect(hashSecret(minted.plaintext)).not.toBe(hashSecret(minted.plaintext + "x"));
++  });
++});
++
++describe("api-keys repo", () => {
++  it("creates and lists newest first", () => {
++    const db = openDb(":memory:");
++    migrate(db);
++    const user = createUser(db, { username: "demo", password: "demo-pass-1234" });
++    const a = createApiKey(db, user.id, "first");
++    const b = createApiKey(db, user.id, "second");
++    const list = listActiveKeys(db, user.id);
++    expect(list.map((k) => k.name)).toEqual(["second", "first"]);
++    expect(findActiveByTokenHash(db, hashSecret(a.plaintext))?.id).toBe(a.record.id);
++    expect(findActiveByTokenHash(db, hashSecret(b.plaintext))?.id).toBe(b.record.id);
++    db.close();
++  });
++});
++
++describe("api-keys http", () => {
++  it("creates a named key, shows plaintext once, lists name and created date", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const { html, secret } = await createNamedKey(app, cookie, "scripts");
++    expect(secret.length).toBeGreaterThan(0);
++    expect(html).toContain('data-testid="api-key-row"');
++    expect(html).toContain("scripts");
++    expect(html).toMatch(/data-testid="api-key-created">\d{4}-\d{2}-\d{2}</);
++    const reload = await request(app).get("/settings").set("Cookie", cookie);
++    expect(reload.text).not.toContain('data-testid="api-key-plaintext"');
++    expect(reload.text).toContain('data-testid="api-key-row"');
++    expect(reload.text).toContain("scripts");
++  });
++
++  it("GET /api/items with Bearer and no cookie returns the UI-created item", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const page = await request(app).get("/items/new").set("Cookie", cookie);
++    const csrf = extractCsrf(page.text);
++    const added = await request(app)
++      .post("/items")
++      .set("Cookie", cookie)
++      .type("form")
++      .redirects(0)
++      .send({
++        _csrf: csrf,
++        url: "https://example.com/from-ui",
++        title: "From UI",
++        note: "",
++        tags: "",
++      });
++    expect(added.status).toBe(302);
++    const { secret } = await createNamedKey(app, cookie, "cli");
++    const res = await request(app)
++      .get("/api/items")
++      .set("Authorization", `Bearer ${secret}`);
++    expect(res.status).toBe(200);
++    expect(res.body.count).toBeGreaterThanOrEqual(1);
++    expect(Array.isArray(res.body.items)).toBe(true);
++    expect(res.body.items.some((it: { title: string }) => it.title === "From UI")).toBe(
++      true,
++    );
++    const withCookie = await request(app).get("/api/items").set("Cookie", cookie);
++    expect(withCookie.status).toBe(200);
++    const itemsPage = await request(app).get("/items").set("Cookie", cookie);
++    expect(itemsPage.status).toBe(200);
++    expect(itemsPage.text).toContain("item-row");
++  });
++
++  it("missing header and Bearer not-a-key return exact 401 body", async () => {
++    const app = makeTestApp();
++    const missing = await request(app).get("/api/items");
++    expect(missing.status).toBe(401);
++    expect(missing.text).toBe('{"error":"unauthorized"}');
++    const bogus = await request(app).get("/api/items").set("Authorization", "Bearer not-a-key");
++    expect(bogus.status).toBe(401);
++    expect(bogus.text).toBe('{"error":"unauthorized"}');
++    const cookie = await signInCookie(app);
++    const both = await request(app)
++      .get("/api/items")
++      .set("Cookie", cookie)
++      .set("Authorization", "Bearer not-a-key");
++    expect(both.status).toBe(401);
++    expect(both.text).toBe('{"error":"unauthorized"}');
++  });
++
++  it("shows last used after Bearer use and revoke is immediate", async () => {
++    const app = makeTestApp();
++    const cookie = await signInCookie(app);
++    const { secret, html: createdHtml } = await createNamedKey(app, cookie, "rotate-me");
++    expect(createdHtml).not.toContain('data-testid="api-key-last-used"');
++    const used = await request(app).get("/api/items").set("Authorization", `Bearer ${secret}`);
++    expect(used.status).toBe(200);
++    const afterUse = await request(app).get("/settings").set("Cookie", cookie);
++    expect(afterUse.text).toMatch(/data-testid="api-key-last-used">\d{4}-\d{2}-\d{2}</);
++    const csrf = extractCsrf(afterUse.text);
++    const revoke = await request(app)
++      .post("/settings/api-keys/1/revoke")
++      .set("Cookie", cookie)
++      .type("form")
++      .redirects(0)
++      .send({ _csrf: csrf });
++    expect(revoke.status).toBe(302);
++    const again = await request(app).get("/api/items").set("Authorization", `Bearer ${secret}`);
++    expect(again.status).toBe(401);
++    expect(again.text).toBe('{"error":"unauthorized"}');
++    const listed = await request(app).get("/settings").set("Cookie", cookie);
++    expect(listed.text).not.toContain('data-testid="api-key-row"');
++  });
++});
+diff --git a/test/unit/migrations.test.ts b/test/unit/migrations.test.ts
+index 5077b65..bd6edcb 100644
+--- a/test/unit/migrations.test.ts
++++ b/test/unit/migrations.test.ts
+@@ -15,0 +16 @@ describe("migrations", () => {
++      "0004_api_keys.sql",
+@@ -29,0 +31 @@ describe("migrations", () => {
++    expect(tableNames).toContain("api_keys");
+@@ -41,0 +44 @@ describe("migrations", () => {
++      "0004_api_keys.sql",
+diff --git a/test/unit/views.test.ts b/test/unit/views.test.ts
+index c7d2c5b..340d176 100644
+--- a/test/unit/views.test.ts
++++ b/test/unit/views.test.ts
+@@ -15,0 +16,2 @@ describe("views", () => {
++    expect(res.text).toContain('data-testid="api-keys-section"');
++    expect(res.text).toContain("API keys");

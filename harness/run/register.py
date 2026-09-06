@@ -201,7 +201,9 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_config()
     held = held_out_dir(cfg)
     root = repo_root()
-    if tracked_h_paths(root):
+    # Write-time invariant: H must not be tracked at --v1/--v2. After the
+    # results push, H is `git add -f`'d (design §9), so --verify-* must still run.
+    if (args.v1 or args.v2) and tracked_h_paths(root):
         die(EXIT_PRECONDITION, "H file is tracked in git ls-files")
     if args.v1 or args.v2:
         copy_h_to_held(held, root)

@@ -38,11 +38,11 @@ sha256sum harness/acceptance/* harness/score/RUBRIC.md harness/score/specimens/*
 make -C harness verify-registration
 ```
 
-Results land in `results/2026-09/` in a later commit; this README carries no numbers until then.
+The scored run is published in `results/2026-09/`, and the numbers below come from it.
 
 ## Reproduce it
 
-Prerequisites: Docker and Compose, Python 3.11, git. A Cursor Cloud account of your own is needed only for live seats; the spawn adapter contract is in `config-schema` terms (`spawn`, `status`, `conversation`, `followup`, JSON on stdout). Scoring needs no seat and no network.
+Prerequisites: Docker and Compose, Python 3.11, git, and Chromium or Chrome if you want `make card` to render the PNG. A Cursor Cloud account of your own is needed only for live seats; the spawn adapter contract is in `config-schema` terms (`spawn`, `status`, `conversation`, `followup`, JSON on stdout). Scoring needs no seat and no network.
 
 ```bash
 make -C harness test
@@ -51,18 +51,46 @@ make -C harness trial ARM=gatekit N=1
 make -C harness score ARM=gatekit N=1
 ```
 
-`make -C harness test` is the 70 P unit tests. `make -C harness test-preflight` is the 10 held-out extractor tests.
+`make -C harness test` is the 77 published unit tests (51 under `run/tests`, 26 under `score/tests`). `make -C harness test-preflight` is the 10 held-out extractor tests.
 
 ## Fairness
 
-An arm is one of the three frameworks; the harness is the referee they all ran on (see the glossary in the first section). All three arms ran as guests on one harness: a Cursor Cloud agent on one pinned model, driven from each framework's stock prompt files. Neither Conductor nor Spec Kit ran in its native host, and the harness author also wrote gatekit and the fixture. The acceptance tests were written before any arm ran, were identical for all arms and hidden from all of them. No arm was tuned from another's output. Every trial is reported.
+An arm is one of the three frameworks; the harness is the referee they all ran on (see the glossary in the first section). All three arms ran as guests on one harness: a Cursor Cloud agent on one pinned model, driven from each framework's stock prompt files. Neither Conductor nor Spec Kit ran in its native host, and the harness author also wrote gatekit and the fixture.
+
+The acceptance tests were written before any arm ran, were identical for all arms and hidden from all of them. No arm was tuned from another's output. Every trial is reported.
 
 ## Results
 
-Added in the results push.
+Each arm ran two scored trials (N=2). Conductor and gatekit also ran a third after a pass/fail disagreement; Spec Kit's two trials agreed, so it got none. Mean spec coverage at `done-f1p` — the primary metric, frozen before the first seat — is 93.8 for Conductor, 93.8 for gatekit and 100.0 for Spec Kit, a separation of 6.2. That is branch B: no winner (`results/2026-09/branch.json`). Two overlays fired with it: gatekit is not the highest-coverage arm, and two arms disagreed with themselves.
+
+Read across: one row is one trial — both acceptance verdicts, smoke at each tag, spec coverage at each tag, decision counts, and the F1' review cost.
 
 <!-- scorecard:start -->
+
+| Arm | Trial | Role | F1 | F1' | Smoke | Cov. f1 | Cov. f1p | Dec. self/der. | Files | Lines | Min |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Conductor | 1 | scored | pass 5/5 | pass 3/3 | 4/4 | 100.0 | 100.0 | 0 / 0 | 15 | 823 | 43.1 |
+| Conductor | 2r1 | scored | fail 4/5 | pass 3/3 | 4/4 | 91.7 | 87.5 | 38 / 0 | 13 | 739 | 52.6 |
+| Conductor | 3 | tie-break | pass 5/5 | pass 3/3 | 4/4 | 83.3 | 93.8 | 0 / 0 | 14 | 774 | 22.5 |
+| gatekit | 1 | scored | fail 4/5 | pass 3/3 | 4/4 | 91.7 | 93.8 | 0 / 1 | 12 | 625 | 71.7 |
+| gatekit | 2 | scored | pass 5/5 | pass 3/3 | 4/4 | 91.7 | 93.8 | 4 / 0 | 12 | 637 | 74.8 |
+| gatekit | 3 | tie-break | fail 4/5 | pass 3/3 | 4/4 | 91.7 | 93.8 | 0 / 1 | 12 | 715 | 20.5 |
+| Spec Kit | 1 | scored | pass 5/5 | pass 3/3 | 4/4 | 100.0 | 100.0 | 0 / 1 | 12 | 722 | 26.8 |
+| Spec Kit | 2r1 | scored | pass 5/5 | pass 3/3 | 4/4 | 100.0 | 100.0 | 10 / 0 | 11 | 716 | 48.5 |
+
 <!-- scorecard:end -->
+
+F1' passed 3/3 on all eight rows and smoke stayed 4/4 at both tags. Three rows failed F1 at 4/5: Conductor's rerun and both of gatekit's odd-numbered trials. Those disagreements fired the pre-declared pass/fail tie-break; Spec Kit got no third. Tie-break rows are reported in full and are not folded into the means above.
+
+The first scored trial of each arm is in `results/2026-09/triptych.md`: spec coverage at done-f1p is 100.0 / 93.8 / 100.0 (conductor / gatekit / spec-kit). gatekit's unmatched surface id at both tags is `Create key`. Conductor and Spec Kit grew a second spec folder for rotation; gatekit amended the same `features/F1` pair.
+
+`results/2026-09/decisions.csv` lists 55 decision points, counted two ways. Conductor's rerun recorded 38, every answer from `HUMAN.md`. The derived pass picked gatekit trial 1, turn 16: "Smoke is green. Next I'll fill the F1 spec (brief, contract, plan, tasks), record plan approval, and implement."
+
+Two seats never reached scoring. `results/2026-09/INVALID.md` lists them under one category, `docker-unavailable` — a harness failure before the first stock command, the only kind this experiment re-runs. Both returned as the `2r1` rows. `results/2026-09/CAVEATS.md` records sanitizer replacements by file; there was no `HUMAN.md` freeze exception and no reshape, so every row is cohort `v1`.
+
+![Scorecard card: every trial in the run](results/2026-09/card.png)
+
+This is one brownfield feature, one follow-up, three arms and two scored trials each on one pinned model — a direction, not a statistic. Message counts and the unblinded stale-statement review were not recorded, so those columns stay empty. Everything else is re-derivable from `<FIXTURE_URL>`: `results/2026-09/<arm>/<n>/` holds the prompt, diffs, spec snapshots, coverage JSON and acceptance logs, and `make -C harness score ARM=<arm> N=<n>` re-scores with no seat and no network.
 
 ## Layout
 

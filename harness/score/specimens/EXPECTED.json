@@ -1,0 +1,5 @@
+{
+  "partial": 63.6,
+  "full": 100.0,
+  "omitted": ["api-key-last-used", "api-key-revoke", "api-key-rotate", "api-key-last-rotated"]
+}

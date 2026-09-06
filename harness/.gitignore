@@ -1,3 +1,1 @@
-acceptance/
-score/specimens/
-score/test_spec_coverage.py
+# Held-out files are published in the results commit; nothing under harness/ is ignored.

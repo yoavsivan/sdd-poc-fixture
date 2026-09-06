@@ -1,0 +1,25 @@
+{
+  "a_minus_variant": null,
+  "branch": "B",
+  "excluded_arms": [],
+  "inputs": {
+    "means": {
+      "conductor": 93.8,
+      "gatekit": 93.8,
+      "spec-kit": 100.0
+    },
+    "separation": 6.2,
+    "spreads": {
+      "conductor": 12.5,
+      "gatekit": 0.0,
+      "spec-kit": 0.0
+    }
+  },
+  "largest_spread": 12.5,
+  "notes": [],
+  "overlays": [
+    "D",
+    "E"
+  ],
+  "separation": 6.2
+}

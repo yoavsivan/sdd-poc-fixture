@@ -1,0 +1,67 @@
+# gatekit verification contract — F1 (2026-09-06)
+# Grammar: docs/contract-format.md. Every check must pass for `gatekit done --feature F1`.
+feature: F1
+base: 7dc3d08df3e41807b1b575b738e8afb5f7990b93                       # git-only
+
+# Gate kinds (.gatekit/gate-kinds.json) that need a PASS verdict in .gatekit/verdicts/F1/
+# before done passes. Empty by default so a single-agent flow works; see docs/quickstart-orchestrator.md.
+required_gates:
+#  - code-review
+
+checks:
+  - id: plan-has-handoff
+    kind: spec-mentions
+    file: plan.md
+    terms:
+      - "## Hand-off"
+
+  - id: tasks-complete
+    kind: command
+    run: gatekit tasks --feature F1 </dev/null
+
+  - id: drift                        # git-only
+    kind: command                    # git-only
+    run: gatekit drift --feature F1 </dev/null  # git-only
+
+  - id: brief-names-surface
+    kind: spec-mentions
+    file: brief.md
+    terms:
+      - api-keys-section
+      - api-key-name
+      - api-key-create
+      - api-key-plaintext
+      - api-key-row
+      - api-key-created
+      - api-key-last-used
+      - api-key-revoke
+      - 'GET /api/items'
+      - 'Authorization: Bearer'
+      - '{"error":"unauthorized"}'
+      - 'POST /api-keys'
+      - 'POST /api-keys/:id/revoke'
+      - api-key-rotate
+      - api-key-last-rotated
+      - 'POST /api-keys/:id/rotate'
+
+  - id: migration-present
+    kind: artifact-exists
+    path: src/db/migrations/0004_api_keys.sql
+
+  - id: unit-tests
+    kind: test
+    run: make test-docker </dev/null
+    timeout: 600
+
+  - id: smoke
+    kind: e2e
+    run: make smoke </dev/null
+    timeout: 600
+
+  - id: rotation-migration
+    kind: artifact-exists
+    path: src/db/migrations/0005_api_keys_last_rotated.sql
+
+  - id: settings-view
+    kind: artifact-exists
+    path: src/views/settings.ejs

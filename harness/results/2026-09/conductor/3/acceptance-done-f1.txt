@@ -1,0 +1,292 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 634B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 401B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 149B done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 5.06kB done
+#6 DONE 0.0s
+
+#7 [5/7] RUN npm ci
+#7 CACHED
+
+#8 [3/7] WORKDIR /app
+#8 CACHED
+
+#9 [6/7] COPY . .
+#9 CACHED
+
+#10 [2/7] RUN apt-get update   && apt-get install -y --no-install-recommends     curl     ca-certificates     python3     make     g++   && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [4/7] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [7/7] RUN npm run build
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:cdd26298343c1bdb1513ef64a218f0b3947751afc1fb9184ba6406fea0d5fe3d done
+#13 naming to docker.io/library/harness-conductor-3-done-f1-app done
+#13 DONE 0.0s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+Attaching to app-1, playwright-1
+app-1  | [info] migrations complete {"applied":[],"skipped":["0001_users.sql","0002_items_tags.sql","0003_items_updated_at.sql","0004_api_keys.sql"]}
+app-1  | [info] seed user {"username":"demo","created":false}
+app-1  | [info] seed items {"inserted":0}
+app-1  | [info] listening on :3000 {"port":3000,"database":"/app/data/shelfmark.db"}
+app-1  | [info] GET /healthz 200 5ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+playwright-1  | 
+playwright-1  | added 202 packages, and audited 203 packages in 6s
+playwright-1  | 
+playwright-1  | 39 packages are looking for funding
+playwright-1  |   run `npm fund` for details
+playwright-1  | 
+playwright-1  | 10 vulnerabilities (6 moderate, 3 high, 1 critical)
+playwright-1  | 
+playwright-1  | To address issues that do not require attention, run:
+playwright-1  |   npm audit fix
+playwright-1  | 
+playwright-1  | To address all issues (including breaking changes), run:
+playwright-1  |   npm audit fix --force
+playwright-1  | 
+playwright-1  | Run `npm audit` for details.
+playwright-1  | 
+playwright-1  | Running 8 tests using 1 worker
+playwright-1  | 
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET / 302 2ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 4ms
+app-1         | [info] POST /signin 302 35ms
+app-1         | [info] GET /items 200 3ms
+app-1         | [info] GET /settings 200 3ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+playwright-1  |   ✘  1 .heldout/acceptance/f1-prime.spec.ts:4:1 › rotate keeps id and name and shows the new secret once (30.0s)
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 2ms
+app-1         | [info] POST /signin 302 34ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+playwright-1  |   ✘  2 .heldout/acceptance/f1-prime.spec.ts:23:1 › old secret fails immediately, new secret works (30.0s)
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 30ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+playwright-1  |   ✘  3 .heldout/acceptance/f1-prime.spec.ts:40:1 › last rotated is shown after rotation (30.0s)
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 1ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 29ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 3ms
+app-1         | [info] POST /settings/api-keys 302 0ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /settings 200 2ms
+playwright-1  |   ✓  4 .heldout/acceptance/f1.spec.ts:4:1 › create key shows plaintext once and lists name + created (287ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 0ms
+app-1         | [info] POST /signin 302 28ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 2ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 1ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /api/items 200 1ms
+playwright-1  |   ✓  5 .heldout/acceptance/f1.spec.ts:21:1 › bearer authenticates /api/items without a cookie (327ms)
+app-1         | [info] GET /api/items 401 0ms
+app-1         | [info] GET /api/items 401 1ms
+playwright-1  |   ✓  6 .heldout/acceptance/f1.spec.ts:37:1 › missing or invalid bearer is 401 with the exact body (9ms)
+app-1         | [info] GET / 302 1ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 0ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 1ms
+app-1         | [info] GET /items/new 200 2ms
+app-1         | [info] POST /items 302 0ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /api/items 200 0ms
+app-1         | [info] GET /items 200 2ms
+playwright-1  |   ✓  7 .heldout/acceptance/f1.spec.ts:49:1 › cookie sessions still work (248ms)
+app-1         | [info] GET / 302 0ms
+app-1         | [info] GET /items 302 0ms
+app-1         | [info] GET /signin?next=%2Fitems 200 1ms
+app-1         | [info] POST /signin 302 27ms
+app-1         | [info] GET /items 200 2ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] POST /settings/api-keys 302 0ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] GET /api/items 200 0ms
+app-1         | [info] GET /settings 200 1ms
+app-1         | [info] POST /settings/api-keys/6/revoke 302 1ms
+app-1         | [info] GET /settings 200 2ms
+app-1         | [info] GET /api/items 401 1ms
+playwright-1  |   ✓  8 .heldout/acceptance/f1.spec.ts:59:1 › revoke is immediate and last used updates (249ms)
+playwright-1  | 
+playwright-1  | 
+playwright-1  |   1) .heldout/acceptance/f1-prime.spec.ts:4:1 › rotate keeps id and name and shows the new secret once 
+playwright-1  | 
+playwright-1  |     [31mTest timeout of 30000ms exceeded.[39m
+playwright-1  | 
+playwright-1  |     Error: locator.click: Test timeout of 30000ms exceeded.
+playwright-1  |     Call log:
+playwright-1  |     [2m  - waiting for getByTestId('api-key-row').filter({ hasText: 'rotate-mtpqghqs-cjii7w' }).getByTestId('api-key-rotate')[22m
+playwright-1  | 
+playwright-1  | 
+playwright-1  |        9 |   const row = loc.row.filter({ hasText: name });
+playwright-1  |       10 |   const before = await row.getAttribute("data-key-id");
+playwright-1  |     > 11 |   await row.getByTestId("api-key-rotate").click();
+playwright-1  |          |                                           ^
+playwright-1  |       12 |   const newSecret = (await loc.plaintext.innerText()).trim();
+playwright-1  |       13 |   expect(newSecret.length).toBeGreaterThan(0);
+playwright-1  |       14 |   expect(newSecret).not.toBe(oldSecret);
+playwright-1  |         at /work/.heldout/acceptance/f1-prime.spec.ts:11:43
+playwright-1  | 
+playwright-1  |     Error Context: test-results/f1-prime-rotate-keeps-id-a-a70f2-d-shows-the-new-secret-once/error-context.md
+playwright-1  | 
+playwright-1  |   2) .heldout/acceptance/f1-prime.spec.ts:23:1 › old secret fails immediately, new secret works ────
+playwright-1  | 
+playwright-1  |     [31mTest timeout of 30000ms exceeded.[39m
+playwright-1  | 
+playwright-1  |     Error: locator.click: Test timeout of 30000ms exceeded.
+playwright-1  |     Call log:
+playwright-1  |     [2m  - waiting for getByTestId('api-key-row').filter({ hasText: 'swap-mtpqh5bn-bxwul6' }).getByTestId('api-key-rotate')[22m
+playwright-1  | 
+playwright-1  | 
+playwright-1  |       26 |   const oldSecret = await createKey(page, name);
+playwright-1  |       27 |   const row = page.getByTestId("api-key-row").filter({ hasText: name });
+playwright-1  |     > 28 |   await row.getByTestId("api-key-rotate").click();
+playwright-1  |          |                                           ^
+playwright-1  |       29 |   const newSecret = (await page.getByTestId("api-key-plaintext").innerText()).trim();
+playwright-1  |       30 |   const oldCtx = await bearerContext(oldSecret);
+playwright-1  |       31 |   const oldRes = await oldCtx.get("/api/items");
+playwright-1  |         at /work/.heldout/acceptance/f1-prime.spec.ts:28:43
+playwright-1  | 
+playwright-1  |     Error Context: test-results/f1-prime-old-secret-fails-immediately-new-secret-works/error-context.md
+playwright-1  | 
+playwright-1  |   3) .heldout/acceptance/f1-prime.spec.ts:40:1 › last rotated is shown after rotation ──────────────
+playwright-1  | 
+playwright-1  |     [31mTest timeout of 30000ms exceeded.[39m
+playwright-1  | 
+playwright-1  |     Error: locator.click: Test timeout of 30000ms exceeded.
+playwright-1  |     Call log:
+playwright-1  |     [2m  - waiting for getByTestId('api-key-row').filter({ hasText: 'stamp-mtpqhswz-6k70cs' }).getByTestId('api-key-rotate')[22m
+playwright-1  | 
+playwright-1  | 
+playwright-1  |       43 |   await createKey(page, name);
+playwright-1  |       44 |   const row = page.getByTestId("api-key-row").filter({ hasText: name });
+playwright-1  |     > 45 |   await row.getByTestId("api-key-rotate").click();
+playwright-1  |          |                                           ^
+playwright-1  |       46 |   await expect(row.getByTestId("api-key-last-rotated")).not.toHaveText("");
+playwright-1  |       47 |   await page.goto("/settings");
+playwright-1  |       48 |   await expect(page.getByTestId("api-key-row").filter({ hasText: name }).getByTestId("api-key-last-rotated")).not.toHaveText("");
+playwright-1  |         at /work/.heldout/acceptance/f1-prime.spec.ts:45:43
+playwright-1  | 
+playwright-1  |     Error Context: test-results/f1-prime-last-rotated-is-shown-after-rotation/error-context.md
+playwright-1  | 
+playwright-1  |   3 failed
+playwright-1  |     .heldout/acceptance/f1-prime.spec.ts:4:1 › rotate keeps id and name and shows the new secret once 
+playwright-1  |     .heldout/acceptance/f1-prime.spec.ts:23:1 › old secret fails immediately, new secret works ─────
+playwright-1  |     .heldout/acceptance/f1-prime.spec.ts:40:1 › last rotated is shown after rotation ───────────────
+playwright-1  |   5 passed (1.6m)
+
+[Kplaywright-1 exited with code 1
+app-1         | [info] GET /healthz 200 1ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+app-1         | [info] GET /healthz 200 0ms
+
+[Kapp-1 exited with code 137
+ Image harness-conductor-3-done-f1-app Building 
+ Image harness-conductor-3-done-f1-app Built 
+ Container harness-conductor-3-done-f1-playwright-1 Recreate 
+ Container harness-conductor-3-done-f1-playwright-1 Recreated 
+ Container harness-conductor-3-done-f1-app-1 Starting 
+ Container harness-conductor-3-done-f1-app-1 Started 
+ Container harness-conductor-3-done-f1-app-1 Waiting 
+ Container harness-conductor-3-done-f1-app-1 Healthy 
+ Container harness-conductor-3-done-f1-playwright-1 Starting 
+ Container harness-conductor-3-done-f1-playwright-1 Started 
+playwright-1  | npm warn deprecated <email removed>: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+ Compose Stopping Aborting on container exit...
+ Container harness-conductor-3-done-f1-playwright-1 Stopping 
+ Container harness-conductor-3-done-f1-playwright-1 Stopped 
+ Container harness-conductor-3-done-f1-app-1 Stopping 
+ Container harness-conductor-3-done-f1-app-1 Stopped 
+

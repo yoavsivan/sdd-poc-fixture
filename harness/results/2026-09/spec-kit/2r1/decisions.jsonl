@@ -1,0 +1,10 @@
+{"turn": 1, "type": "product", "question": "Constitution principles for Shelfmark brownfield fixture", "source": "HUMAN.md#project-context", "answer": "Wrap legacy session/query; TS strict; Docker/Make tests; demo/demo-pass-1234; no new runtime deps"}
+{"turn": 2, "type": "clarify", "question": "Bearer vs cookie when both present on /api/*", "source": "HUMAN.md#clarify", "answer": "Bearer exclusive on /api/*; cookie sessions unchanged for HTML; keep existing tests green"}
+{"turn": 2, "type": "clarify", "question": "Key list display and timestamp format", "source": "HUMAN.md#product", "answer": "Prefix plus masked tail; ISO-8601 YYYY-MM-DD; store UTC; newest first"}
+{"turn": 2, "type": "scope", "question": "Empty API key name", "source": "HUMAN.md#defaults", "answer": "Reject empty/whitespace name; smallest surface that still meets AC"}
+{"turn": 3, "type": "approve-plan", "question": "Approve F1 plan if every AC maps to a task", "source": "HUMAN.md#approvals", "answer": "Approved: AC1-6 map to T006-T015; constitution gates pass"}
+{"turn": 4, "type": "approve-completion", "question": "Approve F1 completion after smoke and unit tests", "source": "HUMAN.md#approvals", "answer": "Approved: make test-docker 51 passed; make smoke 4 passed; locators and 401 body match brief"}
+{"turn": 5, "type": "other", "question": "Which Spec Kit change flow for F1 prime rotate keys", "source": "HUMAN.md#scope", "answer": "Flow-forward new numbered spec 002-rotate-api-keys then plan tasks implement"}
+{"turn": 5, "type": "clarify", "question": "Does rotate keep id and name; last rotated format", "source": "HUMAN.md#product", "answer": "Same id and name; last rotated YYYY-MM-DD UTC; old secret dies immediately"}
+{"turn": 6, "type": "approve-plan", "question": "Approve F1 prime plan AC mapping", "source": "HUMAN.md#approvals", "answer": "Approved: rotate keep id/name, old 401, new bearer, last-rotated map to T003-T008"}
+{"turn": 7, "type": "approve-completion", "question": "Approve F1 prime completion after tests and smoke", "source": "HUMAN.md#approvals", "answer": "Approved: test-docker 52 passed; smoke 4 passed; rotate locators and 401 body match brief"}
